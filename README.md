@@ -4,7 +4,7 @@ A university project for building an application
 Members:
 - Nachat Kaewmeesang 6422770774
 - Panisara Srisan 6422781326
-- Praewa Phunsukmark 6422790046
+- Praewaphun Sukmark 6422790046
 
 # Description:
 
