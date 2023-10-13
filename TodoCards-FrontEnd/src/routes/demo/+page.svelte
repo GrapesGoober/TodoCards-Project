@@ -15,7 +15,10 @@
 		const result = await res.json()
 		if (result.message == "pong"){
 			ping_count ++
+			console.log("recieved pong")
+
 		}
+		
 	}
 </script>
 
