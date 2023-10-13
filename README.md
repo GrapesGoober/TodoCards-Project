@@ -6,6 +6,20 @@ Members:
 - Panisara Srisan 6422781326
 - Praewaphun Sukmark 6422790046
 
+# To run this
+- Installation:
+  - python & flask (`pip install Flask`)
+  - node `https://nodejs.org/en` (i think you shoud go for LTS)
+  
+- Run Python backend
+  - `cd TodoCards-BackEnd`
+  - `python app.py` (or just hit the play button)
+- Run Svelte front end
+  - `cd TodoCards-FrontEnd`
+  - `npm run dev`
+  - you should see a nice localhost popped up. click on it
+
+
 # Description:
 
 A “to-do” app called “TodoCard”, where each to-do items are encapsulated as “cards” organized under “decks”. The basic ideas are as follows
