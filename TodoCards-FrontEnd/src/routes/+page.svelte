@@ -7,6 +7,7 @@ To run this project
 
 <h1>Playing with Demo</h1>
 <p>If you wanna see the demo working of this skeleton project, go <a href="/demo">here</a></p>
+<p>I've also made a demo for the <a href="/card-demo">cards</a></p>
 
 <h3>FrontEnd</h3>
 <p>
