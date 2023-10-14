@@ -20,7 +20,7 @@
 <style>
     .card {
         border-radius: 10px;
-        padding: 20px;
+        padding: 15px;
         margin: 10px;
         max-width: 10em;
     }
