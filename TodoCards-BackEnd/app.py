@@ -19,12 +19,12 @@ def get_cards_list():
     deckname = jsonbody["deckname"]
     
     mycursor = mydb.cursor()
-    # there is a slight typo in "cardcolor", should be "cardColor"
+    # there is a slight capitalization typo in "cardid" and "cardcolor"
     # just be careful when doing queries
     mycursor.execute(
         """
         SELECT 
-            cardName, cardDescription, cardDue, cardIsFinished, cardcolor
+            cardId, cardName, cardDescription, cardDue, cardIsFinished, cardcolor
         FROM card WHERE deckID = (
             SELECT deckID from deck WHERE deckName = %s
         );
@@ -33,11 +33,12 @@ def get_cards_list():
     result = mycursor.fetchall()
     for i, r in enumerate(result):
         result[i] = {
-            "cardName": r[0],
-            "cardDescription": r[1],
-            "cardDue": r[2],
-            "cardIsFinished": r[3],
-            "cardColor": r[4]
+            "cardId": int(r[0]),
+            "cardName": r[1],
+            "cardDescription": r[2],
+            "cardDue": r[3],
+            "cardIsFinished": r[4],
+            "cardColor": r[5]
         }
 
     mycursor.close()

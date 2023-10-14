@@ -20,7 +20,6 @@
 
         // recieve the cards
         cardslist = await response.json()
-        console.log(cardslist)
     }
     onMount(getCardslist) 
 
