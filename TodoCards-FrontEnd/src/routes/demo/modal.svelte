@@ -1,10 +1,10 @@
 <script>
-    import { fade } from "svelte/transition";
+    import { fade } from "svelte/transition"
 
-    export let showModal = false;
+    export let showModal = false
 
     function modalOff() {
-        showModal = false;
+        showModal = false
     }
 
 </script>
