@@ -1,6 +1,6 @@
 <script>
     import { slide } from "svelte/transition";
-    export let title = ""
+    export let name = ""
     export let dueDate = ""
     export let description = ""
     export let showDescription = false
@@ -8,7 +8,7 @@
 </script>
 
 <div class="card" style="background-color: {color};">
-    <div class="title">{title}</div>
+    <div class="title">{name}</div>
     {#if showDescription}
         <div class="description" transition:slide>
             {dueDate}
@@ -22,16 +22,16 @@
         border-radius: 10px;
         padding: 15px;
         margin: 10px;
-        max-width: 10em;
+        max-width: 20em;
     }
     .title {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: large;
-        color: white;
+        color: black;
     }
     .description{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        color: white;
+        color: black;
         font-size: small;
         padding-top: 15px;
     }
