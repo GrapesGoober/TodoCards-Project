@@ -24,13 +24,8 @@ def get_cards_list():
     mycursor.execute(
         """
         SELECT 
-            cardName,
-            cardDescription,
-            cardDue,
-            cardIsFinished,
-            cardcolor
-        FROM card
-        WHERE deckID = (
+            cardName, cardDescription, cardDue, cardIsFinished, cardcolor
+        FROM card WHERE deckID = (
             SELECT deckID from deck WHERE deckName = %s
         );
         """, (deckname,))

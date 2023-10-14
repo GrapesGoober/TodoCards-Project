@@ -1,18 +1,21 @@
 <script>
     import { slide } from "svelte/transition";
-    export let name = ""
-    export let dueDate = ""
-    export let description = ""
-    export let showDescription = false
-    export let color = ""
+    export let info
+    let showDescription = false
+    
 </script>
 
-<div class="card" style="background-color: {color};">
-    <div class="title">{name}</div>
+<div class="card" style="background-color: {info.cardColor};"
+    role="button"
+    on:click={()=>{showDescription = !showDescription}}
+    on:keydown={e=>{if (e.key=="Enter") {showDescription = !showDescription}}}
+    tabindex="0">
+
+    <div class="title">{info.cardName}</div>
     {#if showDescription}
         <div class="description" transition:slide>
-            {dueDate}
-            {description}
+            {info.cardDue}
+            {info.cardDescription}
         </div>
     {/if}
 </div>
