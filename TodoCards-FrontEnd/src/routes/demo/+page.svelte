@@ -1,8 +1,14 @@
 <script>
 	import Modal from './modal.svelte';
+	import Card from './card.svelte';
 
 	let count = 0
 	let showModal = false;
+	let cardShowDesc = false;
+	let cardTitle = "This is Card"
+	let cardDescription = "This is supposed to be a really long description of the card. "+
+	"It can be as long as you'd like it doesn't matter. In fact, the longer the better."
+	let cardColour = "green"
 
 	function handleClick() {
 		count += 1
@@ -26,9 +32,15 @@
 	function modalOn() {
 		showModal = true
 	}
+
+	function toggleCardDesc() {
+		cardShowDesc = !cardShowDesc
+	}
 </script>
 
 <h1>Click thy button</h1>
+
+<a href="/">go back</a> <br>
 
 <button on:click={handleClick}>
 	Clicked {count}
@@ -42,6 +54,17 @@
 
 <button on:click={modalOn}>show modal</button>
 
-<Modal bind:showModal ></Modal>
+<button on:click={toggleCardDesc}>toggle card description</button>
+<input type="text" bind:value={cardTitle}>
+<input type="textArea" bind:value={cardDescription}>
+<input type="text" bind:value={cardColour}>
 
-<a href="/">go back</a>
+<Modal bind:showModal></Modal>
+
+<Card 
+bind:showDescription={cardShowDesc} 
+bind:color={cardColour} 
+bind:title={cardTitle}
+bind:description={cardDescription}>
+</Card>
+
