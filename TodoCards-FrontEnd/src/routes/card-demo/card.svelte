@@ -10,6 +10,7 @@
     on:click={()=>{showDescription = !showDescription}}
     on:keydown={e=>{if (e.key=="Enter") {showDescription = !showDescription}}}
     tabindex="0">
+    <i class="fas fa-edit edit-icon"></i>
 
     <div class="title">{info.cardName}</div>
     {#if showDescription}
@@ -19,6 +20,7 @@
         </div>
     {/if}
 </div>
+
 
 <style>
     .card {
@@ -32,10 +34,20 @@
         font-size: large;
         color: black;
     }
-    .description{
+    .description {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: black;
         font-size: small;
         padding-top: 15px;
+    }
+
+    .edit-icon {
+        position: relative;
+        text-wrap: nowrap;
+        top: 0%;
+        left: 19em;
+        width: 0; 
+        height: 0;
+        padding: -10px;
     }
 </style>
