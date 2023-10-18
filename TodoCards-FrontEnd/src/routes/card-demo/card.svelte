@@ -2,20 +2,37 @@
     import { slide } from "svelte/transition";
     export let info
     let showDescription = false
-    
+    let isFinished = false
 </script>
 
-<div class="card" style="background-color: {info.cardColor};"
-    role="button"
-    on:click={()=>{showDescription = !showDescription}}
-    on:keydown={e=>{if (e.key=="Enter") {showDescription = !showDescription}}}
-    tabindex="0">
-    <i class="fas fa-edit edit-icon"></i>
+<div class="wrapper">
 
-    <div class="title">{info.cardName}</div>
+    {#if isFinished}
+        <div class="card" style="background-color: lightgrey;">
+            <button class="tick" on:click={()=>{isFinished = false}}>
+                <i class="fas fa-check-square fa-lg isFinished"></i>
+            </button>
+
+            <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
+                {info.cardName}
+            </button>
+        </div>
+    {:else}
+        <div class="card" style="background-color: {info.cardColor};">
+            <button class="tick" on:click={()=>{isFinished = true}}>
+                <i class="far fa-square fa-lg"></i>
+            </button>
+
+            <button class="title" on:click={()=>{showDescription = !showDescription}}>
+                {info.cardName}
+            </button>
+        </div>
+    {/if}
+    
     {#if showDescription}
         <div class="description" transition:slide>
-            {info.cardDue}
+            <i class="fas fa-spinner fa-pulse"></i> <br>
+            Due {info.cardDue} <br>
             {info.cardDescription}
         </div>
     {/if}
@@ -23,31 +40,39 @@
 
 
 <style>
+    .wrapper{
+        padding: 10px;
+        width: 20em;
+    }
     .card {
         border-radius: 10px;
-        padding: 15px;
-        margin: 10px;
-        max-width: 20em;
+        border: none;
+        display: flex;
+        width: 100%;
     }
     .title {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: transparent;
         font-size: large;
-        color: black;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: left;
+        border: none;
+        width: 16em;
+        height: 100%;
+        padding: 10px;
+    }
+    .tick {
+        padding-left: 20px;
+        background-color: transparent;
+        border: none;
     }
     .description {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        color: black;
         font-size: small;
-        padding-top: 15px;
+        width: 20em;
+        padding: 15px;
     }
 
-    .edit-icon {
-        position: relative;
-        text-wrap: nowrap;
-        top: 0%;
-        left: 19em;
-        width: 0; 
-        height: 0;
-        padding: -10px;
+    .isFinished {
+        color: grey;
     }
 </style>
