@@ -6,6 +6,20 @@ USE TodoCards;
 -- Database: `todocards`
 --
 
+-- Table for `user`
+CREATE TABLE `user` (
+    `username` varchar(20) PRIMARY KEY,
+    `password` varchar(20) NOT NULL
+  );
+
+-- Table for `access`
+CREATE TABLE `access` (
+    `accessId` int(11) PRIMARY KEY,
+    `username` varchar(20) NOT NULL,
+    `deckId` int(10) NOT NULL,
+    `accessType` varchar(4) NOT NULL
+  );
+
 -- --------------------------------------------------------
 
 --
@@ -13,20 +27,20 @@ USE TodoCards;
 --
 
 CREATE TABLE `card` (
-  `cardid` int(11) NOT NULL,
-  `deckID` int(10) NOT NULL,
+  `cardId` int(11) NOT NULL,
+  `deckId` int(10) NOT NULL,
   `cardName` varchar(50) NOT NULL,
   `cardDescription` text NOT NULL,
   `cardDue` date NOT NULL,
   `cardIsFinished` tinyint(1) NOT NULL,
-  `cardcolor` varchar(10) DEFAULT NULL
+  `cardColor` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `card`
 --
 
-INSERT INTO `card` (`cardid`, `deckID`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardcolor`) VALUES
+INSERT INTO `card` (`cardId`, `deckId`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardColor`) VALUES
 (1, 1, 'Write introduction', '200 words zuzu', '2023-10-17', 0, 'lightblue'),
 (2, 1, 'Write abstract', '500 words zuzu', '2023-11-17', 0, 'pink'),
 (3, 1, 'Cleaning', 'clean bathroom', '2023-11-15', 0, 'lightgreen');
@@ -126,12 +140,22 @@ ALTER TABLE `subcard`
 -- Constraints for table `card`
 --
 ALTER TABLE `card`
-  ADD CONSTRAINT `card_ibfk_1` FOREIGN KEY (`deckID`) REFERENCES `deck` (`deckid`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `card_ibfk_1` FOREIGN KEY (`deckId`) REFERENCES `deck` (`deckId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subcard`
 --
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--
+-- Constraints for table `access`
+--
+ALTER TABLE `access`
+  ADD CONSTRAINT `access_ibfk_1` FOREIGN KEY (`deckId`) REFERENCES `deck` (`deckId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `access_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
 COMMIT;
 
