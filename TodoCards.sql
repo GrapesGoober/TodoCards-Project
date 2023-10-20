@@ -16,9 +16,17 @@ CREATE TABLE `user` (
 CREATE TABLE `access` (
     `accessId` int(11) PRIMARY KEY,
     `username` varchar(20) NOT NULL,
-    `deckId` int(10) NOT NULL,
+    `deckId` int(11) NOT NULL,
     `accessType` varchar(4) NOT NULL
   );
+
+-- Table for `share`
+CREATE TABLE `share` (
+    `code` varchar(20) PRIMARY KEY,
+    `deckId` int(11) NOT NULL,
+    `type` varchar(4) NOT NULL,
+    `expires` datetime NOT NULL
+    );
 
 -- --------------------------------------------------------
 
@@ -28,7 +36,7 @@ CREATE TABLE `access` (
 
 CREATE TABLE `card` (
   `cardId` int(11) NOT NULL,
-  `deckId` int(10) NOT NULL,
+  `deckId` int(11) NOT NULL,
   `cardName` varchar(50) NOT NULL,
   `cardDescription` text NOT NULL,
   `cardDue` date NOT NULL,
@@ -52,7 +60,7 @@ INSERT INTO `card` (`cardId`, `deckId`, `cardName`, `cardDescription`, `cardDue`
 --
 
 CREATE TABLE `deck` (
-  `deckid` int(11) NOT NULL,
+  `deckId` int(11) NOT NULL,
   `deckName` varchar(50) NOT NULL,
   `deckDescription` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -61,7 +69,7 @@ CREATE TABLE `deck` (
 -- Dumping data for table `deck`
 --
 
-INSERT INTO `deck` (`deckid`, `deckName`, `deckDescription`) VALUES
+INSERT INTO `deck` (`deckId`, `deckName`, `deckDescription`) VALUES
 (1, 'QuickDeck', 'This is the default deck.');
 
 -- --------------------------------------------------------
@@ -72,7 +80,7 @@ INSERT INTO `deck` (`deckid`, `deckName`, `deckDescription`) VALUES
 
 CREATE TABLE `subcard` (
   `scardid` int(11) NOT NULL,
-  `cardID` int(10) NOT NULL,
+  `cardID` int(11) NOT NULL,
   `scardName` varchar(50) NOT NULL,
   `scardIsFinished` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -156,6 +164,12 @@ ALTER TABLE `access`
   ADD CONSTRAINT `access_ibfk_1` FOREIGN KEY (`deckId`) REFERENCES `deck` (`deckId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `access_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+
+--
+-- Constraints for table `share`
+--
+ALTER TABLE `share`
+  ADD CONSTRAINT `share_ibfk_1` FOREIGN KEY (`deckId`) REFERENCES `deck` (`deckId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 COMMIT;
 
