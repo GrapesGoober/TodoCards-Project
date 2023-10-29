@@ -9,6 +9,8 @@ Members:
 # To run this
 - Installation:
   - python & flask (`pip install Flask`)
+     - mysql connector
+     - flask cors 
   - node `https://nodejs.org/en` (i think you shoud go for LTS)
   
 - Run Python backend
