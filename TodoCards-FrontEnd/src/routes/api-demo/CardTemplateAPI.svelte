@@ -4,7 +4,8 @@
     let cardslist = [] // output of the fetch goes into this list
     async function getCardslist(){
         let response = await fetch("http://127.0.0.1:5000/get-cards-list?deckname=" + deckname, {
-            method:"GET"
+            method:"GET",
+            credentials: "include"
         })
 
         // recieve the cards

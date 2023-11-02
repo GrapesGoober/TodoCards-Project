@@ -16,8 +16,9 @@ mydb = mysql.connector.connect(
 # sets up some flask stuff
 app = Flask(__name__)
 app.secret_key = "some really useless key lol"
-CORS(app)
-app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
+CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+app.config['SESSION_COOKIE_SAMESITE'] = "None"
+app.config['SESSION_COOKIE_SECURE'] = True
 
 # a debugging route that responds with "pong"
 @app.route("/ping")
@@ -38,8 +39,6 @@ def login():
     if status == True:
         session["username"] = username
 
-        print(session["username"])
-
     return jsonify(status)
 
 @app.route("/logout", methods=["GET"])
@@ -48,17 +47,12 @@ def logout():
         session.pop('username', default=None)
     return ""
 
-@app.route("/debug_login", methods=["GET"])
-def debug_login():
-    return jsonify(session.get("username"))
-
 # retrieve a list of cards using deckname. 
 # this also performs user authentication to make sure that user has access to that card
 @app.route("/get-cards-list", methods=["GET"])
 def get_cards_list():
     deckname = request.args["deckname"]
     username = session.get("username")
-    print("username" in session)
     if username == None:
         return jsonify({"Error": "User hasn't logged in"})
 
