@@ -1,11 +1,11 @@
 import user
 
-result = user.hash_password("cindy123")
+result = user.hash_password("ajarn123")
 print(len(result))
 print(result)
-print(user.is_password_correct(bbd75f6279001130bf3379343942e602caccabedc7bbd617218d86a0940cd2be739c69851fabbebbfeab227d8d82f74d, "alice123"))
+print(user.is_password_correct(result, "ajarn123"))
 
-#alice alice123 bbd75f6279001130bf3379343942e602caccabedc7bbd617218d86a0940cd2be739c69851fabbebbfeab227d8d82f74d
+#ajarn ajarn123 6a195e4ec0e9de6a5d35562e4f920e72a57d4b9750ba00964756d2e9ff3290123ad74d0b75edf4f77d1c2ebe3d6c10c7
 
 #bob bob123 4cbeba55bcfada7cf0142c53c101d9ac770abb26d02235b6f71a77d6d7f86bb10ac1e543dd8cbafcf8952c2d40528297
 
