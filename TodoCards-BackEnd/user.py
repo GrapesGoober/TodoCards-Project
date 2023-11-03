@@ -10,13 +10,14 @@ SALT_SIZE = 16
 def hash_password(password):
     salt = os.urandom(SALT_SIZE)
     pw_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
-    return pw_hash + salt
+    return hex(int.from_bytes(pw_hash + salt, 'big'))[2:]
 
 # Authentication function to generate password hash
 # using indexing to retrieve the salt
 def is_password_correct(pw_salt_hash, password):
-    salt = pw_salt_hash[-SALT_SIZE:]
-    pw_hash = pw_salt_hash[:-SALT_SIZE]
+    byte_hash = bytes.fromhex(pw_salt_hash)
+    salt = byte_hash[-SALT_SIZE:]
+    pw_hash = byte_hash[:-SALT_SIZE]
     return hmac.compare_digest(
         pw_hash,
         hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
