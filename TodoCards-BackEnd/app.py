@@ -102,7 +102,12 @@ def finish_subcard():
 def edit_deck():
     jsonbody = request.get_json()
     deck_info = jsonbody.get("deckInfo")
-    return "Unimplemented"
+    username = session.get("username")
+    if username == None: # return false in case user isn't logged in
+        return "not logged in"
+    
+    status = decks.edit_deck(mydb, deck_info, username)
+    return jsonify(status)
 
 @app.route("/edit-card", methods=["POST"])
 def edit_card():
@@ -148,7 +153,8 @@ def recieve_sharecode():
     if username == None:
         return "not logged in"
     
-    return "Unimplemented"
+    result = decks.recieve_sharecode(mydb, sharecode, username)
+    return jsonify(result)
 
 # the entry point of the code
 if __name__ == "__main__":
