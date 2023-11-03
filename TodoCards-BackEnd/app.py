@@ -28,7 +28,6 @@ app.config['SESSION_COOKIE_SECURE'] = True
 # a debugging route that responds with "pong"
 @app.route("/ping")
 def ping():
-    print(jsonify(None))
     response = jsonify({"message": "pong"})
     return response
 
