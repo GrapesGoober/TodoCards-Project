@@ -46,7 +46,7 @@ def login():
 
     return jsonify(status)
 
-@app.route("/logout", methods=["GET"])
+@app.route("/logout", methods=["POST"])
 def logout():
     if "username" in session:
         session.pop('username', default=None)
