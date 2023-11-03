@@ -108,8 +108,7 @@ ALTER TABLE `card`
 -- Indexes for table `deck`
 --
 ALTER TABLE `deck`
-  ADD PRIMARY KEY (`deckid`),
-  ADD UNIQUE KEY `deckName` (`deckName`);
+  ADD PRIMARY KEY (`deckid`);
 
 --
 -- Indexes for table `subcard`
