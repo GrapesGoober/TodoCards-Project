@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS TodoCards;
 CREATE DATABASE TodoCards;
 USE TodoCards;
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `access`
 --
@@ -12,6 +14,26 @@ CREATE TABLE `access` (
   `deckId` int(11) NOT NULL,
   `accessType` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `access`
+--
+
+INSERT INTO `access` (`accessId`, `username`, `deckId`, `accessType`) VALUES
+(1, 'ajarn', 2, 'view'),
+(2, 'ajarn', 3, 'view'),
+(3, 'ajarn', 4, 'view'),
+(4, 'ajarn', 5, 'view'),
+(5, 'bob', 2, 'edit'),
+(6, 'cindy', 3, 'edit'),
+(7, 'dean', 4, 'edit'),
+(8, 'fay', 5, 'edit'),
+(9, 'ajarn', 6, 'edit'),
+(10, 'ajarn', 7, 'edit'),
+(11, 'bob', 6, 'edit'),
+(12, 'cindy', 6, 'edit'),
+(13, 'dean', 7, 'edit'),
+(14, 'fay', 7, 'edit');
 
 -- --------------------------------------------------------
 
@@ -55,7 +77,13 @@ CREATE TABLE `deck` (
 --
 
 INSERT INTO `deck` (`deckid`, `deckName`, `deckDescription`) VALUES
-(1, 'QuickDeck', 'This is the default deck.');
+(1, 'QuickDeck', 'This is the default deck.'),
+(2, 'bobDeck', ''),
+(3, 'cindyDeck', ''),
+(4, 'deanDeck', ''),
+(5, 'fayDeck', ''),
+(6, 'bobandcindyDeck', ''),
+(7, 'deanandfayDeck', '');
 
 -- --------------------------------------------------------
 
@@ -107,6 +135,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`) VALUES
+('ajarn', '6a195e4ec0e9de6a5d35562e4f920e72a57d4b9750ba00964756d2e9ff3290123ad74d0b75edf4f77d1c2ebe3d6c10c7'),
 ('bob', '4cbeba55bcfada7cf0142c53c101d9ac770abb26d02235b6f71a77d6d7f86bb10ac1e543dd8cbafcf8952c2d40528297'),
 ('cindy', '42e97aa817224cb8b2d50562f2fb2933bef91495f6166b1e7f33701765db0cac598fd8abd828b5a92ae56a8d17f5eb3b'),
 ('dean', '782b68900f3f74ac2d5eeccf5791ea19f0ff5f9d21309be379b24a6767836f1cafedcaa379ab923f8ce28dfe441b87f8'),
@@ -162,6 +191,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `access`
+--
+ALTER TABLE `access`
+  MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
@@ -171,7 +206,7 @@ ALTER TABLE `card`
 -- AUTO_INCREMENT for table `deck`
 --
 ALTER TABLE `deck`
-  MODIFY `deckid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `deckid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `subcard`
@@ -208,3 +243,5 @@ ALTER TABLE `share`
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+

@@ -1,4 +1,6 @@
 import user
+import decks
+import mysql.connector
 
 result = user.hash_password("ajarn123")
 print(len(result))
@@ -14,3 +16,17 @@ print(user.is_password_correct(result, "ajarn123"))
 #dean dean123 782b68900f3f74ac2d5eeccf5791ea19f0ff5f9d21309be379b24a6767836f1cafedcaa379ab923f8ce28dfe441b87f8
 
 #fay fay123 1429511ebd6b934780d07ae90f6715c018f97ace7001302dac2488e8a74ce8f311f1212d3c3154943757be6e80897a09
+
+#------------------------------------------------
+#check access
+#def check_deck_view_access(mydb, deck_id, username):
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="TodoCards"
+)
+checkview = decks.check_deck_view_access(mydb, 4, "dean")
+print(checkview)
+
+mydb.close()
