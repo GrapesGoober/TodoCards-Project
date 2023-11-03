@@ -9,7 +9,6 @@ SALT_SIZE = 16
 # Note that the salt is simply concatenated to the hash
 def hash_password(password):
     salt = os.urandom(SALT_SIZE)
-    print(salt)
     pw_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
     return pw_hash + salt
 
