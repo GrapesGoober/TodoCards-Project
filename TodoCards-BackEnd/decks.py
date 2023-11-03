@@ -9,7 +9,7 @@ def check_deck_view_access(mydb, deck_id, username):
 def check_deck_edit_access(mydb, deck_id, username):
     return True
 
-# Retrieve all decks that the user has access to
+# Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
     expected_results = [
         {
@@ -19,3 +19,28 @@ def get_decks_list(mydb, username):
         }
     ]
     return expected_results
+
+# Edits a deck using deck_info
+# must also check for edit access of that deck_id
+# returns True or False
+def edit_deck(mydb, deck_info, username):
+    return True
+
+# deletes a deck using deck_id
+# must also check for edit access of that deck_id
+# returns True or False
+def delete_deck(mydb, deck_id, username):
+    return True
+
+# Generates a unique sharecode, inserts to share table, and returns it
+# must also check for edit access of that deck_id to get sharecode
+# returns share code, or false
+def get_sharecode(mydb, deck_id, username):
+    return "some_code_1234"
+
+# Recieves a sharecode and allow access
+# must check sharecode integrity (expiration and deck exists)
+# then a new access record onto access table
+# returns True if success, false otherwise
+def recieve_sharecode(mydb, sharecode, username):
+    return True

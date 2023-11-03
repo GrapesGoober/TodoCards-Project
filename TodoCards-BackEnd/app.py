@@ -28,6 +28,7 @@ app.config['SESSION_COOKIE_SECURE'] = True
 # a debugging route that responds with "pong"
 @app.route("/ping")
 def ping():
+    print(jsonify(None))
     response = jsonify({"message": "pong"})
     return response
 
@@ -58,7 +59,7 @@ def get_cards_list():
     
     username = session.get("username")
     if username == None:
-        return jsonify(False)
+        return "not logged in"
 
     result = cards.get_cards_list(mydb, deck_id, username)
     return jsonify(result)
@@ -70,7 +71,7 @@ def get_subcards_list():
 
     username = session.get("username")
     if username == None:
-        return jsonify(False)
+        return "not logged in"
 
     result = cards.get_subcards_list(mydb, card_id, username)
     return jsonify(result)
@@ -81,7 +82,7 @@ def finish_card():
     card_id = jsonbody.get("cardId")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return jsonify(False)
+        return "not logged in"
 
     result = cards.finish_card(mydb, card_id, username)
     return jsonify(result)
@@ -92,7 +93,7 @@ def finish_subcard():
     subcard_id = jsonbody.get("subcardId")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return jsonify(False)
+        return "not logged in"
 
     result = cards.finish_subcard(mydb, subcard_id, username)
     return jsonify(result)
@@ -109,7 +110,7 @@ def edit_card():
     card_info = jsonbody.get("cardInfo")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return jsonify(False)
+        return "not logged in"
     
     status = cards.edit_card(mydb, card_info, username)
 
@@ -121,7 +122,7 @@ def edit_subcard():
     subcard_info = jsonbody.get("subcardInfo")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return jsonify(False)
+        return "not logged in"
     
     status = cards.edit_subcard(mydb, subcard_info, username)
 
@@ -129,10 +130,24 @@ def edit_subcard():
 
 @app.route("/get-sharecode", methods=["GET"])
 def get_sharecode():
-    return "Unimplemented"
+    deck_id = request.args.get("deckId")
+    
+    username = session.get("username")
+    if username == None:
+        return "not logged in"
 
+    result = decks.get_sharecode(mydb, deck_id, username)
+    return jsonify(result)
+
+# Handles sharing
 @app.route("/recieve-sharecode", methods=["GET"])
 def recieve_sharecode():
+    sharecode = request.args.get("sharecode")
+
+    username = session.get("username")
+    if username == None:
+        return "not logged in"
+    
     return "Unimplemented"
 
 # the entry point of the code

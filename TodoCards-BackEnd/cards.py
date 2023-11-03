@@ -23,11 +23,11 @@ def check_subcard_edit_access(mydb, subcard_id, username):
 
 # Retrieve all cards within a deck
 # must also check view access of the deck (using check_deck_view_access function)
-# Otherwise, returns False
+# Otherwise, returns empty list
 def get_cards_list(mydb, deck_id, username):
 
     if not check_deck_view_access(mydb, deck_id, username):
-        return False
+        return []
 
     mycursor = mydb.cursor()
     mycursor.execute(
@@ -54,7 +54,7 @@ def get_cards_list(mydb, deck_id, username):
 
 # Retrieve all subcards within a card
 # must also check view access of that card_id
-# Otherwise, returns False
+# Otherwise, returns empty list
 def get_subcards_list(mydb, card_id, username):
     return []
 

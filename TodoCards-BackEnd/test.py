@@ -1,5 +1,3 @@
-# This is the script user.py, which will be handling all-things users
-# This includes: authentication, changing usernames & password, 
 import os, hashlib, hmac
 
 # global variable for consistant salt size
@@ -9,7 +7,6 @@ SALT_SIZE = 16
 # Note that the salt is simply concatenated to the hash
 def hash_password(password):
     salt = os.urandom(SALT_SIZE)
-    print(salt)
     pw_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
     return pw_hash + salt
 
@@ -23,12 +20,5 @@ def is_password_correct(pw_salt_hash, password):
         hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
     )
 
-# authenticates a user using username and password,
-# returns True or False
-def login(mydb, username, password):
-    return True
 
-# check for not-duplicate username then insert a new user
-# returns True or False
-def signin(mydb, username, password):
-    return True
+
