@@ -9,7 +9,7 @@ USE TodoCards;
 -- Table for `user`
 CREATE TABLE `user` (
     `username` varchar(20) PRIMARY KEY,
-    `password` varchar(20) NOT NULL
+    `password` varchar(100) NOT NULL
   );
 
 -- Table for `access`
