@@ -1,8 +1,13 @@
+# This is the script app.py, which is the entry point for the flask app
+# This file contains the logic for routes, sessions, handling requests
+# This file does not contain the logic for handling database queries & business logic
+# Author: Panisara S 6422781326, Nachat K 6422770774
+
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 import mysql.connector
 
-import cards, user
+import cards, user, decks
 
 # connects to mysql
 # sets this up as a global variable
@@ -13,7 +18,7 @@ mydb = mysql.connector.connect(
     database="TodoCards"
 )
 
-# sets up some flask stuff
+# sets up some flask stuff (oh, and CORS too)
 app = Flask(__name__)
 app.secret_key = "some really useless key lol"
 CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
@@ -33,10 +38,9 @@ def login():
     username = jsonbody.get("username")
     password = jsonbody.get("password")
 
-    # login function returns either userid or false
+    # login function returns either true or false
     status = user.login(mydb, username, password)
-
-    if status == True:
+    if status: 
         session["username"] = username
 
     return jsonify(status)
@@ -47,30 +51,81 @@ def logout():
         session.pop('username', default=None)
     return ""
 
-# retrieve a list of cards using deckname. 
-# this also performs user authentication to make sure that user has access to that card
+# retrieve a list of cards using deckId. 
 @app.route("/get-cards-list", methods=["GET"])
 def get_cards_list():
-    deckname = request.args["deckname"]
+    deck_id = request.args.get("deckId")
+    
     username = session.get("username")
     if username == None:
-        return jsonify({"Error": "User hasn't logged in"})
+        return jsonify(False)
 
-    result = cards.get_cards_list(mydb, deckname, username)
-    response = jsonify(result)
-    return response
+    result = cards.get_cards_list(mydb, deck_id, username)
+    return jsonify(result)
+
+# retrieve a list of subcards using cardId. 
+@app.route("/get-subcards-list", methods=["GET"])
+def get_subcards_list():
+    card_id = request.args.get("deckId")
+
+    username = session.get("username")
+    if username == None:
+        return jsonify(False)
+
+    result = cards.get_subcards_list(mydb, card_id, username)
+    return jsonify(result)
+
+@app.route("/finish-card", methods=["POST"])
+def finish_card():
+    jsonbody = request.get_json()
+    card_id = jsonbody.get("cardId")
+    username = session.get("username")
+    if username == None: # return false in case user isn't logged in
+        return jsonify(False)
+
+    result = cards.finish_card(mydb, card_id, username)
+    return jsonify(result)
+
+@app.route("/finish-subcard", methods=["POST"])
+def finish_subcard():
+    jsonbody = request.get_json()
+    subcard_id = jsonbody.get("subcardId")
+    username = session.get("username")
+    if username == None: # return false in case user isn't logged in
+        return jsonify(False)
+
+    result = cards.finish_subcard(mydb, subcard_id, username)
+    return jsonify(result)
 
 @app.route("/edit-deck", methods=["POST"])
 def edit_deck():
+    jsonbody = request.get_json()
+    deck_info = jsonbody.get("deckInfo")
     return "Unimplemented"
 
 @app.route("/edit-card", methods=["POST"])
 def edit_card():
-    return "Unimplemented"
+    jsonbody = request.get_json()
+    card_info = jsonbody.get("cardInfo")
+    username = session.get("username")
+    if username == None: # return false in case user isn't logged in
+        return jsonify(False)
+    
+    status = cards.edit_card(mydb, card_info, username)
+
+    return jsonify(status)
 
 @app.route("/edit-subcard", methods=["POST"])
 def edit_subcard():
-    return "Unimplemented"
+    jsonbody = request.get_json()
+    subcard_info = jsonbody.get("subcardInfo")
+    username = session.get("username")
+    if username == None: # return false in case user isn't logged in
+        return jsonify(False)
+    
+    status = cards.edit_subcard(mydb, subcard_info, username)
+
+    return jsonify(status)
 
 @app.route("/get-sharecode", methods=["GET"])
 def get_sharecode():
