@@ -45,6 +45,7 @@ def login():
 
     return jsonify(status)
 
+# removes login info from session cookie
 @app.route("/logout", methods=["POST"])
 def logout():
     if "username" in session:
