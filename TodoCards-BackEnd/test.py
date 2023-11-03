@@ -3,7 +3,7 @@ import user
 result = user.hash_password("cindy123")
 print(len(result))
 print(result)
-print(user.is_password_correct(result, "cindy123"))
+print(user.is_password_correct(bbd75f6279001130bf3379343942e602caccabedc7bbd617218d86a0940cd2be739c69851fabbebbfeab227d8d82f74d, "alice123"))
 
 #alice alice123 bbd75f6279001130bf3379343942e602caccabedc7bbd617218d86a0940cd2be739c69851fabbebbfeab227d8d82f74d
 
