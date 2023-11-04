@@ -21,7 +21,7 @@ mydb = mysql.connector.connect(
 # sets up some flask stuff (oh, and CORS too)
 app = Flask(__name__)
 app.secret_key = "some really useless key lol"
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"], supports_credentials=True)
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 app.config['SESSION_COOKIE_SECURE'] = True
 
