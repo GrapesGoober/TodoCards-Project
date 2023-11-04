@@ -1,7 +1,7 @@
 <script>
-    import CardTemplateApi from "./CardTemplateAPI.svelte";
+    import CardTemplateApi from "./CardTemplate.svelte";
     import PingTemplate from "./PingTemplate.svelte";
-    import UserTemplateApi from "./UserTemplateAPI.svelte";
+    import UserTemplateApi from "./UserTemplate.svelte";
 </script>
 
 <h1>This is a demo for the APIs</h1>
