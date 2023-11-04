@@ -1,9 +1,13 @@
 <script>
     import CardTemplateApi from "./CardTemplateAPI.svelte";
+    import PingTemplate from "./PingTemplate.svelte";
     import UserTemplateApi from "./UserTemplateAPI.svelte";
 </script>
 
 <h1>This is a demo for the APIs</h1>
+
+<h2>Try pinging the server</h2>
+<PingTemplate></PingTemplate>
 
 <h2>Log in first</h2>
 <UserTemplateApi></UserTemplateApi>
