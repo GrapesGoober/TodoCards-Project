@@ -52,6 +52,17 @@ def logout():
         session.pop('username', default=None)
     return ""
 
+# retrieve a list of decks
+@app.route("/get-decks-list", methods=["GET"])
+def get_decks_list():
+    username = session.get("username")
+    if username == None:
+        return jsonify("not logged in")
+
+    result = decks.get_decks_list(mydb, username)
+    return jsonify(result)
+
+
 # retrieve a list of cards using deckId. 
 @app.route("/get-cards-list", methods=["GET"])
 def get_cards_list():
