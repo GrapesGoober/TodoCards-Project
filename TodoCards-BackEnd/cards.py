@@ -56,7 +56,7 @@ def get_cards_list(mydb, deck_id, username):
 # must also check view access of that card_id
 # Otherwise, returns empty list
 def get_subcards_list(mydb, card_id, username):
-    return []
+    return ["Unimplemented"]
 
 # updates a card by setting isFinished = True
 # must also check edit access of that card_id
