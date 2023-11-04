@@ -20,9 +20,23 @@
         status = await response.json()
     }
 
+    async function logout(){
+        await fetch("http://127.0.0.1:5000/logout", {
+            method:"POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        // logout doesn't have a response
+        status = false
+    }
+
 </script>
 
 login status = {status} <br>
 <input type="text" placeholder="username" bind:value={username}>
 <input type="password" placeholder="password" bind:value={password}>
 <input type="button" value="login" on:click={login}>
+<input type="button" value="logout" on:click={logout}>
