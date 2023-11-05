@@ -54,9 +54,5 @@ def signin(mydb, username, password):
             return False
 
         mycursor.execute("INSERT INTO user VALUES (%s, %s)", (username, hs_pwd))
-        result = mycursor.fetchall()
-        if len(result) != 0:
-            # checks to see if we've added a new account successfully
-            return login(username, password)
-        else:
-            return False
+        mydb.commit()
+        return login(mydb, username, password)
