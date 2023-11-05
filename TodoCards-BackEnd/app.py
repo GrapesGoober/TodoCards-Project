@@ -21,7 +21,7 @@ mydb = mysql.connector.connect(
 # sets up some flask stuff (oh, and CORS too)
 app = Flask(__name__)
 app.secret_key = "some really useless key lol"
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"], supports_credentials=True)
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 app.config['SESSION_COOKIE_SECURE'] = True
 
@@ -45,11 +45,23 @@ def login():
 
     return jsonify(status)
 
+# removes login info from session cookie
 @app.route("/logout", methods=["POST"])
 def logout():
     if "username" in session:
         session.pop('username', default=None)
     return ""
+
+# retrieve a list of decks
+@app.route("/get-decks-list", methods=["GET"])
+def get_decks_list():
+    username = session.get("username")
+    if username == None:
+        return jsonify("not logged in")
+
+    result = decks.get_decks_list(mydb, username)
+    return jsonify(result)
+
 
 # retrieve a list of cards using deckId. 
 @app.route("/get-cards-list", methods=["GET"])
@@ -58,7 +70,7 @@ def get_cards_list():
     
     username = session.get("username")
     if username == None:
-        return "not logged in"
+        return jsonify("not logged in")
 
     result = cards.get_cards_list(mydb, deck_id, username)
     return jsonify(result)
@@ -70,7 +82,7 @@ def get_subcards_list():
 
     username = session.get("username")
     if username == None:
-        return "not logged in"
+        return jsonify("not logged in")
 
     result = cards.get_subcards_list(mydb, card_id, username)
     return jsonify(result)
@@ -81,7 +93,7 @@ def finish_card():
     card_id = jsonbody.get("cardId")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return "not logged in"
+        return jsonify("not logged in")
 
     result = cards.finish_card(mydb, card_id, username)
     return jsonify(result)
@@ -92,7 +104,7 @@ def finish_subcard():
     subcard_id = jsonbody.get("subcardId")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return "not logged in"
+        return jsonify("not logged in")
 
     result = cards.finish_subcard(mydb, subcard_id, username)
     return jsonify(result)
@@ -103,7 +115,7 @@ def edit_deck():
     deck_info = jsonbody.get("deckInfo")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return "not logged in"
+        return jsonify("not logged in")
     
     status = decks.edit_deck(mydb, deck_info, username)
     return jsonify(status)
@@ -114,7 +126,7 @@ def edit_card():
     card_info = jsonbody.get("cardInfo")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return "not logged in"
+        return jsonify("not logged in")
     
     status = cards.edit_card(mydb, card_info, username)
 
@@ -126,7 +138,7 @@ def edit_subcard():
     subcard_info = jsonbody.get("subcardInfo")
     username = session.get("username")
     if username == None: # return false in case user isn't logged in
-        return "not logged in"
+        return jsonify("not logged in")
     
     status = cards.edit_subcard(mydb, subcard_info, username)
 
@@ -138,7 +150,7 @@ def get_sharecode():
     
     username = session.get("username")
     if username == None:
-        return "not logged in"
+        return jsonify("not logged in")
 
     result = decks.get_sharecode(mydb, deck_id, username)
     return jsonify(result)
@@ -150,7 +162,7 @@ def recieve_sharecode():
 
     username = session.get("username")
     if username == None:
-        return "not logged in"
+        return jsonify("not logged in")
     
     result = decks.recieve_sharecode(mydb, sharecode, username)
     return jsonify(result)

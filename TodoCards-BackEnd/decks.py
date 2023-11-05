@@ -15,7 +15,8 @@ def get_decks_list(mydb, username):
         {
             "deckId" : 1,
             "deckName" : "QuickDeck",
-            "deckDescription" : "Some deck"
+            "deckDescription" : "Some deck",
+            "nearestDue" : "12 June 2029"
         }
     ]
     return expected_results

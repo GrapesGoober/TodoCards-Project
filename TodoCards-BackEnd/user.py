@@ -26,9 +26,37 @@ def is_password_correct(pw_salt_hash, password):
 # authenticates a user using username and password,
 # returns True or False
 def login(mydb, username, password):
-    return True
+
+    with mydb.cursor() as mycursor:
+        mycursor.execute(
+            """
+            SELECT password FROM user WHERE username = %s
+            """, (username,))
+        
+        result = mycursor.fetchall()
+        if len(result) != 0:
+            return is_password_correct(result[0][0], password)
+        else:
+            return False
 
 # check for not-duplicate username then insert a new user
 # returns True or False
 def signin(mydb, username, password):
-    return True
+
+    hs_pwd = hash_password(password)
+
+    with mydb.cursor() as mycursor:
+
+        mycursor.execute("SELECT COUNT(*) FROM user WHERE username = %s", (username,))
+        
+        result = mycursor.fetchall()
+        if result[0][0] != 0:
+            return False
+
+        mycursor.execute("INSERT INTO user VALUES (%s, %s)", (username, hs_pwd))
+        result = mycursor.fetchall()
+        if len(result) != 0:
+            # checks to see if we've added a new account successfully
+            return login(username, password)
+        else:
+            return False
