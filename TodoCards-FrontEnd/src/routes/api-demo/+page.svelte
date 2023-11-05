@@ -4,6 +4,7 @@
     import PingTemplate from "./PingTemplate.svelte";
     import UserTemplate from "./UserTemplate.svelte";
     import EditCardTemplate from "./EditCardTemplate.svelte";
+  import EditDeckTemplate from "./EditDeckTemplate.svelte";
 </script>
 
 <h1>This is a demo for the APIs</h1>
@@ -13,12 +14,12 @@
 
 <h2>Log in first</h2>
 <UserTemplate></UserTemplate>
-
-<h2>Some decks-list test</h2>
-<DeckTemplate></DeckTemplate>
-
-<h2>Some cards-list test</h2>
+<h2>Get items (as list)</h2>
+<DeckTemplate></DeckTemplate> <br>
 <CardTemplate></CardTemplate>
 
-<h2>Some editing card</h2>
+<h2>Edit some Items</h2>
+<h3>Some editing card</h3>
 <EditCardTemplate></EditCardTemplate>
+<h3>Some editing deck</h3>
+<EditDeckTemplate></EditDeckTemplate>
