@@ -1,4 +1,6 @@
 import user
+import decks
+import mysql.connector
 
 # result = user.hash_password("password1234")
 # print(result)
@@ -13,6 +15,7 @@ mydb = mysql.connector.connect(
     database="TodoCards"
 )
 
+# This adds a new user
 print(user.signin(mydb, "jenny", "jennypassword"))
-
+# Can now login
 print(user.login(mydb, "jenny", "jennypassword"))
