@@ -1,36 +1,15 @@
 <script>
+    import * as APIs from "$lib"
 
     let username = "" // the input requires a username & password
     let password = ""
     let status = false // status can either be true or false
     async function login(){
-        let response = await fetch("http://127.0.0.1:5000/login", {
-            method:"POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username,
-                password
-            })
-        })
-
-        // recieve the result
-        status = await response.json()
+        status = await APIs.login(username, password)
     }
 
     async function logout(){
-        await fetch("http://127.0.0.1:5000/logout", {
-            method:"POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-        // logout doesn't have a response
-        status = false
+        status = await APIs.logout()
     }
 
 </script>

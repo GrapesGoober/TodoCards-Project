@@ -1,4 +1,5 @@
 <script>
+    import * as APIs from "$lib"
 
     let status = false
     let deckInfo = {
@@ -7,17 +8,8 @@
         deckDescription:    "200 words zuzu"
     }
     async function editDeck(){
-        let response = await fetch("http://127.0.0.1:5000/edit-deck", {
-            method:"POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({deckInfo})
-        })
-
         // recieve the result
-        status = await response.json()
+        status = await APIs.editDeck(deckInfo)
     }
 
 </script>
