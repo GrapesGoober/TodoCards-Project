@@ -1,4 +1,5 @@
 import user
+import decks
 
 # result = user.hash_password("password1234")
 # print(result)
@@ -15,4 +16,7 @@ mydb = mysql.connector.connect(
 
 # print(user.signup(mydb, "jenny", "jennypassword"))
 
-print(user.login(mydb, "jenny", "jennypassword"))
+#print(user.login(mydb, "jenny", "jennypassword"))
+
+print(decks.check_deck_view_access(mydb, 4, "ajarn"))
+print(decks.check_deck_edit_access(mydb, 4, "dean"))

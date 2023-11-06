@@ -3,11 +3,39 @@
 
 # Utility function to check access for your deck_id
 def check_deck_view_access(mydb, deck_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+        SELECT 
+            deckId, username, accessType
+        FROM access WHERE deckId = %s
+        """, (deck_id,))
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (row[1] == username and row[2] == "view"):
+            return True
+    return False
 
 # Utility function to check access for your deck_id
 def check_deck_edit_access(mydb, deck_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+        SELECT 
+            deckId, username, accessType
+        FROM access WHERE deckId = %s
+        """, (deck_id,))
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (row[1] == username and row[2] == "edit"):
+            return True
+    return False
 
 # Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
