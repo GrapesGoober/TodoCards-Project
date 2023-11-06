@@ -25,13 +25,13 @@ def get_decks_list(mydb, username):
 # must also check for edit access of that deck_id
 # returns True or False
 def edit_deck(mydb, deck_info, username):
-    return True
+    return "Unimplemented"
 
 # deletes a deck using deck_id
 # must also check for edit access of that deck_id
 # returns True or False
 def delete_deck(mydb, deck_id, username):
-    return True
+    return "Unimplemented"
 
 # Generates a unique sharecode, inserts to share table, and returns it
 # must also check for edit access of that deck_id to get sharecode
@@ -44,4 +44,4 @@ def get_sharecode(mydb, deck_id, username):
 # then a new access record onto access table
 # returns True if success, false otherwise
 def recieve_sharecode(mydb, sharecode, username):
-    return True
+    return "Unimplemented"

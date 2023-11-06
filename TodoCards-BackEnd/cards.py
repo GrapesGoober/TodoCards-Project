@@ -62,46 +62,46 @@ def get_subcards_list(mydb, card_id, username):
 # must also check edit access of that card_id
 # returns True if success, False otherwise
 def finish_card(mydb, card_id, username):
-    return True
+    return "Unimplemented"
 
 # updates a subcard by setting isFinished = True
 # must also check edit access of that subcard_id
 # returns True if success, False otherwise
 def finish_subcard(mydb, subcard_id, username):
-    return True
+    return "Unimplemented"
 
 # updates a card with card_info
 # must also check edit access of card_info["cardId"]
 # returns True if success, False otherwise
 def edit_card(mydb, card_info, username):
-    return True
+    return "Unimplemented"
 
 # updates a subcard with card_info
 # must also check edit access
 # returns True if success, False otherwise
 def edit_subcard(mydb, card_info, username):
-    return True
+    return "Unimplemented"
 
 # creates a new card within the deck
 # must also check edit access for that deck_id
 # returns True if success, False otherwise
 def create_card(mydb, deck_id, card_info, username):
-    return True
+    return "Unimplemented"
 
 # creates a new card within the deck
 # must also check edit access for that card_id
 # returns True if success, False otherwise
 def create_subcard(mydb, card_id, subcard_info, username):
-    return True
+    return "Unimplemented"
 
 # deletes a card within the deck
 # must also check edit access for that card_id
 # returns True if success, False otherwise
 def delete_card(mydb, card_id, username):
-    return True
+    return "Unimplemented"
 
 # deletes a subcard within the card
 # must also check edit access for that subcard_id
 # returns True if success, False otherwise
 def delete_subcard(mydb, subcard_id, username):
-    return True
+    return "Unimplemented"
