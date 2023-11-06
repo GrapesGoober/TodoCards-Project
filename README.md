@@ -6,14 +6,24 @@ Members:
 - Panisara Srisan 6422781326
 - Praewaphun Sukmark 6422790046
 
-# Description:
+# To run this
+### Installation
+This project needs `python3` and `nodejs`. We also need some python libraries: `flask`, `flask-cors`, and `mysql`.
+### Running
+There are 3 main components: the database, the backend, and the frontend
+- Database: MAMP MySql at port 3306 (this is the default port)
+- Backend: Navigate to TodoCards-Backend with `cd TodoCards-BackEnd` then run python `python app.py` (or just click play)
+  - This should have the localhost running at port 5000
+- FrontEnd: Navigate to TodoCards-Frontend with `cd TodoCards-FrontEnd` then run node `npm run dev`
+  - This should have the localhost running at port 5173
 
-A “to-do” app called “TodoCard”, where each to-do items are encapsulated as “cards” organized under “decks”. The basic ideas are as follows
-- app can have multiple decks
-- where each decks can have zero or more cards.
-- Each card can have one or more subcards
-- Each card contains info, such as
-  - Name, description, created date, deadline, etc
-  - isdone boolean attribute
-- Each subcard contains info such as
-  - Name, description,  deadline
+# These are our sample usernames & passwords
+ajarn ajarn123
+
+bob bob123
+
+cindy cindy123
+
+dean dean123
+
+fay fay123
