@@ -25,6 +25,15 @@ CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"], supports_c
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 app.config['SESSION_COOKIE_SECURE'] = True
 
+# a preliminary check for login status, only excluded for non-priviledged requests
+@app.before_request
+def check_login():
+    # only apply to previledged requests
+    if request.endpoint not in ['login', 'logout', 'ping', 'signup']:
+        # simply check for username status (if it's set)
+        if "username" not in session:
+            return jsonify("not logged in")
+
 # a debugging route that responds with "pong"
 @app.route("/ping")
 def ping():
@@ -54,14 +63,19 @@ def logout():
         session.pop('username', default=None)
     return ""
 
-# a preliminary check for login status, only excluded for non-priviledged requests
-@app.before_request
-def check_login():
-    # only apply to previledged requests
-    if request.endpoint not in ['login', 'logout', 'ping']:
-        # simply check for username status (if it's set)
-        if "username" not in session:
-            return jsonify("not logged in")
+@app.route("/signup", methods=["POST"])
+def signup():
+    jsonbody = request.get_json()
+    username = jsonbody.get("username")
+    password = jsonbody.get("password")
+
+    status = user.signup(mydb, username, password)
+    if status: 
+        session["username"] = username
+    elif "username" in session:
+        session.pop("username")
+
+    return jsonify(status)
 
 # retrieve a list of decks
 @app.route("/get-decks-list", methods=["GET"])

@@ -37,6 +37,23 @@ export async function login(username, password){
     return await response.json()
 }
 
+export async function signup(username, password){
+    let response = await fetch(ENDPOINT + "/signup", {
+        method:"POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    })
+
+    // recieve the result
+    return await response.json()
+}
+
 export async function logout() {
     await fetch(ENDPOINT + "/logout", {
         method:"POST",
