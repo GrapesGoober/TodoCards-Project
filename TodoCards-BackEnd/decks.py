@@ -60,7 +60,7 @@ def get_decks_list(mydb, username):
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due
         }
-        print(result[i])
+        #print(result[i]) for testing krub
     
     mycursor.close()
     mydb.commit()
