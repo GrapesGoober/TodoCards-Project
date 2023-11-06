@@ -41,7 +41,7 @@ def login(mydb, username, password):
 
 # check for not-duplicate username then insert a new user
 # returns True or False
-def signin(mydb, username, password):
+def signup(mydb, username, password):
 
     hs_pwd = hash_password(password)
 

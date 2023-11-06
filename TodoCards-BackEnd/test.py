@@ -13,6 +13,6 @@ mydb = mysql.connector.connect(
     database="TodoCards"
 )
 
-# print(user.signin(mydb, "jenny", "jennypassword"))
+# print(user.signup(mydb, "jenny", "jennypassword"))
 
 print(user.login(mydb, "jenny", "jennypassword"))
