@@ -18,5 +18,5 @@ mydb = mysql.connector.connect(
 
 #print(user.login(mydb, "jenny", "jennypassword"))
 
-print(decks.check_deck_view_access(mydb, 4, "ajarn"))
-print(decks.check_deck_edit_access(mydb, 4, "dean"))
+print(decks.check_deck_view_access(mydb, 2, "ajarn"))
+print(decks.check_deck_edit_access(mydb, 5, "ajarn"))

@@ -15,7 +15,7 @@ def check_deck_view_access(mydb, deck_id, username):
     mycursor.close()
     mydb.commit()
     for row in result:
-        if (row[1] == username and row[2] == "view"):
+        if (row[1] == username and (row[2] == "view" or row[2] == "edit")):
             return True
     return False
 
