@@ -45,7 +45,9 @@ def get_decks_list(mydb, username):
     mycursor.execute(
         """
         SELECT 
-            deck.deckid, deck.deckName, deck.deckdescription, (SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid) as nearestDue
+            deck.deckid, deck.deckName, deck.deckdescription, (
+                SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid
+            ) as nearestDue
         FROM deck, access
         WHERE deck.deckid = access.deckid
               AND access.username = %s
