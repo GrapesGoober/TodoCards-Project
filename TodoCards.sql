@@ -58,7 +58,11 @@ CREATE TABLE `card` (
 INSERT INTO `card` (`cardid`, `deckId`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardColor`) VALUES
 (1, 1, 'Write introduction', '200 words zuzu', '2023-10-17', 0, 'lightblue'),
 (2, 1, 'Write abstract', '500 words zuzu', '2023-11-17', 0, 'pink'),
-(3, 1, 'Cleaning', 'clean bathroom', '2023-11-15', 0, 'lightgreen');
+(3, 1, 'Cleaning', 'clean bathroom', '2023-11-15', 0, 'lightgreen'),
+(4, 4, 'deanCard1', 'bok bok', '2023-11-16', 0, 'pink'),
+(5, 4, 'deanCard2', 'I am hungry', '2023-11-23', 0, 'lightblue'),
+(6, 7, 'deanandfayCard1', 'wakkkkkkkkkk', '2023-11-08', 0, 'pink'),
+(7, 7, 'deanandfayCard2', 'i love nicki minaj', '2023-11-30', 0, 'lightgreen');
 
 -- --------------------------------------------------------
 
@@ -200,7 +204,7 @@ ALTER TABLE `access`
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `deck`
@@ -243,5 +247,4 @@ ALTER TABLE `share`
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
 
