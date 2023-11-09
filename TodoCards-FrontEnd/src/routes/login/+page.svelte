@@ -9,6 +9,7 @@
     }
 </script>
 
+login status = {status} <br>
 <input type="text" placeholder="username" bind:value={username}>
 <input type="password" placeholder="password" bind:value={password}>
-<button on:click={login}>submit</button>
+<input type="button" value="login" on:click={login}>
