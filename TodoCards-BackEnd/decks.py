@@ -47,10 +47,12 @@ def get_decks_list(mydb, username):
         SELECT 
             deck.deckid, deck.deckName, deck.deckdescription, (
                 SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid
-            ) as nearestDue
-        FROM deck, access
+            ) as nearestDue, GROUP_CONCAT(DISTINCT card.cardColor) as cardColors
+        FROM deck, access, card
         WHERE deck.deckid = access.deckid
+              AND deck.deckid = card.deckid
               AND access.username = %s
+        GROUP BY deck.deckid
         """, (username,))
     
     result = mycursor.fetchall()
@@ -59,11 +61,14 @@ def get_decks_list(mydb, username):
             formatted_nearest_due = r[3].strftime('%d %B %Y')
         else:
             formatted_nearest_due = ""
+
+        card_colors = [color.strip() for color in r[4].split(',')]
         result[i] = {
             "deckId": int(r[0]),
             "deckName": r[1],
             "deckDescription": r[2],
-            "nearestDue" : formatted_nearest_due
+            "nearestDue" : formatted_nearest_due,
+            "cardColors" : card_colors
         }
         #print(result[i]) 
     

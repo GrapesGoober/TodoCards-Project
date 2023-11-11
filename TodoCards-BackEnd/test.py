@@ -45,7 +45,7 @@ assert cards.check_subcard_edit_access(mydb, 5, "ajarn") == True
 assert cards.check_subcard_edit_access(mydb, 1, "ajarn") == False
 
 
-#decks.get_decks_list(mydb, "ajarn")
+decks.get_decks_list(mydb, "dean")
 
 #cards.get_cards_list(mydb, 4, "dean")
 
