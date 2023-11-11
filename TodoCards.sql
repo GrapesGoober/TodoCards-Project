@@ -62,7 +62,8 @@ INSERT INTO `card` (`cardid`, `deckId`, `cardName`, `cardDescription`, `cardDue`
 (4, 4, 'deanCard1', 'bok bok', '2023-11-16', 0, 'pink'),
 (5, 4, 'deanCard2', 'I am hungry', '2023-11-23', 0, 'lightblue'),
 (6, 7, 'deanandfayCard1', 'wakkkkkkkkkk', '2023-11-08', 0, 'pink'),
-(7, 7, 'deanandfayCard2', 'i love nicki minaj', '2023-11-30', 0, 'lightgreen');
+(7, 7, 'deanandfayCard2', 'i love nicki minaj', '2023-11-30', 0, 'lightgreen'),
+(8, 3, 'cindyCard1', '', '2023-11-15', 0, 'lightblue');
 
 -- --------------------------------------------------------
 
@@ -121,7 +122,11 @@ CREATE TABLE `subcard` (
 
 INSERT INTO `subcard` (`scardid`, `cardID`, `scardName`, `scardIsFinished`) VALUES
 (1, 1, 'write intro', 0),
-(2, 2, 'find motivation(to do this work)', 0);
+(2, 2, 'find motivation(to do this work)', 0),
+(3, 4, 'deancard1subcard1', 0),
+(4, 4, 'deancard2subcard1', 0),
+(5, 6, 'deanandfayCard1subcard1', 0),
+(6, 8, 'cindyCard1subcard1', 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +209,7 @@ ALTER TABLE `access`
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `deck`
@@ -216,7 +221,7 @@ ALTER TABLE `deck`
 -- AUTO_INCREMENT for table `subcard`
 --
 ALTER TABLE `subcard`
-  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -247,4 +252,3 @@ ALTER TABLE `share`
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-

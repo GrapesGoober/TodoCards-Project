@@ -3,30 +3,94 @@
 # Author: Panisara S 6422781326, Nachat K 6422770774
 
 # using this access check function for the "create card" feature
-from decks import check_deck_view_access, check_deck_edit_access
+#from decks import check_deck_view_access, check_deck_edit_access
+import decks
 
 # Utility function to check access for your card_id
 def check_card_view_access(mydb, card_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+            SELECT deckId
+            FROM card 
+            WHERE cardid = %s
+            """, (card_id,)
+    )
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (decks.check_deck_view_access(mydb, row[0], username) == True or decks.check_deck_edit_access(mydb, row[0], username) == True):
+            return True
+    return False
+
 
 # Utility function to check access for your subcard_id
 def check_subcard_view_access(mydb, subcard_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+            SELECT cardID
+            FROM subcard
+            WHERE scardid = %s
+            """, (subcard_id,)
+    )
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (check_card_view_access(mydb, row[0], username) == True or check_card_edit_access(mydb, row[0], username) == True):
+            return True
+    return False
+
 
 # Utility function to check access for your card_id
 def check_card_edit_access(mydb, card_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+            SELECT deckId
+            FROM card 
+            WHERE cardid = %s
+            """, (card_id,)
+    )
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (decks.check_deck_edit_access(mydb, row[0], username) == True):
+            return True
+    return False
+
 
 # Utility function to check access for your subcard_id
 def check_subcard_edit_access(mydb, subcard_id, username):
-    return True
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+            SELECT cardID
+            FROM subcard
+            WHERE scardid = %s
+            """, (subcard_id,)
+    )
+    
+    result = mycursor.fetchall()
+    mycursor.close()
+    mydb.commit()
+    for row in result:
+        if (check_card_edit_access(mydb, row[0], username) == True):
+            return True
+    return False
 
 # Retrieve all cards within a deck
 # must also check view access of the deck (using check_deck_view_access function)
 # Otherwise, returns empty list
 def get_cards_list(mydb, deck_id, username):
 
-    if not check_deck_view_access(mydb, deck_id, username):
+    if not decks.check_deck_view_access(mydb, deck_id, username):
         return []
 
     mycursor = mydb.cursor()

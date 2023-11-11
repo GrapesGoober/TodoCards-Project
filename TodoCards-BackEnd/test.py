@@ -1,6 +1,7 @@
 import user
 import decks
 import cards
+import inspect
 
 # result = user.hash_password("password1234")
 # print(result)
@@ -15,13 +16,31 @@ mydb = mysql.connector.connect(
     database="TodoCards"
 )
 
-# print(user.signup(mydb, "jenny", "jennypassword"))
+assert cards.check_card_view_access(mydb, 7, "dean") == True
+assert cards.check_card_view_access(mydb, 7, "fay") == True
+assert cards.check_card_view_access(mydb, 4, "dean") == True
+assert cards.check_card_view_access(mydb, 4, "fay") == False
+assert cards.check_card_view_access(mydb, 4, "ajarn") == True
+assert cards.check_card_view_access(mydb, 1, "ajarn") == False
 
-#print(user.login(mydb, "jenny", "jennypassword"))
+assert cards.check_subcard_view_access(mydb, 2, "bob") == False
+assert cards.check_subcard_view_access(mydb, 3, "ajarn") == True
+assert cards.check_subcard_view_access(mydb, 4, "dean") == True
+assert cards.check_subcard_view_access(mydb, 3, "ajarn") == True
+assert cards.check_subcard_view_access(mydb, 1, "ajarn") == False
 
-#print(decks.check_deck_view_access(mydb, 2, "ajarn"))
-#print(decks.check_deck_edit_access(mydb, 5, "ajarn"))
+assert cards.check_card_edit_access(mydb, 7, "dean") == True
+assert cards.check_card_edit_access(mydb, 7, "fay") == True
+assert cards.check_card_edit_access(mydb, 4, "dean") == True
+assert cards.check_card_edit_access(mydb, 4, "fay") == False
+assert cards.check_card_edit_access(mydb, 4, "ajarn") == False
+assert cards.check_card_edit_access(mydb, 7, "ajarn") == True
+assert cards.check_card_edit_access(mydb, 1, "ajarn") == False
 
-#print(cards.get_cards_list(mydb, 12, "cindy"))
+assert cards.check_subcard_edit_access(mydb, 2, "bob") == False
+assert cards.check_subcard_edit_access(mydb, 3, "dean") == True
+assert cards.check_subcard_edit_access(mydb, 4, "dean") == True
+assert cards.check_subcard_edit_access(mydb, 6, "ajarn") == False
+assert cards.check_subcard_edit_access(mydb, 5, "ajarn") == True
+assert cards.check_subcard_edit_access(mydb, 1, "ajarn") == False
 
-decks.get_decks_list(mydb, "dean")
