@@ -111,6 +111,7 @@ def get_cards_list(mydb, deck_id, username):
             "cardIsFinished": r[4],
             "cardColor": r[5]
         }
+        #print(result[i])
 
     mycursor.close()
     mydb.commit()
@@ -120,7 +121,30 @@ def get_cards_list(mydb, deck_id, username):
 # must also check view access of that card_id
 # Otherwise, returns empty list
 def get_subcards_list(mydb, card_id, username):
-    return ["Unimplemented"]
+    if not check_card_view_access(mydb, card_id, username):
+        return []
+    
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+        SELECT 
+            scardid, scardName, scardIsFinished 
+        FROM subcard 
+        WHERE cardid = %s
+        """, (card_id,))
+    
+    result = mycursor.fetchall()
+    for i, r in enumerate(result):
+        result[i] = {
+            "subcardId": int(r[0]),  
+            "subcardName": r[1],
+            "subcardIsFinished": int(r[2]),
+        }
+        #print(result[i])
+
+    mycursor.close()
+    mydb.commit()
+    return result
 
 # updates a card by setting isFinished = True
 # must also check edit access of that card_id
