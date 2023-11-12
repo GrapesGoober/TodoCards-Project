@@ -47,11 +47,12 @@ def get_decks_list(mydb, username):
         SELECT 
             deck.deckid, deck.deckName, deck.deckdescription, (
                 SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid
-            ) as nearestDue, GROUP_CONCAT(DISTINCT card.cardColor) as cardColors
+            ) as nearestDue, GROUP_CONCAT(card.cardColor) as cardColors
         FROM deck, access, card
         WHERE deck.deckid = access.deckid
               AND deck.deckid = card.deckid
               AND access.username = %s
+             
         GROUP BY deck.deckid
         """, (username,))
     
@@ -69,6 +70,7 @@ def get_decks_list(mydb, username):
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due,
             "cardColors" : card_colors
+            
         }
         #print(result[i]) 
     
@@ -99,7 +101,18 @@ def edit_deck(mydb, deck_info, username):
 # must also check for edit access of that deck_id
 # returns True or False
 def delete_deck(mydb, deck_id, username):
-    return "Unimplemented"
+    if check_deck_edit_access(mydb, deck_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM deck
+                WHERE deckid = %s
+                """, (deck_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
 
 # Generates a unique sharecode, inserts to share table, and returns it
 # must also check for edit access of that deck_id to get sharecode

@@ -150,18 +150,46 @@ def get_subcards_list(mydb, card_id, username):
 # must also check edit access of that card_id
 # returns True if success, False otherwise
 def finish_card(mydb, card_id, username):
-    return "Unimplemented"
+    if check_card_edit_access(mydb, card_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                UPDATE card
+                SET cardIsFinished = '1'
+                WHERE cardid = %s
+                """, (card_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # updates a subcard by setting isFinished = True
 # must also check edit access of that subcard_id
 # returns True if success, False otherwise
 def finish_subcard(mydb, subcard_id, username):
-    return "Unimplemented"
+    
+    if check_subcard_edit_access(mydb, subcard_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                UPDATE subcard
+                SET scardIsFinished = '1'
+                WHERE scardid = %s
+                """, (subcard_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # updates a card with card_info
 # must also check edit access of card_info["cardId"]
 # returns True if success, False otherwise
 def edit_card(mydb, card_info, username):
+
     return "Unimplemented"
 
 # updates a subcard with card_info
@@ -186,10 +214,37 @@ def create_subcard(mydb, card_id, subcard_info, username):
 # must also check edit access for that card_id
 # returns True if success, False otherwise
 def delete_card(mydb, card_id, username):
-    return "Unimplemented"
+    
+    if check_card_edit_access(mydb, card_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM card
+                WHERE cardid = %s
+                """, (card_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    
+    return False
+    
 
 # deletes a subcard within the card
 # must also check edit access for that subcard_id
 # returns True if success, False otherwise
 def delete_subcard(mydb, subcard_id, username):
-    return "Unimplemented"
+
+    if check_subcard_edit_access(mydb, subcard_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM subcard
+                WHERE scardid = %s
+                """, (subcard_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    
+    return False
