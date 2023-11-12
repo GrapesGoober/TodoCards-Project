@@ -1,4 +1,6 @@
 <script>
+    import Deckslist from "./deckslist.svelte";
+
 
 </script>
 
@@ -9,4 +11,4 @@
 <h1>This is a skeleton project for TodoCards</h1>
 <h2>This is the deckslist page (the home page)</h2>
 
-
+<Deckslist></Deckslist>

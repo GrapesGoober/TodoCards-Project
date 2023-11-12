@@ -1,6 +1,8 @@
 // place files you want to import through the `$lib` alias in this folder.
 const ENDPOINT = "http://127.0.0.1:5000"
 
+// route to the login page upon unsuccessful login
+const LOGIN_HREF = "/login"
 
 let ping_count = 0
 export async function ping() {
@@ -73,7 +75,12 @@ export async function getDeckslist(){
     })
 
     // recieve the cards
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+        return []
+    }
+    return result
 }
 
 export async function getCardslist(deckId){
