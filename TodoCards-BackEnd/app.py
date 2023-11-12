@@ -32,7 +32,7 @@ def check_login():
     if request.endpoint not in ['login', 'logout', 'ping', 'signup']:
         # simply check for username status (if it's set)
         if "username" not in session:
-            return jsonify("not logged in")
+            return jsonify(False)
 
 # a debugging route that responds with "pong"
 @app.route("/ping")
