@@ -4,9 +4,9 @@
     let username = "" // the input requires a username & password
     let password = ""
     let wrong_password_text = ""
-
+    let status = false
     async function login(){
-        let status = await APIs.login(username, password)
+        status = await APIs.login(username, password)
         // upon successful login, we wanna redirect user to home page 
         if (status == true) {
             // (which is default endpoint)
