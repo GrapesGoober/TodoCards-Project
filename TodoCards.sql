@@ -38,7 +38,8 @@ INSERT INTO `access` (`accessId`, `username`, `deckId`, `accessType`) VALUES
 (12, 'cindy', 6, 'edit'),
 (13, 'dean', 7, 'edit'),
 (14, 'fay', 7, 'edit'),
-(16, 'ajarn', 9, 'view');
+(16, 'ajarn', 9, 'view'),
+(20, 'ajarn', 14, 'edit');
 
 -- --------------------------------------------------------
 
@@ -65,13 +66,16 @@ INSERT INTO `card` (`cardid`, `deckId`, `cardName`, `cardDescription`, `cardDue`
 (2, 1, 'Write abstract', '500 words zuzu', '2023-11-17', 0, 'pink'),
 (3, 1, 'Cleaning', 'clean bathroom', '2023-11-15', 0, 'lightgreen'),
 (4, 4, 'deanCard1', 'bok bok', '2023-11-16', 1, 'pink'),
-(5, 4, 'deanCard2', 'I am hungry', '2023-11-23', 0, 'lightblue'),
+(5, 4, 'deanCard2newwww', 'Hello Mars', '2023-11-30', 1, 'lightblue'),
 (6, 7, 'deanandfayCard1', 'wakkkkkkkkkk', '2023-11-08', 1, 'pink'),
 (7, 7, 'deanandfayCard2', 'i love nicki minaj', '2023-11-30', 1, 'lightgreen'),
 (8, 3, 'cindyCard1', '', '2023-11-15', 0, 'lightblue'),
 (9, 4, 'ForDeanDelete1', '', '2023-11-13', 0, 'lightblue'),
 (11, 3, 'ForCindyDelete1', '', '2023-11-13', 1, 'lightblue'),
-(14, 3, 'ForCindyDelete2', '', '2023-11-30', 0, 'lightblue');
+(14, 3, 'ForCindyDelete2', '', '2023-11-30', 0, 'lightblue'),
+(15, 1, 'testAdding', '', '2023-11-23', 0, 'lightgreen'),
+(16, 4, 'deanCard3', 'testAdding', '2023-11-30', 1, 'pink'),
+(18, 4, 'deanCard4', 'testAdding2', '2023-11-20', 0, 'lightblue');
 
 -- --------------------------------------------------------
 
@@ -92,12 +96,13 @@ CREATE TABLE `deck` (
 INSERT INTO `deck` (`deckid`, `deckName`, `deckDescription`) VALUES
 (1, 'QuickDeck', 'This is the default deck.'),
 (2, 'bobDeck', ''),
-(3, 'cindyDeck', ''),
+(3, 'cindyDecktestEdit', 'i love nicki minaj'),
 (4, 'deanDeck', ''),
 (5, 'fayDeck', ''),
 (6, 'bobandcindyDeck', ''),
 (7, 'deanandfayDeck', ''),
-(9, 'testDelete2', '');
+(9, 'testDelete2', ''),
+(14, 'ajarnDeck1', 'UwU');
 
 -- --------------------------------------------------------
 
@@ -132,12 +137,14 @@ CREATE TABLE `subcard` (
 INSERT INTO `subcard` (`scardid`, `cardID`, `scardName`, `scardIsFinished`) VALUES
 (1, 1, 'write intro', 0),
 (2, 2, 'find motivation(to do this work)', 0),
-(3, 4, 'deancard1subcard1', 1),
+(3, 4, 'deancard1subcard1New', 0),
 (4, 4, 'deancard1subcard2', 1),
 (5, 6, 'deanandfayCard1subcard1', 0),
 (6, 8, 'cindyCard1subcard1', 1),
 (7, 4, 'TestDeanDelete1', 1),
-(9, 8, 'TestCindyDelete1', 0);
+(9, 8, 'TestCindyDelete1', 0),
+(10, 8, 'cindyCard1Subcard3', 0),
+(11, 8, 'cindyCard1Subcard4', 1);
 
 -- --------------------------------------------------------
 
@@ -214,25 +221,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `access`
 --
 ALTER TABLE `access`
-  MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `deck`
 --
 ALTER TABLE `deck`
-  MODIFY `deckid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `deckid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `subcard`
 --
 ALTER TABLE `subcard`
-  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -263,3 +270,5 @@ ALTER TABLE `share`
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+
