@@ -96,7 +96,7 @@ def get_cards_list():
 # retrieve a list of subcards using cardId. 
 @app.route("/get-subcards-list", methods=["GET"])
 def get_subcards_list():
-    card_id = request.args.get("deckId")
+    card_id = request.args.get("cardId")
     username = session.get("username")
     result = cards.get_subcards_list(mydb, card_id, username)
     return jsonify(result)
