@@ -1,7 +1,14 @@
 <script>
+  import { onMount } from "svelte";
+
     // Need to get the deckId for this page
-    let searchParams = new URLSearchParams(window.location.search);
-    let deckId = searchParams.get("deckId");
+    let searchParams
+    let deckId
+
+    onMount( () => {
+        searchParams = new URLSearchParams(window.location.search)
+        deckId = searchParams.get("deckId")
+    })
     
 </script>
 
