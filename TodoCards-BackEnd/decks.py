@@ -40,11 +40,10 @@ def check_deck_edit_access(mydb, deck_id, username):
 
 # Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
-    
+
     mycursor = mydb.cursor()
     mycursor.execute(
         """
-
         SELECT 
             deck.deckid, deck.deckName, 
             deck.deckdescription, 
@@ -76,7 +75,6 @@ def get_decks_list(mydb, username):
             
         }
         #print(result[i]) 
-    
     mycursor.close()
     mydb.commit()
     return result

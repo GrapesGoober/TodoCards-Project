@@ -84,4 +84,12 @@ assert cards.finish_subcard(mydb, 6, "ajarn") == False
 assert cards.finish_subcard(mydb, 6, "cindy") == True
 assert cards.finish_subcard(mydb, 4, "dean") == True
 
-decks.get_decks_list(mydb, "dean")
+#decks.get_decks_list(mydb, "bob")
+
+#print(decks.delete_deck(mydb, 10, "ajarn"))
+assert cards.get_cards_list(mydb, 3, "dean") == False
+
+#print(cards.get_subcards_list(mydb, 4, "dean"))
+
+
+print(decks.get_decks_list(mydb, "dean"))

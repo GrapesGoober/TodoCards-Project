@@ -91,7 +91,7 @@ def check_subcard_edit_access(mydb, subcard_id, username):
 def get_cards_list(mydb, deck_id, username):
 
     if not decks.check_deck_view_access(mydb, deck_id, username):
-        return []
+        return False
 
     mycursor = mydb.cursor()
     mycursor.execute(
@@ -122,7 +122,7 @@ def get_cards_list(mydb, deck_id, username):
 # Otherwise, returns empty list
 def get_subcards_list(mydb, card_id, username):
     if not check_card_view_access(mydb, card_id, username):
-        return []
+        return False
     
     mycursor = mydb.cursor()
     mycursor.execute(
