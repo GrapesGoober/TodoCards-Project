@@ -203,8 +203,13 @@ def edit_card(mydb, card_info, username):
                 cardColor = %s
             WHERE cardid = %s
             """,
-            (int(card_info["deckId"]), card_info["cardName"], card_info["cardDescription"], card_info["cardDue"],
-             card_info["cardIsFinished"], card_info["cardColor"], int(card_info["cardId"]))
+            (int(card_info["deckId"]), 
+             card_info["cardName"], 
+             card_info["cardDescription"], 
+             card_info["cardDue"],
+             card_info["cardIsFinished"], 
+             card_info["cardColor"], 
+             int(card_info["cardId"]))
         )
           
         mycursor.close()
@@ -228,7 +233,9 @@ def edit_subcard(mydb, subcard_info, username):
                 scardIsFinished = %s
             WHERE scardid = %s
             """,
-            (int(subcard_info["cardId"]), subcard_info["subcardName"], subcard_info["subcardIsFinished"],
+            (int(subcard_info["cardId"]), 
+             subcard_info["subcardName"], 
+             subcard_info["subcardIsFinished"],
              int(subcard_info["subcardId"]) )
         )
           
@@ -249,8 +256,11 @@ def create_card(mydb, deck_id, card_info, username):
             INSERT INTO `card` (`deckId`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardColor`) 
             VALUES (%s, %s, %s, %s, %s, %s)
             """,
-            (deck_id, card_info["cardName"], card_info["cardDescription"], card_info["cardDue"],
-             card_info["cardIsFinished"], card_info["cardColor"])
+            (deck_id, card_info["cardName"], 
+             card_info["cardDescription"], 
+             card_info["cardDue"],
+             card_info["cardIsFinished"], 
+             card_info["cardColor"])
         )
           
         mycursor.close()
@@ -269,7 +279,8 @@ def create_subcard(mydb, card_id, subcard_info, username):
             INSERT INTO `subcard` (`cardId`, `scardName`, `scardIsFinished`) 
             VALUES (%s, %s, %s)
             """,
-            (card_id, subcard_info["subcardName"], subcard_info["subcardIsFinished"])
+            (card_id, subcard_info["subcardName"], 
+             subcard_info["subcardIsFinished"])
         )
           
         mycursor.close()
