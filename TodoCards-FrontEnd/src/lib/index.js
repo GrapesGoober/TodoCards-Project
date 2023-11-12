@@ -74,11 +74,10 @@ export async function getDeckslist(){
         credentials: "include"
     })
 
-    // recieve the cards
+    // recieve the decks
     let result = await response.json()
     if (result == "not logged in") {
         window.location.href = LOGIN_HREF
-        return []
     }
     return result
 }
@@ -89,8 +88,11 @@ export async function getCardslist(deckId){
         credentials: "include"
     })
 
-    // recieve the cards
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function getSubcardslist(cardId){
@@ -99,8 +101,11 @@ export async function getSubcardslist(cardId){
         credentials: "include"
     })
 
-    // recieve the cards
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function editCard(cardInfo){
@@ -113,8 +118,11 @@ export async function editCard(cardInfo){
         body: JSON.stringify({cardInfo})
     })
 
-    // recieve the result
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function editSubcard(subcardInfo){
@@ -127,8 +135,11 @@ export async function editSubcard(subcardInfo){
         body: JSON.stringify({subcardInfo})
     })
 
-    // recieve the result
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function editDeck(deckInfo){
@@ -141,8 +152,11 @@ export async function editDeck(deckInfo){
         body: JSON.stringify({deckInfo})
     })
 
-    // recieve the result
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 
@@ -156,8 +170,11 @@ export async function finishCard(cardId){
         body: JSON.stringify({cardId})
     })
 
-    // recieve the result
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 export async function finishSubcard(subcardId){
     let response = await fetch(ENDPOINT + "/finish-subcard", {
@@ -169,8 +186,11 @@ export async function finishSubcard(subcardId){
         body: JSON.stringify({subcardId})
     })
 
-    // recieve the result
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function getSharecode(deckId){
@@ -179,8 +199,11 @@ export async function getSharecode(deckId){
         credentials: "include"
     })
 
-    // recieve the sharecode
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
 
 export async function recieveSharecode(sharecode){
@@ -189,6 +212,9 @@ export async function recieveSharecode(sharecode){
         credentials: "include"
     })
 
-    // recieve the sharecode
-    return await response.json()
+    let result = await response.json()
+    if (result == "not logged in") {
+        window.location.href = LOGIN_HREF
+    }
+    return result
 }
