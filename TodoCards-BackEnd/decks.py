@@ -40,19 +40,18 @@ def check_deck_edit_access(mydb, deck_id, username):
 
 # Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
-    
+
     mycursor = mydb.cursor()
     mycursor.execute(
         """
         SELECT 
-            deck.deckid, deck.deckName, deck.deckdescription, (
-                SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid
-            ) as nearestDue, GROUP_CONCAT(DISTINCT card.cardColor) as cardColors
-        FROM deck, access, card
+            deck.deckid, deck.deckName, 
+            deck.deckdescription, 
+            (SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid AND card.cardIsFinished = '0') as nearestDue, 
+            (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors
+        FROM deck, access
         WHERE deck.deckid = access.deckid
-              AND deck.deckid = card.deckid
               AND access.username = %s
-        GROUP BY deck.deckid
         """, (username,))
     
     result = mycursor.fetchall()
@@ -62,16 +61,20 @@ def get_decks_list(mydb, username):
         else:
             formatted_nearest_due = ""
 
-        card_colors = [color.strip() for color in r[4].split(',')]
+        if r[4] != None:
+            card_colors = [color.strip() for color in r[4].split(',')]
+        else:
+            card_colors = []
+
         result[i] = {
             "deckId": int(r[0]),
             "deckName": r[1],
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due,
             "cardColors" : card_colors
+            
         }
         #print(result[i]) 
-    
     mycursor.close()
     mydb.commit()
     return result
@@ -99,7 +102,18 @@ def edit_deck(mydb, deck_info, username):
 # must also check for edit access of that deck_id
 # returns True or False
 def delete_deck(mydb, deck_id, username):
-    return "Unimplemented"
+    if check_deck_edit_access(mydb, deck_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM deck
+                WHERE deckid = %s
+                """, (deck_id,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
 
 # Generates a unique sharecode, inserts to share table, and returns it
 # must also check for edit access of that deck_id to get sharecode
