@@ -70,7 +70,8 @@ INSERT INTO `card` (`cardid`, `deckId`, `cardName`, `cardDescription`, `cardDue`
 (7, 7, 'deanandfayCard2', 'i love nicki minaj', '2023-11-30', 1, 'lightgreen'),
 (8, 3, 'cindyCard1', '', '2023-11-15', 0, 'lightblue'),
 (9, 4, 'ForDeanDelete1', '', '2023-11-13', 0, 'lightblue'),
-(11, 3, 'ForCindyDelete1', '', '2023-11-13', 1, 'lightblue');
+(11, 3, 'ForCindyDelete1', '', '2023-11-13', 1, 'lightblue'),
+(14, 3, 'ForCindyDelete2', '', '2023-11-30', 0, 'lightblue');
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,7 @@ ALTER TABLE `access`
 -- AUTO_INCREMENT for table `card`
 --
 ALTER TABLE `card`
-  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `deck`
@@ -231,7 +232,7 @@ ALTER TABLE `deck`
 -- AUTO_INCREMENT for table `subcard`
 --
 ALTER TABLE `subcard`
-  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `scardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -262,4 +263,3 @@ ALTER TABLE `share`
 ALTER TABLE `subcard`
   ADD CONSTRAINT `subcard_ibfk_1` FOREIGN KEY (`cardID`) REFERENCES `card` (`cardid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
