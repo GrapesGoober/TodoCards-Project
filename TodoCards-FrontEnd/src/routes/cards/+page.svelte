@@ -26,6 +26,7 @@
 
 {#if deckinfo}
     <h1>{deckinfo.deckName}</h1>
+    <p><b>Nearest Due Date</b> {deckinfo.nearestDue}</p>
     <p>{deckinfo.deckDescription}</p>
 {/if}
 
