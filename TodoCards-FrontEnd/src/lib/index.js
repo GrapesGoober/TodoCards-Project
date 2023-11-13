@@ -99,6 +99,18 @@ export async function editDeck(deckInfo){
     return await sendAuthPostRequest("/edit-deck", {deckInfo})
 }
 
+export async function createCard(cardInfo){
+    return await sendAuthPostRequest("/create-card", {cardInfo})
+}
+
+export async function createSubcard(subcardInfo){
+    return await sendAuthPostRequest("/create-subcard", {subcardInfo})
+}
+
+export async function createDeck(deckInfo){
+    return await sendAuthPostRequest("/create-deck", {deckInfo})
+}
+
 export async function deleteCard(cardId){
     return await sendAuthPostRequest("/delete-card", {cardId})
 }
