@@ -141,6 +141,30 @@ def edit_subcard():
     status = cards.edit_subcard(mydb, subcard_info, username)
     return jsonify(status)
 
+@app.route("/delete-deck", methods=["POST"])
+def delete_deck():
+    jsonbody = request.get_json()
+    deck_id = jsonbody.get("deckId")
+    username = session.get("username")
+    status = decks.delete_deck(mydb, deck_id, username)
+    return jsonify(status)
+
+@app.route("/delete-card", methods=["POST"])
+def delete_card():
+    jsonbody = request.get_json()
+    card_id = jsonbody.get("cardId")
+    username = session.get("username")
+    status = cards.delete_card(mydb, card_id, username)
+    return jsonify(status)
+
+@app.route("/delete-subcard", methods=["POST"])
+def delete_subcard():
+    jsonbody = request.get_json()
+    subcard_id = jsonbody.get("subcardId")
+    username = session.get("username")
+    status = cards.delete_card(mydb, subcard_id, username)
+    return jsonify(status)
+
 @app.route("/get-sharecode", methods=["GET"])
 def get_sharecode():
     deck_id = request.args.get("deckId")
