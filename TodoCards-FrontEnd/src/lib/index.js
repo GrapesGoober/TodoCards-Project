@@ -76,7 +76,7 @@ export async function getDeckslist(){
 
     // recieve the decks
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -89,7 +89,7 @@ export async function getCardslist(deckId){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -102,7 +102,7 @@ export async function getSubcardslist(cardId){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -119,7 +119,7 @@ export async function editCard(cardInfo){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -136,7 +136,7 @@ export async function editSubcard(subcardInfo){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -153,7 +153,7 @@ export async function editDeck(deckInfo){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -171,7 +171,7 @@ export async function finishCard(cardId){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -187,7 +187,7 @@ export async function finishSubcard(subcardId){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -200,7 +200,7 @@ export async function getSharecode(deckId){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
@@ -213,7 +213,7 @@ export async function recieveSharecode(sharecode){
     })
 
     let result = await response.json()
-    if (result == "not logged in") {
+    if (result === false) {
         window.location.href = LOGIN_HREF
     }
     return result
