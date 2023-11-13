@@ -5,13 +5,14 @@
     }
 </script>
 
-<button on:click={toCardsPage} class="container">
+<div class="alldeck">
+    <button on:click={toCardsPage} class="container">
 
     <!-- For card name & nearest date due -->
-    <div class="text-container">
-        <div class="deck-name"> {deckinfo.deckName} </div>
-        <div> {deckinfo.nearestDue} </div>
-    </div>
+        <div class="text-container">
+            <div class="deck-name"> {deckinfo.deckName} </div>
+            <div> {deckinfo.nearestDue} </div>
+        </div>
 
     <!-- For the multicolored cards icon -->
     <!--  <div class="icon-container">
@@ -21,8 +22,9 @@
             "> </div>
         {/each  }
     </div> -->
+    </button>
+</div>
 
-</button>
 
 <style>
     .icon {
@@ -35,21 +37,32 @@
         font-size: large;
     }
     .container {
-        width: 30em;
-        height: 5em;
-        margin: 2em;
+        width: 300px;
+        height: 54px;
+        margin: 25px;
         padding-left: 20px;
-        border: 1px solid black;
-        background-color: white;
+        border: none;
+        background-color: rgb(126, 126, 255);
+        color: white;
         border-radius: 1em;
         text-align: left;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        transition: background-color 0.3s;
+    }
+    .container:hover {
+        background-color: rgb(156, 156, 255);
     }
     .text-container {
         width: 20em;
     }
     .icon-container {
         display: inline;
+    }
+    .alldeck {
+        margin-left: 5px;
     }
 </style>

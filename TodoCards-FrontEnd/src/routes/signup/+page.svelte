@@ -8,20 +8,31 @@
 
     let passwordNotMatching = false
 
-    async function signup(){
-        if (signup_password == signup_confirm_password) {
-            signup_status = await APIs.signup(signup_username, signup_password)
-            window.location.href = "/"
+    async function signup() {
+        if (signup_password !== "" && signup_confirm_password !== "") {
+            if (signup_password === signup_confirm_password) {
+                signup_status = await APIs.signup(signup_username, signup_password);
+                window.location.href = "/";
+            } else {
+                passwordNotMatching = true;
+            }
+        } else {
+            // Handle case where passwords are empty
+            passwordNotMatching = true;
         }
-        else {
-            passwordNotMatching = true
-        }
+    }
+
+    async function goback(){
+        window.location.href = "/login";
     }
 </script>
 
-
 <div class="signuppage">
-    <h1>Sign up</h1>
+    <div class="header">
+        <!--might add an icon for going back to login page-->
+        <button class="goback_btn" on:click={goback}>&#60;</button>
+        <h1>Sign up</h1>
+    </div>
     <div>
         <input type="text" placeholder="Username" bind:value={signup_username}>
     </div>
@@ -35,11 +46,14 @@
     {#if passwordNotMatching}
     <p class="wrong-text">Please confirm your password again.</p>  
     {/if}
-    <button on:click={signup}>Sign up</button>
+    <button class="signup_btn" on:click={signup}>Sign up</button>
 </div>
 
 <style>
     @import "../style.css";
+    p {
+        margin: 0;
+    }
     div {
         width: 300px;
         height: 40px;
@@ -54,7 +68,7 @@
         border-width: 1px;
         padding-left: 16px;
     }
-    button {
+    .signup_btn {
         width: 268px;
         height: 30px;
         border: none;
@@ -64,10 +78,34 @@
         font-weight: bold;
         cursor: pointer;
     }
-    button:hover {
+    .signup_btn:hover {
         background-color: rgb(111, 111, 255);
     }
-    button:active {
+    .signup_btn:active {
         background-color: rgb(129, 129, 255);
+    }
+    .wrong-text {
+        color: red;
+        font-size: 12px;
+        margin-bottom: 12px;
+        margin-right: 10px;
+    }
+    .header {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    .goback_btn {
+        font-weight: bold;
+        font-size: 36px;
+        margin-right: 12px;
+        background-color: white;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+    }
+    .goback_btn:active {
+        color: rgb(77, 77, 77);
     }
 </style>
