@@ -4,17 +4,57 @@ const ENDPOINT = "http://127.0.0.1:5000"
 // route to the login page upon unsuccessful login
 const LOGIN_HREF = "/login"
 
-let ping_count = 0
-export async function ping() {
-    let res = await fetch(ENDPOINT + "/ping", {
+async function sendGetRequest(route, params) {
+
+    let queryString = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+        
+    let response = await fetch(`${ENDPOINT}${route}?${queryString}`, {
         method: "GET",
-        credentials: 'include',
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    return await response.json()
+}
+
+async function sendPostRequest(route, body) {
+    let response = await fetch(ENDPOINT + route, {
+        method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json"
         },
+        body: JSON.stringify(body)
     })
-    
-    let result = await res.json()
+
+    return await response.json()
+}
+
+async function sendAuthPostRequest(route, body) {
+    let result = await sendPostRequest(route, body)
+    if (result === false) {
+        window.location.href = LOGIN_HREF
+    }
+    return result
+}
+
+async function sendAuthGetRequest(route, body) {
+    let result = await sendGetRequest(route, body)
+    if (result === false) {
+        window.location.href = LOGIN_HREF
+    }
+    return result
+}
+
+
+let ping_count = 0
+export async function ping() {
+
+    let result = await sendGetRequest("/ping", {})
     if (result.message === "pong"){
         ping_count ++
     }
@@ -23,198 +63,54 @@ export async function ping() {
 }
 
 export async function login(username, password){
-    let response = await fetch(ENDPOINT + "/login", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username,
-            password
-        })
-    })
-
-    // recieve the result
-    return await response.json()
+    return await sendPostRequest("/login", {username, password})
 }
 
 export async function signup(username, password){
-    let response = await fetch(ENDPOINT + "/signup", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username,
-            password
-        })
-    })
-
-    // recieve the result
-    return await response.json()
+    return await sendPostRequest("/signup", {username, password})
 }
 
 export async function logout() {
-    await fetch(ENDPOINT + "/logout", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-
+    await sendPostRequest("/logout", {})
     return false
 }
 
 export async function getDeckslist(){
-    let response = await fetch(ENDPOINT + "/get-decks-list?", {
-        method:"GET",
-        credentials: "include"
-    })
-
-    // recieve the decks
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthGetRequest("/get-decks-list", {})
 }
 
 export async function getCardslist(deckId){
-    let response = await fetch(ENDPOINT + "/get-cards-list?deckId=" + deckId, {
-        method:"GET",
-        credentials: "include"
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthGetRequest("/get-cards-list", {deckId})
 }
 
 export async function getSubcardslist(cardId){
-    let response = await fetch(ENDPOINT + "/get-subcards-list?cardId=" + cardId, {
-        method:"GET",
-        credentials: "include"
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthGetRequest("/get-subcards-list", {cardId})
 }
 
 export async function editCard(cardInfo){
-    let response = await fetch(ENDPOINT + "/edit-card", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({cardInfo})
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthPostRequest("/edit-card", {cardInfo})
 }
 
 export async function editSubcard(subcardInfo){
-    let response = await fetch(ENDPOINT + "/edit-subcard", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({subcardInfo})
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthPostRequest("/edit-subcard", {subcardInfo})
 }
 
 export async function editDeck(deckInfo){
-    let response = await fetch(ENDPOINT + "/edit-deck", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({deckInfo})
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthPostRequest("/edit-deck", {deckInfo})
 }
 
 
 export async function finishCard(cardId){
-    let response = await fetch(ENDPOINT + "/finish-card", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({cardId})
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthPostRequest("/finish-card", {cardId})
 }
 export async function finishSubcard(subcardId){
-    let response = await fetch(ENDPOINT + "/finish-subcard", {
-        method:"POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({subcardId})
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthPostRequest("/finish-card", {subcardId})
 }
 
 export async function getSharecode(deckId){
-    let response = await fetch(ENDPOINT + "/get-sharecode?deckId=" + deckId, {
-        method:"GET",
-        credentials: "include"
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthGetRequest("/get-sharecode", {deckId})
 }
 
 export async function recieveSharecode(sharecode){
-    let response = await fetch(ENDPOINT + "/recieve-sharecode?sharecode=" + sharecode, {
-        method:"GET",
-        credentials: "include"
-    })
-
-    let result = await response.json()
-    if (result === false) {
-        window.location.href = LOGIN_HREF
-    }
-    return result
+    return await sendAuthGetRequest("/recieve-sharecode", {sharecode})
 }
