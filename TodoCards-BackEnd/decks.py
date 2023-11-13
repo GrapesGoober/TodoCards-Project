@@ -58,6 +58,7 @@ def get_decks_list(mydb, username):
     for i, r in enumerate(result):
         if r[3] != None:
             formatted_nearest_due = r[3].strftime('%d %B %Y')
+            #formatted_nearest_due = int(r[3])
         else:
             formatted_nearest_due = ""
 
@@ -96,7 +97,23 @@ def get_decks_list(mydb, username):
 # returns True or False
 def edit_deck(mydb, deck_info, username):
 
-    return "Unimplemented"
+    if check_deck_edit_access(mydb, int(deck_info["deckId"]), username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            UPDATE deck
+            SET deckName = %s,
+                deckDescription = %s
+
+            WHERE deckid = %s
+            """,
+            (deck_info["deckName"], deck_info["deckDescription"], int(deck_info["deckId"]))
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # deletes a deck using deck_id
 # must also check for edit access of that deck_id
@@ -127,3 +144,27 @@ def get_sharecode(mydb, deck_id, username):
 # returns True if success, false otherwise
 def recieve_sharecode(mydb, sharecode, username):
     return "Unimplemented"
+
+
+def create_deck(mydb, deck_info, access_info, username):
+    mycursor = mydb.cursor()
+    mycursor.execute(
+        """
+        INSERT INTO `deck` (`deckName`, `deckDescription`) 
+        VALUES (%s, %s)
+        """,
+        (deck_info["deckName"], deck_info["deckDescription"])
+    )
+
+    deck_id = mycursor.lastrowid
+    mycursor.execute(
+        """
+        INSERT INTO `access` (`username`, `deckid`, `accessType`) 
+        VALUES (%s, %s, %s)
+        """,
+        (username, deck_id, access_info["accessType"])
+    )
+          
+    mycursor.close()
+    mydb.commit()
+    return True

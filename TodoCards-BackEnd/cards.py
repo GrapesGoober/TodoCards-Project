@@ -184,31 +184,110 @@ def finish_subcard(mydb, subcard_id, username):
         return True
     return False
 
-
 # updates a card with card_info
 # must also check edit access of card_info["cardId"]
 # returns True if success, False otherwise
-def edit_card(mydb, card_info, username):
+def edit_card(mydb, card_info, username):  
+    
+    #print(card_info["cardid"])
+    if check_card_edit_access(mydb, int(card_info["cardId"]), username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            UPDATE card
+            SET deckId = %s,
+                cardName = %s,
+                cardDescription = %s,
+                cardDue = %s,
+                cardIsFinished = %s,
+                cardColor = %s
+            WHERE cardid = %s
+            """,
+            (int(card_info["deckId"]), 
+             card_info["cardName"], 
+             card_info["cardDescription"], 
+             card_info["cardDue"],
+             card_info["cardIsFinished"], 
+             card_info["cardColor"], 
+             int(card_info["cardId"]))
+        )
+          
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
 
-    return "Unimplemented"
+
 
 # updates a subcard with card_info
 # must also check edit access
 # returns True if success, False otherwise
-def edit_subcard(mydb, card_info, username):
-    return "Unimplemented"
+def edit_subcard(mydb, subcard_info, username):
+    if check_subcard_edit_access(mydb, int(subcard_info["cardId"]), username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            UPDATE subcard
+            SET cardid = %s,
+                scardName = %s,
+                scardIsFinished = %s
+            WHERE scardid = %s
+            """,
+            (int(subcard_info["cardId"]), 
+             subcard_info["subcardName"], 
+             subcard_info["subcardIsFinished"],
+             int(subcard_info["subcardId"]) )
+        )
+          
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # creates a new card within the deck
 # must also check edit access for that deck_id
 # returns True if success, False otherwise
 def create_card(mydb, deck_id, card_info, username):
-    return "Unimplemented"
+    if decks.check_deck_edit_access(mydb, deck_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            INSERT INTO `card` (`deckId`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardColor`) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (deck_id, card_info["cardName"], 
+             card_info["cardDescription"], 
+             card_info["cardDue"],
+             card_info["cardIsFinished"], 
+             card_info["cardColor"])
+        )
+          
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
 
 # creates a new card within the deck
 # must also check edit access for that card_id
 # returns True if success, False otherwise
 def create_subcard(mydb, card_id, subcard_info, username):
-    return "Unimplemented"
+    if check_card_edit_access(mydb, card_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            INSERT INTO `subcard` (`cardId`, `scardName`, `scardIsFinished`) 
+            VALUES (%s, %s, %s)
+            """,
+            (card_id, subcard_info["subcardName"], 
+             subcard_info["subcardIsFinished"])
+        )
+          
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # deletes a card within the deck
 # must also check edit access for that card_id

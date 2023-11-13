@@ -92,4 +92,70 @@ assert cards.get_cards_list(mydb, 3, "dean") == False
 #print(cards.get_subcards_list(mydb, 4, "dean"))
 
 
-print(decks.get_decks_list(mydb, "dean"))
+#print(decks.get_decks_list(mydb, "dean"))
+
+'''
+assert cards.edit_card(mydb, {"cardId": 5, 
+                       "deckId" : 4,
+                       "cardName": "deanCard2newwww",
+                       "cardDescription": "Hello Mars",
+                       "cardDue": "2023-11-30",
+                       "cardIsFinished": "1",
+                       "cardColor": "lightblue"},
+                "fay") == True
+'''
+
+
+assert cards.edit_subcard(mydb, {"subcardId": 3, 
+                                "cardId": 4,
+                                "subcardName" : "deancard1subcard1New",
+                                "subcardIsFinished": "0"},
+                                "dean") == True
+
+assert decks.edit_deck(mydb, {"deckId": 3, 
+                            "deckName": "cindyDecktestEdit",
+                            "deckDescription" : "ayo aloha"},
+                            "dean") == False
+
+assert decks.edit_deck(mydb, {"deckId": 3, 
+                            "deckName": "cindyDecktestEdit",
+                            "deckDescription" : "i love nicki minaj"},
+                            "cindy") == True
+
+
+assert cards.create_card(mydb, 4, {"cardName": "deanCard3",
+                                "cardDescription": "testAdding",
+                                "cardDue": "2023-11-30",
+                                "cardIsFinished": "1",
+                                "cardColor": "pink"},
+                                 "ajarn") == False
+'''
+assert cards.create_card(mydb, 4, {"cardName": "deanCard4",
+                                "cardDescription": "testAdding2",
+                                "cardDue": "2023-11-20",
+                                "cardIsFinished": "0",
+                                "cardColor": "lightblue"},
+                                 "dean") == True
+'''
+
+
+assert cards.create_subcard(mydb, 8, {"subcardName": "cindyCard1Subcard3",
+                                    "subcardIsFinished": "0"},
+                                    "dean") == False
+
+assert cards.create_subcard(mydb, 8, {"subcardName": "cindyCard1Subcard3",
+                                    "subcardIsFinished": "0"},
+                                    "fay") == False
+'''
+assert cards.create_subcard(mydb, 8, {"subcardName": "cindyCard1Subcard4",
+                                    "subcardIsFinished": "1"},
+                                    "cindy") == True
+'''
+
+'''
+decks.create_deck(mydb, 
+                    {"deckName": "ajarnDeck1", "deckDescription": "UwU"}, 
+                    {"accessType": "edit"},
+                    "ajarn") 
+'''
+#assert decks.delete_deck(mydb, 15, "ajarn") == False
