@@ -39,12 +39,11 @@
     
     {#if showDescription}
         <div class="description" transition:slide>
-            <i class="fas fa-spinner fa-pulse"></i> <br>
+            <!-- <i class="fas fa-spinner fa-pulse"></i> <br> -->
             Due {cardinfo.cardDue} <br>
             {cardinfo.cardDescription}
+            <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
         </div>
-        
-        <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
     {/if}
 </div>
 

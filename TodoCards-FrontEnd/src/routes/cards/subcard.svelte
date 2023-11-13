@@ -33,11 +33,10 @@
 <style>
     .wrapper{
         padding: 5px;
-        margin-left: 2em;
+        margin: 0.5em;
         width: 20em;
     }
     .tick {
-        padding-left: 20px;
         background-color: transparent;
         border: none;
     }
