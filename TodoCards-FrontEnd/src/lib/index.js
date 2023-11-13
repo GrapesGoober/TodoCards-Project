@@ -1,5 +1,5 @@
 // place files you want to import through the `$lib` alias in this folder.
-const ENDPOINT = "http://127.0.0.1:5000"
+const ENDPOINT = "/api"
 
 // route to the login page upon unsuccessful login
 const LOGIN_HREF = "/login"
