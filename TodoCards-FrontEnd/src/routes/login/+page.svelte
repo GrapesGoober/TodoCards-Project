@@ -29,8 +29,9 @@
 {#if wrongPassword}
     <p class="wrong-text">username or password is incorrect</p>  
 {/if}
-
-<button on:click={goToSignup}>,jhkg</button>
+<br>
+<p>If you don't have an account, sign up here</p>
+<button on:click={goToSignup}>Sign Up</button>
 
 <style>
     @import "../style.css";
