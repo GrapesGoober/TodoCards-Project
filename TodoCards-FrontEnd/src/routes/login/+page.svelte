@@ -21,3 +21,8 @@
 <input type="text" placeholder="username" bind:value={username}>
 <input type="password" placeholder="password" bind:value={password}>
 <button on:click={login}>submit</button>
+
+<style>
+    @import "../style.css";
+
+</style>

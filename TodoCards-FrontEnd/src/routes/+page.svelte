@@ -12,3 +12,8 @@
 <h2>This is the deckslist page (the home page)</h2>
 
 <Deckslist></Deckslist>
+
+<style>
+    @import "./style.css";
+
+</style>

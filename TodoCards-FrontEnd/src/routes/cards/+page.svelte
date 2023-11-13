@@ -15,7 +15,6 @@
         // also get the deck info to display as well
         let deckslist = await APIs.getDeckslist()
         deckinfo = deckslist.find(deck => deck.deckId == deckId)
-        console.log(deckinfo)
     }
     onMount(getCardslist)
     
@@ -37,3 +36,8 @@
         <Card bind:cardinfo={card} refresh={getCardslist}></Card>
     {/each}
 </div>
+
+<style>
+    @import "../style.css";
+
+</style>

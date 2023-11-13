@@ -17,7 +17,7 @@
 
 <div class="wrapper">
 
-    {#if cardinfo.isFinished}
+    {#if cardinfo.cardIsFinished}
         <div class="card" style="background-color: lightgrey;">
             <button class="tick" on:click={finishCard}>
                 <i class="fas fa-check-square fa-lg isFinished"></i>
@@ -63,7 +63,6 @@
     .title {
         background-color: transparent;
         font-size: large;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
         text-align: left;
         border: none;
         width: 16em;
@@ -76,7 +75,6 @@
         border: none;
     }
     .description {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: small;
         width: 20em;
         padding: 15px;
