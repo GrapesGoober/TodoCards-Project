@@ -5,28 +5,50 @@
     }
 </script>
 
-<div class="wrapper">
+<button on:click={toCardsPage} class="container">
 
-    <button on:click={toCardsPage}>See cards</button>
     <!-- For card name & nearest date due -->
-    <div>
-        <div> {deckinfo.deckName} </div>
+    <div class="text-container">
+        <div class="deck-name"> {deckinfo.deckName} </div>
         <div> {deckinfo.nearestDue} </div>
     </div>
 
     <!-- For the multicolored cards icon -->
-    <div>
-        {#each deckinfo.cardColors as color}
-            <div class="icon" style="background-color: {color}"> </div>
+    <div class="icon-container">
+        {#each deckinfo.cardColors as color, i}
+            <div class="icon" style="
+                background-color: {color}
+            "> </div>
         {/each  }
     </div>
 
-</div>
+</button>
 
 <style>
     .icon {
-        width: 20px;
-        height: 20px;
-        border-radius: 2px;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+    .deck-name {
+        font-size: large;
+    }
+    .container {
+        width: 30em;
+        height: 5em;
+        margin: 2em;
+        padding-left: 20px;
+        border: 1px solid black;
+        border-radius: 1em;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+    }
+    .text-container {
+        width: 20em;
+    }
+    .icon-container {
+        display: inline;
     }
 </style>
