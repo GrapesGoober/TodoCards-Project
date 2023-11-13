@@ -37,14 +37,14 @@
     .container {
         width: 30em;
         height: 5em;
-        margin: 2em;
-        padding-left: 20px;
-        border: 1px solid black;
-        background-color: white;
-        border-radius: 1em;
+        margin: 1em;
+        padding-left: 30px;
+        border: none;
+        background-color: #EAEAEA;
+        border-radius: 2.5em;
         text-align: left;
-        display: flex;
-        justify-content: space-between;
+        display: block;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
     .text-container {
         width: 20em;
