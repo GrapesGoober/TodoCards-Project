@@ -14,13 +14,13 @@
     </div>
 
     <!-- For the multicolored cards icon -->
-    <div class="icon-container">
+    <!--  <div class="icon-container">
         {#each deckinfo.cardColors as color, i}
             <div class="icon" style="
                 background-color: {color}
             "> </div>
         {/each  }
-    </div>
+    </div> -->
 
 </button>
 
@@ -40,6 +40,7 @@
         margin: 2em;
         padding-left: 20px;
         border: 1px solid black;
+        background-color: white;
         border-radius: 1em;
         text-align: left;
         display: flex;
