@@ -30,7 +30,7 @@ def check_login():
             return jsonify(False)
 
 # a debugging route that responds with "pong"
-@app.route("/api/ping")
+@app.route("/api/ping", methods=["POST"])
 def ping():
     response = jsonify({"message": "pong"})
     return response
@@ -57,7 +57,7 @@ def login():
 def logout():
     if "username" in session:
         session.pop('username', default=None)
-    return ""
+    return "null"
 
 @app.route("/api/signup", methods=["POST"])
 def signup():
@@ -74,7 +74,7 @@ def signup():
     return jsonify(status)
 
 # retrieve a list of decks
-@app.route("/api/get-decks-list", methods=["GET"])
+@app.route("/api/get-decks-list", methods=["POST"])
 def get_decks_list():
     username = session.get("username")
     result = decks.get_decks_list(mydb, username)
@@ -82,17 +82,19 @@ def get_decks_list():
 
 
 # retrieve a list of cards using deckId. 
-@app.route("/api/get-cards-list", methods=["GET"])
+@app.route("/api/get-cards-list", methods=["POST"])
 def get_cards_list():
-    deck_id = request.args.get("deckId")
+    jsonbody = request.get_json()
+    deck_id = jsonbody.get("deckId")
     username = session.get("username")
     result = cards.get_cards_list(mydb, deck_id, username)
     return jsonify(result)
 
 # retrieve a list of subcards using cardId. 
-@app.route("/api/get-subcards-list", methods=["GET"])
+@app.route("/api/get-subcards-list", methods=["POST"])
 def get_subcards_list():
-    card_id = request.args.get("cardId")
+    jsonbody = request.get_json()
+    card_id = jsonbody.get("cardId")
     username = session.get("username")
     result = cards.get_subcards_list(mydb, card_id, username)
     return jsonify(result)
@@ -185,17 +187,19 @@ def delete_subcard():
     status = cards.delete_card(mydb, subcard_id, username)
     return jsonify(status)
 
-@app.route("/api/get-sharecode", methods=["GET"])
+@app.route("/api/get-sharecode", methods=["POST"])
 def get_sharecode():
-    deck_id = request.args.get("deckId")
+    jsonbody = request.get_json()
+    deck_id = jsonbody.get("deckId")
     username = session.get("username")
     result = decks.get_sharecode(mydb, deck_id, username)
     return jsonify(result)
 
 # Handles sharing
-@app.route("/api/recieve-sharecode", methods=["GET"])
+@app.route("/api/recieve-sharecode", methods=["POST"])
 def recieve_sharecode():
-    sharecode = request.args.get("sharecode")
+    jsonbody = request.get_json()
+    sharecode = jsonbody.get("sharecode")
     username = session.get("username")
     result = decks.recieve_sharecode(mydb, sharecode, username)
     return jsonify(result)
