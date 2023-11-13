@@ -5,8 +5,17 @@
     let signup_password = ""
     let signup_confirm_password = ""
     let signup_status = false;
+
+    let passwordNotMatching = false
+
     async function signup(){
-        signup_status = await APIs.signup(signup_username, signup_password)
+        if (signup_password == signup_confirm_password) {
+            signup_status = await APIs.signup(signup_username, signup_password)
+            window.location.href = "/"
+        }
+        else {
+            passwordNotMatching = true
+        }
     }
 </script>
 
@@ -23,7 +32,7 @@
         <input type="password" placeholder="Confirm Password" bind:value={signup_confirm_password}>
     </div>
 
-    {#if signup_password != signup_confirm_password}
+    {#if passwordNotMatching}
     <p class="wrong-text">Please confirm your password again.</p>  
     {/if}
     <button on:click={signup}>Sign up</button>
