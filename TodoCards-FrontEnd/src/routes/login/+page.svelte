@@ -30,8 +30,7 @@
     <p class="wrong-text">username or password is incorrect</p>  
 {/if}
 <br>
-<p>If you don't have an account, sign up here</p>
-<button on:click={goToSignup}>Sign Up</button>
+<p>If you don't have an account, sign up <a href="/signup">here</a> </p>
 
 <style>
     @import "../style.css";
