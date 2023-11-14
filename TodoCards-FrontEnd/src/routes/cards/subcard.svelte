@@ -13,14 +13,14 @@
 
 <div class="wrapper">
     {#if subcardinfo.subcardIsFinished}
-        <button class="tick" on:click={finishCard}>
+        <button class="tick bobbing-hover" on:click={finishCard}>
             <i class="fas fa-check-square fa-lg finished"></i>
         </button>
         <span class="finished">
             {subcardinfo.subcardName}
         </span>
     {:else}
-        <button class="tick" on:click={finishCard}>
+        <button class="tick bobbing-hover" on:click={finishCard}>
             <i class="far fa-square fa-lg"></i>
         </button>
         <span>
@@ -32,22 +32,13 @@
 
 <style>
     .wrapper{
-        padding: 5px;
-        margin: 0.5em;
+        margin-left: 1em;
         width: 20em;
     }
     .tick {
+        padding: 10px;
         background-color: transparent;
         border: none;
-        position: relative;
-        left: 0px;
-        top: 0px;
-        transition: 0.1s ease-in-out;
-    }
-    .tick:hover {
-        position: relative;
-        left: -2px;
-        top: -2px;
     }
 
     .finished {

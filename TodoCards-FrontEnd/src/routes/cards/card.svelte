@@ -17,7 +17,7 @@
 
     {#if cardinfo.cardIsFinished}
         <div class="card" style="background-color: lightgrey;">
-            <button class="tick" on:click={finishCard}>
+            <button class="tick bobbing-hover" on:click={finishCard}>
                 <i class="fas fa-check-square fa-lg isFinished"></i>
             </button>
 
@@ -26,7 +26,7 @@
             </button>
 
             {#if showDescription}
-            <button class="edit-button">
+            <button class="edit-button bobbing-hover">
                 <i class="fas fa-edit"></i>
             </button>
             {/if}
@@ -36,7 +36,7 @@
         
     {:else}
         <div class="card" style="background-color: {cardinfo.cardColor};">
-            <button class="tick" on:click={finishCard}>
+            <button class="tick bobbing-hover" on:click={finishCard}>
                 <i class="far fa-square fa-lg"></i>
             </button>
 
@@ -46,7 +46,7 @@
 
             {#if showDescription}
                 <button class="edit-button">
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit bobbing-hover"></i>
                 </button>
             {/if}
         </div>
@@ -54,11 +54,16 @@
     {/if}
     
     {#if showDescription}
-        <div class="description" transition:slide>
+        <div class="description-box" transition:slide>
             <!-- <i class="fas fa-spinner fa-pulse"></i> <br> -->
-            Due {cardinfo.cardDue} <br>
-            {cardinfo.cardDescription}
+            <div>
+                <p> Due {cardinfo.cardDue} </p>
+                <p>{cardinfo.cardDescription} </p>
+            </div>
             <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
+            <button class="add-subcard-button bobbing-hover">
+                <i class="fas fa-plus"></i> Add Subcard
+            </button>
         </div>
     {/if}
 </div>
@@ -88,21 +93,12 @@
         padding-left: 20px;
         background-color: transparent;
         border: none;
-        position: relative;
-        left: 0px;
-        top: 0px;
-        transition: 0.1s ease-in-out;
-    }
-    .tick:hover {
-        position: relative;
-        left: -2px;
-        top: -2px;
     }
 
-    .description {
+    .description-box {
         font-size: small;
         width: 20em;
-        padding: 15px;
+        padding-left: 15px;
     }
 
     .isFinished {
@@ -114,7 +110,6 @@
         background-color: transparent;
         color: rgb(66, 66, 66);
         position: relative;
-        left: 0px;
         top: 0px;
         transition: 0.1s ease-in-out;
         left: -10px;
@@ -122,8 +117,14 @@
     
     .edit-button:hover {
         color: rgb(123, 123, 123);
-        position: relative;
-        left: -12px;
-        top: -2px;
+    }
+
+    .add-subcard-button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .add-subcard-button:hover {
+        color: gray;
     }
 </style>
