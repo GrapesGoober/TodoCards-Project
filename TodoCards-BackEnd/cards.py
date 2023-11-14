@@ -203,7 +203,7 @@ def edit_card(mydb, card_info, username):
                 cardColor = %s
             WHERE cardid = %s
             """,
-            (int(card_info["deckId"]), 
+            (int(card_info["cardId"]), 
              card_info["cardName"], 
              card_info["cardDescription"], 
              card_info["cardDue"],
