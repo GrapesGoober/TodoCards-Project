@@ -119,16 +119,7 @@
     }
 
     .edit-button {
-        border: none;
-        background-color: transparent;
-        color: rgb(66, 66, 66);
-        transition: 0.1s ease-in-out;
-        position: relative;
         left: -10px;
-    }
-    
-    .edit-button:hover {
-        color: rgb(123, 123, 123);
     }
 
     .add-subcard-button {
