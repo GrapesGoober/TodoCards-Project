@@ -8,7 +8,7 @@
 <!--This is the deckslist page (the home page)-->
 <div class="header">
     <h1 class="todo-header">Todo</h1>
-    <div>profilepic</div>
+    <button class="fas fa-user-circle user-btn"></button>
 </div>
 <div>
     <Deckslist></Deckslist>
@@ -51,14 +51,19 @@
         border: none;
         border-radius: 50%;
         color: green;
-        transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+        transition: 0.15s;
     }
     .add-btn:hover {
-        background-color: green;
-        color: white;
+        color: rgb(10, 170, 10);
     }
-    .add-btn:active {
-        background-color: rgb(0, 169, 0);
-        border-color: rgb(0, 169, 0);
+    .user-btn {
+        font-size: xx-large;
+        border: none;
+        color: rgb(89, 89, 89);
+        transition: 0.15s;
+    }
+
+    .user-btn:hover {
+        color: rgb(145, 145, 145);
     }
 </style>
