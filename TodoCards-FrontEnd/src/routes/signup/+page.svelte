@@ -27,10 +27,13 @@
     }
 </script>
 
+<!-- Font Awesome 5 Free -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <div class="signuppage">
     <div class="header">
         <!--might add an icon for going back to login page-->
-        <button class="goback_btn" on:click={goback}>&#60;</button>
+        <button class="goback_btn" on:click={goback}><i class="fas fa-angle-left"></i></button>
         <h1>Sign up</h1>
     </div>
     <div>
