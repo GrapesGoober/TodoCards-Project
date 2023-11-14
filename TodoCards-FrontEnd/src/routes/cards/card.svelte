@@ -58,9 +58,11 @@
             </button>            
 
             {#if showDescription}
-                <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
-                    <i class="fas fa-edit"></i>
-                </button>
+                <div class="edit-button-container">
+                    <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
+                        <i class="fas fa-edit "></i>
+                    </button>
+                </div>
             {/if}
         </div>
 
@@ -118,14 +120,17 @@
         color: grey;
     }
 
+    .edit-button-container {
+        position: relative;
+        top: 10px;
+        left: -10px;
+    }
+
     .edit-button {
         border: none;
         background-color: transparent;
         color: rgb(66, 66, 66);
-        position: relative;
-        top: 0px;
         transition: 0.1s ease-in-out;
-        left: -10px;
     }
     
     .edit-button:hover {
