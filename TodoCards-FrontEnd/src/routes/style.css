@@ -8,13 +8,13 @@ body {
     padding-bottom: 30em;
 }
 
-.bobbing-hover {
+.bobbing-hover * {
     position: relative;
     left: 0px;
     top: 0px;
     transition: 0.1s ease-in-out;
 }
-.bobbing-hover:hover {
+.bobbing-hover:hover * {
     position: relative;
     left: -2px;
     top: -2px;

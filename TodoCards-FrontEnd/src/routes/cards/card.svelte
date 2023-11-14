@@ -58,11 +58,9 @@
             </button>            
 
             {#if showDescription}
-                <div class="edit-button-container">
-                    <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
-                        <i class="fas fa-edit "></i>
-                    </button>
-                </div>
+                <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
+                    <i class="fas fa-edit "></i>
+                </button>
             {/if}
         </div>
 
@@ -77,7 +75,7 @@
             </div>
             <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
             <button class="add-subcard-button bobbing-hover">
-                <i class="fas fa-plus"></i> Add Subcard
+                <i class="fas fa-plus"></i> <span>Add Subcard</span>
             </button>
         </div>
     {/if}
@@ -120,17 +118,13 @@
         color: grey;
     }
 
-    .edit-button-container {
-        position: relative;
-        top: 10px;
-        left: -10px;
-    }
-
     .edit-button {
         border: none;
         background-color: transparent;
         color: rgb(66, 66, 66);
         transition: 0.1s ease-in-out;
+        position: relative;
+        left: -10px;
     }
     
     .edit-button:hover {
