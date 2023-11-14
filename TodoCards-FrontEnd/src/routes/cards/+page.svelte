@@ -25,7 +25,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 {#if deckinfo}
-    <h1>{deckinfo.deckName}</h1>
+    <h1>{deckinfo.deckName}
+        <button class="edit-button">
+            <i class="fas fa-edit"></i>
+        </button>
+    </h1>
+    
     {#if deckinfo.nearestDue != ""}
         <p><b>Nearest Due Date</b> {deckinfo.nearestDue}</p>
     {/if}
