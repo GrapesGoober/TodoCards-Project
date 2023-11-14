@@ -54,6 +54,7 @@
         border-radius: 50%;
         color: green;
         transition: 0.15s;
+        cursor: pointer;
     }
     .add-btn:hover {
         color: rgb(10, 170, 10);
@@ -62,7 +63,9 @@
         font-size: xx-large;
         border: none;
         color: rgb(89, 89, 89);
+        cursor: pointer;
         transition: 0.15s;
+        background-color: white;
     }
 
     .user-btn:hover {
