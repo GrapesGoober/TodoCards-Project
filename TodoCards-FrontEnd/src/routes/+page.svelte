@@ -14,8 +14,8 @@
     <Deckslist></Deckslist>
 </div>
 <div class="header">
-    <button class="edit_btn">Edit</button>
-    <button class="add_btn">+</button>
+    <button class="edit-btn">Edit</button>
+    <button class="fas fa-plus-circle add-btn"></button>
 </div>
 
 <style>
@@ -31,39 +31,33 @@
         align-items: center;
         justify-content: space-between;
     }
-    .edit_btn {
+    .edit-btn {
         font-size: 23px;
         border: none;
         background-color: white;
         cursor: pointer;
     }
-    .edit_btn:hover {
+    .edit-btn:hover {
         color: rgb(100, 100, 100);
     }
-    .edit_btn:active {
+    .edit-btn:active {
         color: rgb(139, 139, 139);
     }
-    .add_btn {
-        font-size: 25px;
-        font-weight: bold;
-        vertical-align: middle;
-        text-align: center;
+    .add-btn {
+        font-size: xx-large;
+        padding: 0;
         height: 40px;
         width: 40px;
+        border: none;
         border-radius: 50%;
-        border-style: solid;
-        border-width: 3.5px;
-        background-color: white;
         color: green;
-        border-color: green;
-
         transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     }
-    .add_btn:hover {
+    .add-btn:hover {
         background-color: green;
         color: white;
     }
-    .add_btn:active {
+    .add-btn:active {
         background-color: rgb(0, 169, 0);
         border-color: rgb(0, 169, 0);
     }
