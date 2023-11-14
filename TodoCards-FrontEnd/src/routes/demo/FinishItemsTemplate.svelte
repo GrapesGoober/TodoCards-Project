@@ -14,6 +14,9 @@
 </script>
 
 <p>finishCardResult = {finishCardResult}</p>
+cardId <input type="text" bind:value={cardId}>
 <input type="button" value="Finish Card!" on:click={finishCard}>
-<p>finishCardResult = {finishSubardResult}</p>
+
+<p>finishSubardResult = {finishSubardResult}</p>
+subcardId <input type="text" bind:value={subcardId}>
 <input type="button" value="Finish Subcard!" on:click={finishSubcard}>

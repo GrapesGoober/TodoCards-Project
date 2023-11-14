@@ -1,15 +1,13 @@
 <script>
     import * as APIs from "$lib"
     import { slide } from "svelte/transition";
+    import Subcardlist from "./subcardlist.svelte";
     export let cardinfo, refresh
     let showDescription = false
     async function finishCard() {
         let status = await APIs.finishCard(cardinfo.cardId)
         if (status == true) {
             refresh()
-        }
-        else {
-            console.log("APIs.finishCard(" + cardinfo.cardId +") returned " + status)
         }
     }
 </script>
@@ -41,9 +39,10 @@
     
     {#if showDescription}
         <div class="description" transition:slide>
-            <i class="fas fa-spinner fa-pulse"></i> <br>
+            <!-- <i class="fas fa-spinner fa-pulse"></i> <br> -->
             Due {cardinfo.cardDue} <br>
             {cardinfo.cardDescription}
+            <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
         </div>
     {/if}
 </div>
