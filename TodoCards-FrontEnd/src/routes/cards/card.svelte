@@ -26,8 +26,8 @@
             </button>
 
             {#if showDescription}
-            <button class="edit-delete-button">
-                <i class="fas fa-trash-alt"></i>
+            <button class="edit-button">
+                <i class="fas fa-edit"></i>
             </button>
             {/if}
         </div>
@@ -45,7 +45,7 @@
             </button>            
 
             {#if showDescription}
-                <button class="edit-delete-button">
+                <button class="edit-button">
                     <i class="fas fa-edit"></i>
                 </button>
             {/if}
@@ -88,7 +88,17 @@
         padding-left: 20px;
         background-color: transparent;
         border: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        transition: 0.1s ease-in-out;
     }
+    .tick:hover {
+        position: relative;
+        left: -2px;
+        top: -2px;
+    }
+
     .description {
         font-size: small;
         width: 20em;
@@ -99,15 +109,18 @@
         color: grey;
     }
 
-    .edit-delete-button {
+    .edit-button {
         border: none;
         background-color: transparent;
         color: rgb(66, 66, 66);
         position: relative;
+        left: 0px;
+        top: 0px;
+        transition: 0.1s ease-in-out;
         left: -10px;
     }
     
-    .edit-delete-button:hover {
+    .edit-button:hover {
         color: rgb(123, 123, 123);
         position: relative;
         left: -12px;

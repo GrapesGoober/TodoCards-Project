@@ -39,6 +39,15 @@
     .tick {
         background-color: transparent;
         border: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        transition: 0.1s ease-in-out;
+    }
+    .tick:hover {
+        position: relative;
+        left: -2px;
+        top: -2px;
     }
 
     .finished {
