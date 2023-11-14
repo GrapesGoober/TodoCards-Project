@@ -2,7 +2,9 @@
     import * as APIs from "$lib"
     import { slide } from "svelte/transition";
     import Subcardlist from "./subcardlist.svelte";
+    import EditcardModal from "./editcardmodal.svelte";
     export let cardinfo, refresh
+    
     let showDescription = false
     async function finishCard() {
         let status = await APIs.finishCard(cardinfo.cardId)
@@ -10,8 +12,20 @@
             refresh()
         }
     }
+    let isEditing = false
+    let currentlyEditingCard
+    function showEdit(cardinfo) {
+        currentlyEditingCard = cardinfo
+        isEditing = true
+    }
+
 </script>
 
+<EditcardModal 
+    bind:showModal={isEditing} 
+    bind:cardInfo={currentlyEditingCard}
+    refresh={refresh}>
+</EditcardModal>
 
 <div class="wrapper">
 
@@ -26,12 +40,11 @@
             </button>
 
             {#if showDescription}
-            <button class="edit-button bobbing-hover">
+            <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
                 <i class="fas fa-edit"></i>
             </button>
             {/if}
         </div>
-
         
         
     {:else}
@@ -45,7 +58,7 @@
             </button>            
 
             {#if showDescription}
-                <button class="edit-button">
+                <button class="edit-button" on:click={()=>{showEdit(cardinfo)}}>
                     <i class="fas fa-edit bobbing-hover"></i>
                 </button>
             {/if}
