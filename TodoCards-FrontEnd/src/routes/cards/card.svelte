@@ -24,7 +24,16 @@
             <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
                 {cardinfo.cardName}
             </button>
+
+            {#if showDescription}
+            <button class="edit-delete-button">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            {/if}
         </div>
+
+        
+        
     {:else}
         <div class="card" style="background-color: {cardinfo.cardColor};">
             <button class="tick" on:click={finishCard}>
@@ -33,8 +42,15 @@
 
             <button class="title" on:click={()=>{showDescription = !showDescription}}>
                 {cardinfo.cardName}
-            </button>
+            </button>            
+
+            {#if showDescription}
+                <button class="edit-delete-button">
+                    <i class="fas fa-edit"></i>
+                </button>
+            {/if}
         </div>
+
     {/if}
     
     {#if showDescription}
@@ -81,5 +97,20 @@
 
     .isFinished {
         color: grey;
+    }
+
+    .edit-delete-button {
+        border: none;
+        background-color: transparent;
+        color: rgb(66, 66, 66);
+        position: relative;
+        left: -10px;
+    }
+    
+    .edit-delete-button:hover {
+        color: rgb(123, 123, 123);
+        position: relative;
+        left: -12px;
+        top: -2px;
     }
 </style>
