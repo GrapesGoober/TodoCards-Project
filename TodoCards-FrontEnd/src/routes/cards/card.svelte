@@ -58,8 +58,8 @@
             </button>            
 
             {#if showDescription}
-                <button class="edit-button" on:click={()=>{showEdit(cardinfo)}}>
-                    <i class="fas fa-edit bobbing-hover"></i>
+                <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
+                    <i class="fas fa-edit"></i>
                 </button>
             {/if}
         </div>
