@@ -125,6 +125,7 @@
     .add-subcard-button {
         background-color: transparent;
         border: none;
+        margin: 5px;
     }
 
     .add-subcard-button:hover {
