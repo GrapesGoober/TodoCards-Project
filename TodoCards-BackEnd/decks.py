@@ -48,7 +48,8 @@ def get_decks_list(mydb, username):
             deck.deckid, deck.deckName, 
             deck.deckdescription, 
             (SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid AND card.cardIsFinished = '0') as nearestDue, 
-            (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors
+            (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors,
+            access.accessType
         FROM deck, access
         WHERE deck.deckid = access.deckid
               AND access.username = %s
@@ -66,14 +67,14 @@ def get_decks_list(mydb, username):
             card_colors = [color.strip() for color in r[4].split(',')]
         else:
             card_colors = []
-
+            
         result[i] = {
             "deckId": int(r[0]),
             "deckName": r[1],
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due,
-            "cardColors" : card_colors
-            
+            "cardColors" : card_colors,
+            "editable" : r[5] == "edit"
         }
         #print(result[i]) 
     mycursor.close()
