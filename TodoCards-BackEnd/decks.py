@@ -73,7 +73,7 @@ def get_decks_list(mydb, username):
             "deckName": r[1],
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due,
-            "cardColors" : card_colors
+            "cardColors" : card_colors,
             "editable" : r[5] == "edit"
         }
         #print(result[i]) 
