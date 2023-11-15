@@ -5,10 +5,10 @@
     
     // Send request to backend to query the cards for us
     let deckslist = []
-    async function getCardslist(){
+    export async function getDeckslist(){
         deckslist = await APIs.getDeckslist()
     }
-    onMount(getCardslist)
+    onMount(getDeckslist)
 
 </script>
 

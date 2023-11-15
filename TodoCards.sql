@@ -54,7 +54,7 @@ CREATE TABLE `card` (
   `cardDescription` text NOT NULL,
   `cardDue` date NOT NULL,
   `cardIsFinished` tinyint(1) NOT NULL,
-  `cardColor` varchar(10) DEFAULT NULL
+  `cardColor` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
