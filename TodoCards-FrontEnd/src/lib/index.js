@@ -102,7 +102,7 @@ export async function finishCard(cardId){
     return await sendAuthBackendRequest("/finish-card", {cardId})
 }
 export async function finishSubcard(subcardId){
-    return await sendAuthBackendRequest("/finish-card", {subcardId})
+    return await sendAuthBackendRequest("/finish-subcard", {subcardId})
 }
 
 export async function getSharecode(deckId){

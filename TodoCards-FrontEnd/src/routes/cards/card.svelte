@@ -7,9 +7,11 @@
     
     let showDescription = false
     async function finishCard() {
-        let status = await APIs.finishCard(cardinfo.cardId)
-        if (status == true) {
-            refresh()
+        if (editable == true) {
+            let status = await APIs.finishCard(cardinfo.cardId)
+            if (status == true) {
+                refresh()
+            }
         }
     }
     let isEditing = false
@@ -31,11 +33,9 @@
 
     {#if cardinfo.cardIsFinished}
         <div class="card" style="background-color: lightgrey;">
-            {#if editable}
-                <button class="tick bobbing-hover" on:click={finishCard}>
-                    <i class="fas fa-check-square fa-lg isFinished"></i>
-                </button>
-            {/if}
+            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
+                <i class="fas fa-check-square fa-lg isFinished"></i>
+            </button>
 
             <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
                 {cardinfo.cardName}
@@ -51,11 +51,9 @@
         
     {:else}
         <div class="card" style="background-color: {cardinfo.cardColor};">
-            {#if editable}
-                <button class="tick bobbing-hover" on:click={finishCard}>
-                    <i class="far fa-square fa-lg"></i>
-                </button>
-            {/if}
+            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
+                <i class="far fa-square fa-lg"></i>
+            </button>
 
             <button class="title" on:click={()=>{showDescription = !showDescription}}>
                 {cardinfo.cardName}
@@ -77,7 +75,7 @@
                 <p> Due {cardinfo.cardDue} </p>
                 <p>{cardinfo.cardDescription} </p>
             </div>
-            <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
+            <Subcardlist bind:cardId={cardinfo.cardId} bind:editable={editable} refresh={refresh}></Subcardlist>
             {#if editable}
                 <button class="add-subcard-button bobbing-hover">
                     <i class="fas fa-plus"></i> <span>Add Subcard</span>

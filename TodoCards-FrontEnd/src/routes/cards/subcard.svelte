@@ -1,11 +1,12 @@
 <script>
     import * as APIs from "$lib"
-    export let subcardinfo, refresh
-    async function finishCard() {
-        let status = await APIs.finishSubcard(subcardinfo.subcardId)
-        console.log(status)
-        if (status == true) {
-            refresh()
+    export let subcardinfo, refresh, editable
+    async function finishSubcard() {
+        if (editable == true) {
+            let status = await APIs.finishSubcard(subcardinfo.subcardId)
+            if (status == true) {
+                await refresh()
+            }
         }
     }
 </script>
@@ -13,14 +14,14 @@
 
 <div class="wrapper">
     {#if subcardinfo.subcardIsFinished}
-        <button class="tick bobbing-hover" on:click={finishCard}>
+        <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
             <i class="fas fa-check-square fa-lg finished"></i>
         </button>
         <span class="finished">
             {subcardinfo.subcardName}
         </span>
     {:else}
-        <button class="tick bobbing-hover" on:click={finishCard}>
+        <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
             <i class="far fa-square fa-lg"></i>
         </button>
         <span>
