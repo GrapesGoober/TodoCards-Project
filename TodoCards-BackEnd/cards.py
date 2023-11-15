@@ -5,6 +5,7 @@
 # using this access check function for the "create card" feature
 #from decks import check_deck_view_access, check_deck_edit_access
 import decks
+from datetime import datetime
 
 # Utility function to check access for your card_id
 def check_card_view_access(mydb, card_id, username):
@@ -103,11 +104,16 @@ def get_cards_list(mydb, deck_id, username):
     
     result = mycursor.fetchall()
     for i, r in enumerate(result):
+        if r[3] != None:
+            format_due = r[3].strftime('%d %B %Y')
+            #formatted_nearest_due = int(r[3])
+        else:
+            format_due = ""
         result[i] = {
             "cardId": int(r[0]),
             "cardName": r[1],
             "cardDescription": r[2],
-            "cardDue": r[3],
+            "cardDue": format_due,
             "cardIsFinished": r[4],
             "cardColor": r[5]
         }
@@ -191,11 +197,15 @@ def edit_card(mydb, card_info, username):
     
     #print(card_info["cardid"])
     if check_card_edit_access(mydb, int(card_info["cardId"]), username):
+        
+        # format datestring into date object
+        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+
         mycursor = mydb.cursor()
         mycursor.execute(
             """
             UPDATE card
-            SET deckId = %s,
+            SET 
                 cardName = %s,
                 cardDescription = %s,
                 cardDue = %s,
@@ -203,10 +213,10 @@ def edit_card(mydb, card_info, username):
                 cardColor = %s
             WHERE cardid = %s
             """,
-            (int(card_info["deckId"]), 
+            (
              card_info["cardName"], 
              card_info["cardDescription"], 
-             card_info["cardDue"],
+             dateObj,
              card_info["cardIsFinished"], 
              card_info["cardColor"], 
              int(card_info["cardId"]))
