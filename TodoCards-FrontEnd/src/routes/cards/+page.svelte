@@ -38,9 +38,12 @@
 
 {#if deckinfo}
     <h1>{deckinfo.deckName}
-        <button class="edit-button bobbing-hover" on:click={showEditDeckModal}>
-            <i class="fas fa-edit"></i>
-        </button>
+        {#if deckinfo.editable}
+            <button class="edit-button bobbing-hover" on:click={showEditDeckModal}>
+                <i class="fas fa-edit"></i>
+            </button>
+        {/if}
+        
     </h1>
     
     {#if deckinfo.nearestDue != ""}
@@ -51,11 +54,13 @@
 
 <button on:click={getCardslistAndDeckInfo}>refresh</button>
 
+{#if deckinfo != null}
 <div>
     {#each cardslist as card}
-        <Card bind:cardinfo={card} refresh={getCardslistAndDeckInfo}></Card>
+        <Card bind:cardinfo={card} bind:editable={deckinfo.editable} refresh={getCardslistAndDeckInfo}></Card>
     {/each}
 </div>
+{/if}
 
 <style>
     @import "../style.css";
