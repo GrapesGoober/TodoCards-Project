@@ -158,14 +158,66 @@ def create_deck(mydb, deck_info, access_info, username):
     )
 
     deck_id = mycursor.lastrowid
+    addAccess(mydb, deck_id, "edit", username)
+    for people in access_info.keys():
+        addAccess(mydb, deck_id, access_info[people], people)
+          
+    return True
+
+
+'''
+Note that this will not generate a duplicate access record when another already exists. 
+If the target access already exists, simply do nothing and return true. 
+(also, this function does not need to check access for the access giver. 
+Since this function will be used only by create_deck and recieve_sharecode, 
+both of these functions will check the giver's access beforehand)
+'''
+def addAccess(mydb, deck_id, access_type, username):
+    mycursor = mydb.cursor()
     mycursor.execute(
         """
-        INSERT INTO `access` (`username`, `deckid`, `accessType`) 
-        VALUES (%s, %s, %s)
-        """,
-        (username, deck_id, access_info["accessType"])
-    )
-          
+        SELECT 
+            username, deckid, accessType 
+        FROM access
+        WHERE username = %s
+            AND deckid = %s
+            AND accessType = %s
+        """, (username, deck_id, access_type))
+    
+    result = mycursor.fetchall()
     mycursor.close()
     mydb.commit()
+
+    if not result:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            INSERT INTO `access` (`username`, `deckId`, `accessType`) 
+            VALUES (%s, %s, %s)
+            """,
+            (username, deck_id, access_type)
+        )
+        mycursor.close()
+        mydb.commit()
+
+    #else:
+        #print("record exists")
     return True
+
+
+def removeAccess(mydb, deck_id, removee_username, remover_username):
+    if check_deck_view_access(mydb, deck_id, remover_username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM access
+                WHERE deckid = %s
+                    AND username = %s
+                """, (deck_id, removee_username)
+            )
+        mycursor.close()
+        mydb.commit()
+
+    else:
+        print("remover_username does not have access")
+    return False
