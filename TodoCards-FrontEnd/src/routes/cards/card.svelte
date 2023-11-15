@@ -75,12 +75,11 @@
                 <p> Due {cardinfo.cardDue} </p>
                 <p>{cardinfo.cardDescription} </p>
             </div>
-            <Subcardlist bind:cardId={cardinfo.cardId} bind:editable={editable} refresh={refresh}></Subcardlist>
-            {#if editable}
-                <button class="add-subcard-button bobbing-hover">
-                    <i class="fas fa-plus"></i> <span>Add Subcard</span>
-                </button>
-            {/if}
+            <Subcardlist 
+                bind:cardId={cardinfo.cardId} 
+                bind:editable={editable} 
+                refresh={refresh}>
+            </Subcardlist>
         </div>
     {/if}
 </div>
@@ -124,15 +123,5 @@
 
     .edit-button {
         left: -10px;
-    }
-
-    .add-subcard-button {
-        background-color: transparent;
-        border: none;
-        margin: 5px;
-    }
-
-    .add-subcard-button:hover {
-        color: gray;
     }
 </style>
