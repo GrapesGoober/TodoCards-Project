@@ -20,6 +20,11 @@
         <span class="finished">
             {subcardinfo.subcardName}
         </span>
+        {#if editable}
+            <button class="tick trash bobbing-hover" on:click={finishSubcard}>
+                <i class="fas fa-trash-alt finished"></i>
+            </button>
+        {/if}
     {:else}
         <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
             <i class="far fa-square fa-lg"></i>
@@ -32,9 +37,17 @@
 
 
 <style>
+    span {
+        width: 1em;
+    }
+
     .wrapper{
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin-left: 1em;
-        width: 20em;
+        width: 17em;
     }
     .tick {
         padding: 10px;
@@ -46,4 +59,8 @@
         color: grey;
     }
     
+    .trash {
+        position: absolute;
+        left: 80%;        
+    }
 </style>
