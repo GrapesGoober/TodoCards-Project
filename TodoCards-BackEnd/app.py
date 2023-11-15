@@ -44,7 +44,6 @@ def login():
 
     # login function returns either true or false
     status = user.login(mydb, username, password)
-    print(status)
     if status: 
         session["username"] = username
     elif "username" in session:
