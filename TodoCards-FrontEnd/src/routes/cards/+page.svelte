@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
 	import Card from './card.svelte'
     import EditdeckModal from "./editdeckmodal.svelte";
+    import Createcardmodal from "./createcardmodal.svelte";
 
     // Send request to backend to query the cards for us
     let cardslist = []
@@ -24,19 +25,31 @@
         isEditing = true
     }
 
+    let isAdding = false
+    async function showAddCardModal() {
+        isAdding = true
+    }
     
 </script>
 
 <!-- Font Awesome 5 Free -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<EditdeckModal
-    bind:showModal={isEditing} 
-    bind:deckInfo={deckinfo}
-    refresh={getCardslistAndDeckInfo}>
-</EditdeckModal>
+
 
 {#if deckinfo}
+    <EditdeckModal
+        bind:showModal={isEditing} 
+        bind:deckInfo={deckinfo}
+        refresh={getCardslistAndDeckInfo}>
+    </EditdeckModal>
+
+    <Createcardmodal
+        bind:showModal={isAdding} 
+        bind:deckId={deckinfo.deckId}
+        refresh={getCardslistAndDeckInfo}>
+    </Createcardmodal>
+    
     <h1>{deckinfo.deckName}
         {#if deckinfo.editable}
             <button class="edit-button bobbing-hover" on:click={showEditDeckModal}>
@@ -62,10 +75,26 @@
 </div>
 {/if}
 
+<button class="fas fa-plus-circle add-btn" on:click={showAddCardModal}></button>
+
 <style>
     @import "../style.css";
 
     .edit-button {
         left: 10px;
+    }
+    .add-btn {
+        font-size: xx-large;
+        padding: 0;
+        height: 40px;
+        width: 40px;
+        border: none;
+        border-radius: 50%;
+        color: green;
+        transition: 0.15s;
+        cursor: pointer;
+    }
+    .add-btn:hover {
+        color: rgb(10, 170, 10);
     }
 </style>
