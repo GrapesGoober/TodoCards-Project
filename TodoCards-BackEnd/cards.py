@@ -233,19 +233,16 @@ def edit_card(mydb, card_info, username):
 # must also check edit access
 # returns True if success, False otherwise
 def edit_subcard(mydb, subcard_info, username):
-    if check_subcard_edit_access(mydb, int(subcard_info["cardId"]), username):
+    if check_subcard_edit_access(mydb, int(subcard_info["subcardId"]), username):
         mycursor = mydb.cursor()
         mycursor.execute(
             """
             UPDATE subcard
-            SET cardid = %s,
-                scardName = %s,
-                scardIsFinished = %s
+            SET 
+                scardName = %s
             WHERE scardid = %s
             """,
-            (int(subcard_info["cardId"]), 
-             subcard_info["subcardName"], 
-             subcard_info["subcardIsFinished"],
+            (subcard_info["subcardName"], 
              int(subcard_info["subcardId"]) )
         )
           
