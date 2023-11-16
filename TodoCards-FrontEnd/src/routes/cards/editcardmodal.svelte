@@ -1,6 +1,7 @@
 <script>
     import * as APIs from "$lib"
     import Modal from "../modal.svelte"
+    import ColorPicker from "./colorPicker.svelte";
     export let showModal = false, cardInfo, refresh
 
     async function editCard(){
@@ -44,7 +45,7 @@
 
     <div class="card-color">
         <p class="deckinfo-txt">Color</p>
-        <input class="color-input" type="text" placeholder="cardColo" bind:value={cardInfo.cardColor}>
+        <ColorPicker bind:selectedColor={cardInfo.cardColor}></ColorPicker>
     </div>
 
 
@@ -112,10 +113,6 @@
         margin-right: 20px;
         margin-top: 18px;
         margin-bottom: 10px;
-    }
-    .color-input {
-        margin-left: 8px;
-        width: 200px;
     }
 
     .delete-submit {
