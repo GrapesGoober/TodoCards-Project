@@ -185,7 +185,7 @@ def delete_subcard():
     jsonbody = request.get_json()
     subcard_id = jsonbody.get("subcardId")
     username = session.get("username")
-    status = cards.delete_card(mydb, subcard_id, username)
+    status = cards.delete_subcard(mydb, subcard_id, username)
     return jsonify(status)
 
 @app.route("/api/get-sharecode", methods=["POST"])
