@@ -1,6 +1,5 @@
 <script>
     import * as APIs from "$lib"
-    import { slide } from "svelte/transition";
     import Subcardlist from "./subcardlist.svelte";
     import EditcardModal from "./editcardmodal.svelte";
     export let cardinfo, refresh, editable
@@ -69,7 +68,7 @@
     {/if}
     
     {#if showDescription}
-        <div class="description-box" transition:slide>
+        <div class="description-box">
             <!-- <i class="fas fa-spinner fa-pulse"></i> <br> -->
             <div>
                 <p> Due {cardinfo.cardDue} </p>
