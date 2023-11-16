@@ -22,11 +22,13 @@
 
 </script>
 
+{#if isEditing}
 <EditcardModal 
     bind:showModal={isEditing} 
     bind:cardInfo={currentlyEditingCard}
     refresh={refresh}>
 </EditcardModal>
+{/if}
 
 <div class="wrapper">
 
