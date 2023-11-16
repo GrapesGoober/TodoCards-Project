@@ -1,8 +1,12 @@
 <script>
     import * as APIs from "$lib"
 	import { clickOutside } from './clickOutside.js';
+
     export let subcardinfo, refresh, editable
+    let isSelected = false, isEditing = false, currentlyEditingSubcard
+    
     async function finishSubcard() {
+        // need to do editable check since the check buttons still exist for view-only
         if (editable == true) {
             let status = await APIs.finishSubcard(subcardinfo.subcardId)
             if (status == true) {
@@ -10,35 +14,75 @@
             }
         }
     }
+
+    async function deleteSubcard() {
+        let status = await APIs.deleteSubcard(subcardinfo.subcardId)
+        if (status == true) {
+            await refresh()
+        }
+    }
+
+    async function editSubcard() {
+        let status = await APIs.editSubcard(currentlyEditingSubcard)
+        if (status == true) {
+            await refresh()
+            isSelected = false
+            isEditing = false
+        }
+    }
+
+    function editMode() {
+        isEditing = true
+        isSelected = false
+        currentlyEditingSubcard = subcardinfo
+    }
+
+    function selectSubcard() {
+        if (!isEditing) {
+            isSelected = !isSelected
+        }
+    }
     
-    let isSelected = false
 </script>
 
 
 <button 
     class="wrapper {isSelected ? "selected" : ""}" 
-    on:click={()=> {isSelected=!isSelected}}
-    use:clickOutside on:click_outside={()=>{isSelected = false}}>
+    on:click={selectSubcard}
+    use:clickOutside on:click_outside={()=>{isSelected = false, isEditing = false}}>
 
     {#if subcardinfo.subcardIsFinished}
         <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
-            <i class="fas fa-check-square fa-lg finished"></i>
+            <i class="fas fa-check-square fa-lg grey"></i>
         </button>
-        <span class="finished">
+        <span class="grey">
             {subcardinfo.subcardName}
         </span>
         {#if editable && isSelected}
-            <button class="tick trash bobbing-hover" on:click={finishSubcard}>
-                <i class="fas fa-trash-alt finished"></i>
+            <button class="tick selected-icon bobbing-hover" on:click={deleteSubcard}>
+                <i class="fas fa-trash-alt grey"></i>
             </button>
         {/if}
     {:else}
-        <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
-            <i class="far fa-square fa-lg"></i>
-        </button>
-        <span>
-            {subcardinfo.subcardName}
-        </span>
+    
+        {#if !isEditing}
+            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
+                <i class="far fa-square fa-lg"></i>
+            </button>
+            <span>
+                {subcardinfo.subcardName}
+            </span>
+            {#if editable && isSelected}
+                <button class="tick selected-icon bobbing-hover" on:click={editMode}>
+                    <i class="fas fa-edit grey"></i>
+                </button>
+            {/if}
+        {:else}
+            <input class="textbox" type="text" placeholder="subcard name" bind:value={subcardinfo.subcardName}>
+            <button class="tick-circle green bobbing-hover" on:click={editSubcard}>
+                <i class="far fa-check-circle"></i>
+            </button>
+        {/if}
     {/if}
 </button>
 
@@ -65,12 +109,29 @@
         border: none;
     }
 
-    .finished {
+    .grey {
         color: grey;
     }
     
-    .trash {
+    .selected-icon {
         position: absolute;
-        left: 80%;        
+        left: 24em;        
+    }
+    
+    .textbox {
+        padding: 10px;
+        background-color: lightgrey;
+        border: none;
+    }
+
+    .tick-circle {
+        font-size: x-large;
+        border: none;
+        background-color: transparent;
+        position: relative;
+    }
+
+    .green {
+        color: green;
     }
 </style>
