@@ -39,42 +39,25 @@
 
 <div class="wrapper">
 
-    {#if cardinfo.cardIsFinished}
-        <div class="card" style="background-color: lightgrey;">
-            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
+    <div class="card" style="background-color: {cardinfo.cardIsFinished ? "lightgrey" : cardinfo.cardColor};">
+        <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
+            {#if cardinfo.cardIsFinished}
                 <i class="fas fa-check-square fa-lg isFinished"></i>
-            </button>
-
-            <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
-                {cardinfo.cardName}
-            </button>
-
-            {#if showDescription && editable}
-            <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
-                <i class="fas fa-edit"></i>
-            </button>
-            {/if}
-        </div>
-        
-        
-    {:else}
-        <div class="card" style="background-color: {cardinfo.cardColor};">
-            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
+            {:else}
                 <i class="far fa-square fa-lg"></i>
-            </button>
-
-            <button class="title" on:click={()=>{showDescription = !showDescription}}>
-                {cardinfo.cardName}
-            </button>            
-
-            {#if showDescription && editable}
-                <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
-                    <i class="fas fa-edit "></i>
-                </button>
             {/if}
-        </div>
+        </button>
 
-    {/if}
+        <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
+            {cardinfo.cardName}
+        </button>
+
+        {#if showDescription && editable}
+        <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
+            <i class="fas fa-edit"></i>
+        </button>
+        {/if}
+    </div>
     
     {#if showDescription}
         <div class="description-box">
