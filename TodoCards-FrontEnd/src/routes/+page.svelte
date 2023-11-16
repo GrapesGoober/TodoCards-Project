@@ -8,6 +8,10 @@
     function addDeck() {
         isAdding = true
     }
+
+    async function gotoUserSetting(){
+        window.location.href = "/usersetting";
+    }
 </script>
 
 <Adddeckmodal
@@ -20,7 +24,7 @@
 <!--This is the deckslist page (the home page)-->
 <div class="header">
     <h1 class="todo-header">Todo</h1>
-    <button class="fas fa-user-circle user-btn"></button>
+    <button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
 </div>
 <div>
     <Deckslist getDeckslist={refreshCards}></Deckslist>
