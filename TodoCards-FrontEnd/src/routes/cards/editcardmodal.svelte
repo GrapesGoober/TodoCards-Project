@@ -12,6 +12,13 @@
             showModal = false
         }
     }
+    async function deleteCard(){
+        let status = await APIs.deleteCard(cardInfo.cardId)
+        if (status == true) {
+            await refresh()
+            showModal = false
+        }
+    }
     function cancel() {
         showModal = false
     }
@@ -51,10 +58,13 @@
 
 
     <div class="delete-submit">
-        <i class="fas fa-trash-alt deletedeck"></i>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <i class="fas fa-check-circle submit" on:click={editCard}></i>
+        <button class="red-button bobbing-hover" on:click={deleteCard}>
+            <i class="fas fa-trash-alt"></i>
+        </button>
+
+        <button class="green-button bobbing-hover" on:click={editCard}>
+            <i class="fas fa-check-circle"></i>
+        </button>
     </div>
 </Modal>
 
@@ -120,20 +130,25 @@
         justify-content: space-between;
         align-items: center;
     }
-    .deletedeck {
+    .red-button {
         color: rgb(187, 0, 0);
         font-size: 20px;
         cursor: pointer;
     }
-    .deletedeck:active {
+    .red-button:hover {
         color: rgb(229, 0, 0);
     }
-    .submit {
+    .green-button {
         color: green;
         font-size: 20px;
         cursor: pointer;
     }
-    .submit:active {
+    .green-button:hover {
         color: rgb(0, 194, 0);
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
     }
 </style>
