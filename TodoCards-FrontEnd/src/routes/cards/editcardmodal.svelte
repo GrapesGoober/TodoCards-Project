@@ -2,6 +2,7 @@
     import * as APIs from "$lib"
     import Modal from "../modal.svelte"
     import ColorPicker from "./colorPicker.svelte";
+    import Datepicker from "./datepicker.svelte";
     export let showModal = false, cardInfo, refresh
 
     async function editCard(){
@@ -39,7 +40,7 @@
 
     <div class="deck-description">
         <p class="deckinfo-txt">Due date</p>
-        <input type="text" placeholder="datepicker" bind:value={cardInfo.cardDue}>
+        <Datepicker bind:cardDue={cardInfo.cardDue}></Datepicker>
     </div>
 
 
