@@ -19,6 +19,13 @@
         currentlyEditingCard = cardinfo
         isEditing = true
     }
+    
+    let cardDue_dateObj = new Date(cardinfo.cardDue)
+    let formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short'
+    }).format(cardDue_dateObj);
 
 </script>
 
@@ -73,7 +80,7 @@
         <div class="description-box">
             <!-- <i class="fas fa-spinner fa-pulse"></i> <br> -->
             <div>
-                <p> Due {cardinfo.cardDue} </p>
+                <p> Due {formattedDate} </p>
                 <p>{cardinfo.cardDescription} </p>
             </div>
             <Subcardlist 

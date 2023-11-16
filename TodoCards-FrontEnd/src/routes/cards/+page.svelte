@@ -8,6 +8,7 @@
     // Send request to backend to query the cards for us
     let cardslist = []
     let deckinfo
+    let formattedDeckDue = ""
     async function getCardslistAndDeckInfo(){
         // get the cardslist
         let searchParams = new URLSearchParams(window.location.search)
@@ -17,6 +18,19 @@
         // also get the deck info to display as well
         let deckslist = await APIs.getDeckslist()
         deckinfo = deckslist.find(deck => deck.deckId == deckId)
+
+        if (deckinfo == null) {
+            window.location.href = "/"
+        }
+        
+        if (deckinfo.nearestDue != "") {
+            let cardDue_dateObj = new Date(deckinfo.nearestDue)
+            formattedDeckDue = new Intl.DateTimeFormat('en-US', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short'
+            }).format(cardDue_dateObj);
+        }
     }
     onMount(getCardslistAndDeckInfo)
     
@@ -29,6 +43,7 @@
     async function showAddCardModal() {
         isAdding = true
     }
+
     
 </script>
 
@@ -59,8 +74,8 @@
         
     </h1>
     
-    {#if deckinfo.nearestDue != ""}
-        <p><b>Nearest Due Date</b> {deckinfo.nearestDue}</p>
+    {#if formattedDeckDue != ""}
+        <p><b>Nearest Due Date</b> {formattedDeckDue}</p>
     {/if}
     <p>{deckinfo.deckDescription}</p>
 {/if}
