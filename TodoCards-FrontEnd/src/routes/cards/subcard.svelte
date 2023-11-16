@@ -1,5 +1,6 @@
 <script>
     import * as APIs from "$lib"
+	import { clickOutside } from './clickOutside.js';
     export let subcardinfo, refresh, editable
     async function finishSubcard() {
         if (editable == true) {
@@ -9,10 +10,16 @@
             }
         }
     }
+    
+    let isSelected = false
 </script>
 
 
-<div class="wrapper">
+<button 
+    class="wrapper {isSelected ? "selected" : ""}" 
+    on:click={()=> {isSelected=!isSelected}}
+    use:clickOutside on:click_outside={()=>{isSelected = false}}>
+
     {#if subcardinfo.subcardIsFinished}
         <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishSubcard}>
             <i class="fas fa-check-square fa-lg finished"></i>
@@ -20,7 +27,7 @@
         <span class="finished">
             {subcardinfo.subcardName}
         </span>
-        {#if editable}
+        {#if editable && isSelected}
             <button class="tick trash bobbing-hover" on:click={finishSubcard}>
                 <i class="fas fa-trash-alt finished"></i>
             </button>
@@ -33,13 +40,10 @@
             {subcardinfo.subcardName}
         </span>
     {/if}
-</div>
+</button>
 
 
 <style>
-    span {
-        width: 1em;
-    }
 
     .wrapper{
         display: block;
@@ -47,7 +51,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
         margin-left: 1em;
-        width: 17em;
+        width: 20em;
+        border: none;
+        background-color: transparent;
+        text-align: left;
+    }
+    .selected {
+        border: 1px solid black;
     }
     .tick {
         padding: 10px;
