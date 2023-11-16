@@ -55,7 +55,7 @@
 {#if deckinfo}
     <EditdeckModal
         bind:showModal={isEditing} 
-        bind:deckInfo={deckinfo}
+        deckInfo={deckinfo}
         refresh={getCardslistAndDeckInfo}>
     </EditdeckModal>
 
