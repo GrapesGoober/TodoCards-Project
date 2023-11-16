@@ -1,12 +1,10 @@
 <script>
-    import { fade } from "svelte/transition"
-
     export let showModal = false
 
 </script>
 
 {#if showModal}
-    <div class="modal-backdrop" transition:fade>
+    <div class="modal-backdrop">
         <div class="modal-box">
             <slot></slot>
         </div>
