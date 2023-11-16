@@ -1,7 +1,6 @@
 <script>
     import * as APIs from "$lib"
     import { onMount } from "svelte";
-    import { slide } from "svelte/transition";
     import Addsubcarditem from "./addsubcarditem.svelte";
     import Subcard from "./subcard.svelte";
     export let cardId, refresh, editable
@@ -30,7 +29,7 @@
 </Addsubcarditem>
 
 {#if editable && !isAddSubcard}
-    <button class="add-subcard-button bobbing-hover" on:click={showAddSubcard} transition:slide>
+    <button class="add-subcard-button bobbing-hover" on:click={showAddSubcard}>
         <i class="fas fa-plus"></i> <span>Add Subcard</span>
     </button>
 {/if}
