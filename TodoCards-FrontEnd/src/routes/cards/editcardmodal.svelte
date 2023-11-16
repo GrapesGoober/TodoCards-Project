@@ -56,6 +56,7 @@
         <ColorPicker bind:selectedColor={cardInfo.cardColor}></ColorPicker>
     </div>
 
+    <br> <br>
 
     <div class="delete-submit">
         <button class="red-button bobbing-hover" on:click={deleteCard}>
