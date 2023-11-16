@@ -75,7 +75,9 @@
 </div>
 {/if}
 
+{#if deckinfo && deckinfo.editable}
 <button class="fas fa-plus-circle add-btn" on:click={showAddCardModal}></button>
+{/if}
 
 <style>
     @import "../style.css";
