@@ -24,26 +24,26 @@
     </div>
 
 
-    <div class="deck-name">
-        <p class="deckinfo-txt">Card Name</p>
+    <div class="name">
+        <p class="info-txt">Card Name</p>
         <input type="text" placeholder="Name" bind:value={cardInfo.cardName}>
     </div>
 
 
-    <div class="deck-description">
-        <p class="deckinfo-txt">Description</p>
+    <div class="description">
+        <p class="info-txt">Description</p>
         <input type="text" placeholder="Card Description" bind:value={cardInfo.cardDescription}>
     </div>
 
 
-    <div class="deck-description">
-        <p class="deckinfo-txt">Due date</p>
+    <div class="description">
+        <p class="info-txt">Due date</p>
         <input type="text" placeholder="datepicker" bind:value={cardInfo.cardDue}>
     </div>
 
 
     <div class="card-color">
-        <p class="deckinfo-txt">Color</p>
+        <p class="info-txt">Color</p>
         <input class="color-input" type="text" placeholder="cardColo" bind:value={cardInfo.cardColor}>
     </div>
 
@@ -80,7 +80,7 @@
         display: flex;
         align-items: center;
     }
-    .deck-name, .deck-description, .delete-submit {
+    .name, .description, .delete-submit {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 10px;
@@ -90,7 +90,7 @@
         margin: 10px;
     }
 
-    .deckinfo-txt {
+    .info-txt {
         margin-bottom: 4px;
     }
 

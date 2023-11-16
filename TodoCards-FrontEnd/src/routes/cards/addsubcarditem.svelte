@@ -42,11 +42,16 @@
         display: flex;
     }
     .textbox {
-        padding: 10px;
+        align-items: center;
+        padding-left: 10px;
+        padding-bottom: 2px;
+        border-radius: 4px;
         background-color: lightgrey;
         border: none;
     }
-
+    .textbox:focus {
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+    }
     .tick {
         font-size: x-large;
         border: none;

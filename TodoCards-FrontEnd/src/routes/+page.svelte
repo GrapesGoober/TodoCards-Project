@@ -44,18 +44,6 @@
         align-items: center;
         justify-content: space-between;
     }
-    .edit-btn {
-        font-size: 23px;
-        border: none;
-        background-color: white;
-        cursor: pointer;
-    }
-    .edit-btn:hover {
-        color: rgb(100, 100, 100);
-    }
-    .edit-btn:active {
-        color: rgb(139, 139, 139);
-    }
     .add-btn {
         font-size: xx-large;
         padding: 0;

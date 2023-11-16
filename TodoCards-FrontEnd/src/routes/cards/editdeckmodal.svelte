@@ -237,7 +237,6 @@
 
     .delete-submit {
         justify-content: space-between;
-        align-items: center;
     }
     .deletedeck {
         color: rgb(187, 0, 0);
