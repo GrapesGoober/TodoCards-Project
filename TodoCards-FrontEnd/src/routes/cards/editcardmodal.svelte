@@ -6,7 +6,7 @@
     async function editCard(){
         let status = await APIs.editCard(cardInfo)
         if (status == true) {
-            refresh()
+            await refresh()
             showModal = false
         }
     }

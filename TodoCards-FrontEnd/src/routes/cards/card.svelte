@@ -3,13 +3,15 @@
     import { slide } from "svelte/transition";
     import Subcardlist from "./subcardlist.svelte";
     import EditcardModal from "./editcardmodal.svelte";
-    export let cardinfo, refresh
+    export let cardinfo, refresh, editable
     
     let showDescription = false
     async function finishCard() {
-        let status = await APIs.finishCard(cardinfo.cardId)
-        if (status == true) {
-            refresh()
+        if (editable == true) {
+            let status = await APIs.finishCard(cardinfo.cardId)
+            if (status == true) {
+                refresh()
+            }
         }
     }
     let isEditing = false
@@ -31,7 +33,7 @@
 
     {#if cardinfo.cardIsFinished}
         <div class="card" style="background-color: lightgrey;">
-            <button class="tick bobbing-hover" on:click={finishCard}>
+            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
                 <i class="fas fa-check-square fa-lg isFinished"></i>
             </button>
 
@@ -39,7 +41,7 @@
                 {cardinfo.cardName}
             </button>
 
-            {#if showDescription}
+            {#if showDescription && editable}
             <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
                 <i class="fas fa-edit"></i>
             </button>
@@ -49,7 +51,7 @@
         
     {:else}
         <div class="card" style="background-color: {cardinfo.cardColor};">
-            <button class="tick bobbing-hover" on:click={finishCard}>
+            <button class="tick {editable ? "bobbing-hover" : ""}" on:click={finishCard}>
                 <i class="far fa-square fa-lg"></i>
             </button>
 
@@ -57,7 +59,7 @@
                 {cardinfo.cardName}
             </button>            
 
-            {#if showDescription}
+            {#if showDescription && editable}
                 <button class="edit-button bobbing-hover" on:click={()=>{showEdit(cardinfo)}}>
                     <i class="fas fa-edit "></i>
                 </button>
@@ -73,10 +75,11 @@
                 <p> Due {cardinfo.cardDue} </p>
                 <p>{cardinfo.cardDescription} </p>
             </div>
-            <Subcardlist bind:cardId={cardinfo.cardId} refresh={refresh}></Subcardlist>
-            <button class="add-subcard-button bobbing-hover">
-                <i class="fas fa-plus"></i> <span>Add Subcard</span>
-            </button>
+            <Subcardlist 
+                bind:cardId={cardinfo.cardId} 
+                bind:editable={editable} 
+                refresh={refresh}>
+            </Subcardlist>
         </div>
     {/if}
 </div>
@@ -120,15 +123,5 @@
 
     .edit-button {
         left: -10px;
-    }
-
-    .add-subcard-button {
-        background-color: transparent;
-        border: none;
-        margin: 5px;
-    }
-
-    .add-subcard-button:hover {
-        color: gray;
     }
 </style>

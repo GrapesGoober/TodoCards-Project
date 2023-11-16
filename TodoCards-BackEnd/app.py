@@ -44,7 +44,6 @@ def login():
 
     # login function returns either true or false
     status = user.login(mydb, username, password)
-    print(status)
     if status: 
         session["username"] = username
     elif "username" in session:
@@ -151,16 +150,18 @@ def create_deck():
 def create_card():
     jsonbody = request.get_json()
     card_info = jsonbody.get("cardInfo")
+    deck_id = jsonbody.get("deckId") 
     username = session.get("username")
-    status = cards.create_card(mydb, card_info, username)
+    status = cards.create_card(mydb, deck_id, card_info, username)
     return jsonify(status)
 
 @app.route("/api/create-subcard", methods=["POST"])
 def create_subcard():
     jsonbody = request.get_json()
     subcard_info = jsonbody.get("subcardInfo")
+    card_id = jsonbody.get("cardId")
     username = session.get("username")
-    status = cards.create_subcard(mydb, subcard_info, username)
+    status = cards.create_subcard(mydb, card_id, subcard_info, username)
     return jsonify(status)
 
 @app.route("/api/delete-deck", methods=["POST"])

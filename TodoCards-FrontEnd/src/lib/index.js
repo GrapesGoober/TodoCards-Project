@@ -74,12 +74,12 @@ export async function editDeck(deckInfo){
     return await sendAuthBackendRequest("/edit-deck", {deckInfo})
 }
 
-export async function createCard(cardInfo){
-    return await sendAuthBackendRequest("/create-card", {cardInfo})
+export async function createCard(deckId, cardInfo){
+    return await sendAuthBackendRequest("/create-card", {deckId, cardInfo})
 }
 
-export async function createSubcard(subcardInfo){
-    return await sendAuthBackendRequest("/create-subcard", {subcardInfo})
+export async function createSubcard(cardId, subcardInfo){
+    return await sendAuthBackendRequest("/create-subcard", {cardId, subcardInfo})
 }
 
 export async function createDeck(deckInfo){
@@ -102,7 +102,7 @@ export async function finishCard(cardId){
     return await sendAuthBackendRequest("/finish-card", {cardId})
 }
 export async function finishSubcard(subcardId){
-    return await sendAuthBackendRequest("/finish-card", {subcardId})
+    return await sendAuthBackendRequest("/finish-subcard", {subcardId})
 }
 
 export async function getSharecode(deckId){

@@ -48,7 +48,8 @@ def get_decks_list(mydb, username):
             deck.deckid, deck.deckName, 
             deck.deckdescription, 
             (SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid AND card.cardIsFinished = '0') as nearestDue, 
-            (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors
+            (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors,
+            access.accessType
         FROM deck, access
         WHERE deck.deckid = access.deckid
               AND access.username = %s
@@ -66,14 +67,14 @@ def get_decks_list(mydb, username):
             card_colors = [color.strip() for color in r[4].split(',')]
         else:
             card_colors = []
-
+            
         result[i] = {
             "deckId": int(r[0]),
             "deckName": r[1],
             "deckDescription": r[2],
             "nearestDue" : formatted_nearest_due,
-            "cardColors" : card_colors
-            
+            "cardColors" : card_colors,
+            "editable" : r[5] == "edit"
         }
         #print(result[i]) 
     mycursor.close()
@@ -157,14 +158,66 @@ def create_deck(mydb, deck_info, access_info, username):
     )
 
     deck_id = mycursor.lastrowid
+    addAccess(mydb, deck_id, "edit", username)
+    for people in access_info.keys():
+        addAccess(mydb, deck_id, access_info[people], people)
+          
+    return True
+
+
+'''
+Note that this will not generate a duplicate access record when another already exists. 
+If the target access already exists, simply do nothing and return true. 
+(also, this function does not need to check access for the access giver. 
+Since this function will be used only by create_deck and recieve_sharecode, 
+both of these functions will check the giver's access beforehand)
+'''
+def addAccess(mydb, deck_id, access_type, username):
+    mycursor = mydb.cursor()
     mycursor.execute(
         """
-        INSERT INTO `access` (`username`, `deckid`, `accessType`) 
-        VALUES (%s, %s, %s)
-        """,
-        (username, deck_id, access_info["accessType"])
-    )
-          
+        SELECT 
+            username, deckid, accessType 
+        FROM access
+        WHERE username = %s
+            AND deckid = %s
+            AND accessType = %s
+        """, (username, deck_id, access_type))
+    
+    result = mycursor.fetchall()
     mycursor.close()
     mydb.commit()
+
+    if not result:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+            INSERT INTO `access` (`username`, `deckId`, `accessType`) 
+            VALUES (%s, %s, %s)
+            """,
+            (username, deck_id, access_type)
+        )
+        mycursor.close()
+        mydb.commit()
+
+    #else:
+        #print("record exists")
     return True
+
+
+def removeAccess(mydb, deck_id, removee_username, remover_username):
+    if check_deck_view_access(mydb, deck_id, remover_username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM access
+                WHERE deckid = %s
+                    AND username = %s
+                """, (deck_id, removee_username)
+            )
+        mycursor.close()
+        mydb.commit()
+
+    else:
+        print("remover_username does not have access")
+    return False

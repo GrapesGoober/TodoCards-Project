@@ -1,7 +1,19 @@
 <script>
+    import Adddeckmodal from "./adddeckmodal.svelte";
     import Deckslist from "./deckslist.svelte";
+
+    let isAdding = false
+    let refreshCards
+
+    function addDeck() {
+        isAdding = true
+    }
 </script>
 
+<Adddeckmodal
+    bind:showModal={isAdding} 
+    refresh={refreshCards}>
+</Adddeckmodal>
 <!-- Font Awesome 5 Free -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -11,11 +23,10 @@
     <button class="fas fa-user-circle user-btn"></button>
 </div>
 <div>
-    <Deckslist></Deckslist>
+    <Deckslist getDeckslist={refreshCards}></Deckslist>
 </div>
 <div class="header">
-    <button class="edit-btn">Edit</button>
-    <button class="fas fa-plus-circle add-btn"></button>
+    <button class="fas fa-plus-circle add-btn" on:click={addDeck}></button>
 </div>
 
 

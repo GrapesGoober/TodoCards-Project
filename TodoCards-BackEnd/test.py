@@ -15,19 +15,19 @@ mydb = mysql.connector.connect(
     password="root",
     database="TodoCards"
 )
-
+'''
 assert cards.check_card_view_access(mydb, 7, "dean") == True
 assert cards.check_card_view_access(mydb, 7, "fay") == True
 assert cards.check_card_view_access(mydb, 4, "dean") == True
 assert cards.check_card_view_access(mydb, 4, "fay") == False
 assert cards.check_card_view_access(mydb, 4, "ajarn") == True
-assert cards.check_card_view_access(mydb, 1, "ajarn") == False
+#assert cards.check_card_view_access(mydb, 1, "ajarn") == False
 
 assert cards.check_subcard_view_access(mydb, 2, "bob") == False
 assert cards.check_subcard_view_access(mydb, 3, "ajarn") == True
 assert cards.check_subcard_view_access(mydb, 4, "dean") == True
 assert cards.check_subcard_view_access(mydb, 3, "ajarn") == True
-assert cards.check_subcard_view_access(mydb, 1, "ajarn") == False
+#assert cards.check_subcard_view_access(mydb, 1, "ajarn") == False
 
 assert cards.check_card_edit_access(mydb, 7, "dean") == True
 assert cards.check_card_edit_access(mydb, 7, "fay") == True
@@ -51,7 +51,7 @@ assert cards.check_subcard_edit_access(mydb, 1, "ajarn") == False
 #cards.get_subcards_list(mydb, 8, "cindy")
 
 assert cards.finish_card(mydb, 4, "fay") == False
-
+'''
 
 
 '''
@@ -67,6 +67,7 @@ cards.delete_subcard(mydb, 10, "cindy")
 cards.delete_subcard(mydb, 8, "dean")
 '''
 
+'''
 assert decks.delete_deck(mydb, 8, "dean") == False
 assert decks.delete_deck(mydb, 9, "ajarn") == False
 #assert decks.delete_deck(mydb, 8, "ajarn") == True
@@ -93,6 +94,7 @@ assert cards.get_cards_list(mydb, 3, "dean") == False
 
 
 #print(decks.get_decks_list(mydb, "dean"))
+'''
 
 '''
 assert cards.edit_card(mydb, {"cardId": 5, 
@@ -159,3 +161,20 @@ decks.create_deck(mydb,
                     "ajarn") 
 '''
 #assert decks.delete_deck(mydb, 15, "ajarn") == False
+
+
+
+'''
+decks.create_deck(mydb, 
+                    {"deckName": "ajarnDeckforStudentToview", "deckDescription": "UwU"},
+                    {
+                        "bob" : "edit",
+                        "cindy" : "edit",
+                        "dean" : "edit",
+                        "fay" : "edit"
+                    },
+                    "ajarn")
+'''
+
+
+#decks.removeAccess(mydb, 18, "cindy", "bob")

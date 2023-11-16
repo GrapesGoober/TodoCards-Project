@@ -260,16 +260,19 @@ def edit_subcard(mydb, subcard_info, username):
 # returns True if success, False otherwise
 def create_card(mydb, deck_id, card_info, username):
     if decks.check_deck_edit_access(mydb, deck_id, username):
+
+        # format datestring into date object
+        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+
         mycursor = mydb.cursor()
         mycursor.execute(
             """
-            INSERT INTO `card` (`deckId`, `cardName`, `cardDescription`, `cardDue`, `cardIsFinished`, `cardColor`) 
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO `card` (`deckId`, `cardName`, `cardDescription`, `cardIsFinished`, `cardDue`, `cardColor`) 
+            VALUES (%s, %s, %s, 0, %s, %s)
             """,
             (deck_id, card_info["cardName"], 
              card_info["cardDescription"], 
-             card_info["cardDue"],
-             card_info["cardIsFinished"], 
+             dateObj, 
              card_info["cardColor"])
         )
           
@@ -287,10 +290,9 @@ def create_subcard(mydb, card_id, subcard_info, username):
         mycursor.execute(
             """
             INSERT INTO `subcard` (`cardId`, `scardName`, `scardIsFinished`) 
-            VALUES (%s, %s, %s)
+            VALUES (%s, %s, 0)
             """,
-            (card_id, subcard_info["subcardName"], 
-             subcard_info["subcardIsFinished"])
+            (card_id, subcard_info["subcardName"], )
         )
           
         mycursor.close()
