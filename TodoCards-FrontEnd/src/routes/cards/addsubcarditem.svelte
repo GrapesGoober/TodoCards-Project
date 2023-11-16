@@ -1,6 +1,5 @@
 <script>
     import * as APIs from "$lib"
-    import { slide } from "svelte/transition";
     export let refresh, cardId, show
 
     let subcardinfo = {
@@ -21,7 +20,7 @@
 </script>
 
 {#if show}
-<div class="wrapper" transition:slide>
+<div class="wrapper">
     <input class="textbox" type="text" placeholder="subcard name" bind:value={subcardinfo.subcardName}>
     
     <button class="tick green bobbing-hover" on:click={addSubcard}>
