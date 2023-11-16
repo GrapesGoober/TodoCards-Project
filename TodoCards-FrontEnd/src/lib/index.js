@@ -98,11 +98,11 @@ export async function deleteDeck(deckId){
     return await sendAuthBackendRequest("/delete-deck", {deckId})
 }
 
-export async function finishCard(cardId){
-    return await sendAuthBackendRequest("/finish-card", {cardId})
+export async function finishCard(cardId, isUnfinished){
+    return await sendAuthBackendRequest("/finish-card", {cardId, isUnfinished})
 }
-export async function finishSubcard(subcardId){
-    return await sendAuthBackendRequest("/finish-subcard", {subcardId})
+export async function finishSubcard(subcardId, isUnfinished){
+    return await sendAuthBackendRequest("/finish-subcard", {subcardId, isUnfinished})
 }
 
 export async function getSharecode(deckId){

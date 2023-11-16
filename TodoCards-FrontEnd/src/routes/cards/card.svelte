@@ -7,7 +7,7 @@
     let showDescription = false
     async function finishCard() {
         if (editable == true) {
-            let status = await APIs.finishCard(cardinfo.cardId)
+            let status = await APIs.finishCard(cardinfo.cardId, cardinfo.cardIsFinished)
             if (status == true) {
                 refresh()
             }

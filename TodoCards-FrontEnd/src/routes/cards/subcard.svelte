@@ -8,7 +8,7 @@
     async function finishSubcard() {
         // need to do editable check since the check buttons still exist for view-only
         if (editable == true) {
-            let status = await APIs.finishSubcard(subcardinfo.subcardId)
+            let status = await APIs.finishSubcard(subcardinfo.subcardId, subcardinfo.subcardIsFinished)
             if (status == true) {
                 await refresh()
             }

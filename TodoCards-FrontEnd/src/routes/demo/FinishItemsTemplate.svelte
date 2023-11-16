@@ -4,12 +4,12 @@
     let cardId = 1
     let finishCardResult = false
     async function finishCard(){
-        finishCardResult = await APIs.finishCard(cardId)
+        finishCardResult = await APIs.finishCard(cardId, false)
     }
     let subcardId = 1
     let finishSubardResult = false
     async function finishSubcard(){
-        finishSubardResult = await APIs.finishSubcard(subcardId)
+        finishSubardResult = await APIs.finishSubcard(subcardId, false)
     }
 </script>
 

@@ -155,15 +155,15 @@ def get_subcards_list(mydb, card_id, username):
 # updates a card by setting isFinished = True
 # must also check edit access of that card_id
 # returns True if success, False otherwise
-def finish_card(mydb, card_id, username):
+def finish_card(mydb, card_id, is_unfinished, username):
     if check_card_edit_access(mydb, card_id, username):
         mycursor = mydb.cursor()
         mycursor.execute(
             """
                 UPDATE card
-                SET cardIsFinished = '1'
+                SET cardIsFinished = %s
                 WHERE cardid = %s
-                """, (card_id,)
+                """, ( 0 if is_unfinished else 1, card_id,)
         )
         mycursor.close()
         mydb.commit()
@@ -174,16 +174,17 @@ def finish_card(mydb, card_id, username):
 # updates a subcard by setting isFinished = True
 # must also check edit access of that subcard_id
 # returns True if success, False otherwise
-def finish_subcard(mydb, subcard_id, username):
+def finish_subcard(mydb, subcard_id, is_unfinished, username):
     
     if check_subcard_edit_access(mydb, subcard_id, username):
+        print(is_unfinished, 0 if is_unfinished else 1)
         mycursor = mydb.cursor()
         mycursor.execute(
             """
                 UPDATE subcard
-                SET scardIsFinished = '1'
+                SET scardIsFinished = %s
                 WHERE scardid = %s
-                """, (subcard_id,)
+                """, ( 0 if is_unfinished else 1, subcard_id,)
         )
         mycursor.close()
         mydb.commit()
