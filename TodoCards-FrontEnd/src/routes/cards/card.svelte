@@ -48,7 +48,7 @@
             {/if}
         </button>
 
-        <button class="title isFinished" on:click={()=>{showDescription = !showDescription}}>
+        <button class="title {cardinfo.cardIsFinished ? "isFinished" : ""}" on:click={()=>{showDescription = !showDescription}}>
             {cardinfo.cardName}
         </button>
 
