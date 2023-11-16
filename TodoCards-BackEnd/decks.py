@@ -58,7 +58,7 @@ def get_decks_list(mydb, username):
     result = mycursor.fetchall()
     for i, r in enumerate(result):
         if r[3] != None:
-            formatted_nearest_due = r[3].strftime('%d %B %Y')
+            formatted_nearest_due = r[3].strftime("%Y-%m-%d")
             #formatted_nearest_due = int(r[3])
         else:
             formatted_nearest_due = ""

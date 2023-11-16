@@ -105,7 +105,7 @@ def get_cards_list(mydb, deck_id, username):
     result = mycursor.fetchall()
     for i, r in enumerate(result):
         if r[3] != None:
-            format_due = r[3].strftime('%d %B %Y')
+            format_due = r[3].strftime("%Y-%m-%d")
             #formatted_nearest_due = int(r[3])
         else:
             format_due = ""
@@ -199,7 +199,7 @@ def edit_card(mydb, card_info, username):
     if check_card_edit_access(mydb, int(card_info["cardId"]), username):
         
         # format datestring into date object
-        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+        dateObj = datetime.strptime(card_info["cardDue"], "%Y-%m-%d")
 
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -262,7 +262,7 @@ def create_card(mydb, deck_id, card_info, username):
     if decks.check_deck_edit_access(mydb, deck_id, username):
 
         # format datestring into date object
-        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+        dateObj = datetime.strptime(card_info["cardDue"], "%Y-%m-%d")
 
         mycursor = mydb.cursor()
         mycursor.execute(
