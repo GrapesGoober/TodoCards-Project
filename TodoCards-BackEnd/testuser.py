@@ -16,3 +16,9 @@ mydb = mysql.connector.connect(
 # user.signup(mydb, "admin4", "admin4123")
 
 assert user.login(mydb, "admin4", "admin4123") == True
+
+
+user.signup(mydb, "testdelete1", "111")
+user.signup(mydb, "testdelete2", "111")
+user.signup(mydb, "testdelete3", "111")
+user.signup(mydb, "testdelete4", "111")

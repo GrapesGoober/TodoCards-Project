@@ -2,19 +2,46 @@ from datetime import date
 # This is the script cards.py, which will be handling all-things decks
 # This includes: getting, creating, editing, finishing, and deleting decks
 
-# Utility function to check access for your deck_id
-def check_deck_view_access(mydb, deck_id, username):
+def check_is_admin(mydb, username):
     mycursor = mydb.cursor()
     mycursor.execute(
         """
         SELECT 
+            username 
+        FROM admin 
+        WHERE username = %s
+        """, (username,))
+    is_admin = mycursor.fetchall()
+
+    if is_admin:
+        #print("is admin")
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+    
+
+# Utility function to check access for your deck_id
+def check_deck_view_access(mydb, deck_id, username):
+    # check if user is admin----------------------------
+    mycursor = mydb.cursor()
+    if check_is_admin(mydb, username) == True:
+        return True 
+
+
+    # check if user has view access----------------------
+    mycursor.execute(
+        """
+        SELECT 
             deckId, username, accessType
-        FROM access WHERE deckId = %s
+        FROM access 
+        WHERE deckId = %s
         """, (deck_id,))
     
     result = mycursor.fetchall()
     mycursor.close()
     mydb.commit()
+
     for row in result:
         if (row[1] == username and (row[2] == "view" or row[2] == "edit")):
             return True
@@ -22,6 +49,14 @@ def check_deck_view_access(mydb, deck_id, username):
 
 # Utility function to check access for your deck_id
 def check_deck_edit_access(mydb, deck_id, username):
+    
+    # check if user is admin----------------------------
+    mycursor = mydb.cursor()
+    if check_is_admin(mydb, username) == True:
+        return True 
+
+    # check if user has edit access----------------------------
+
     mycursor = mydb.cursor()
     mycursor.execute(
         """
@@ -115,6 +150,20 @@ def edit_deck(mydb, deck_info, username):
         return True
     return False
 
+def delete_user(mydb, user, admin):
+    if check_is_admin == True:
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                DELETE FROM user
+                WHERE username = %s
+                """, (user,)
+        )
+        mycursor.close()
+        mydb.commit()
+        return True
+    return False
+
 
 # deletes a deck using deck_id
 # must also check for edit access of that deck_id
@@ -161,7 +210,6 @@ def create_deck(mydb, deck_info, access_info, username):
     addAccess(mydb, deck_id, "edit", username)
     for people in access_info.keys():
         addAccess(mydb, deck_id, access_info[people], people)
-          
     return True
 
 
