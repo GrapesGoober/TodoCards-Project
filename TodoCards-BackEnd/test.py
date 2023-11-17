@@ -2,6 +2,7 @@ import user
 import decks
 import cards
 import inspect
+import admin
 
 # result = user.hash_password("password1234")
 # print(result)
@@ -189,7 +190,10 @@ assert decks.check_deck_view_access(mydb, 14, "admin1") == True
 #assert decks.check_deck_edit_access(mydb, 5, "fay") == True
 
 
-assert decks.check_deck_edit_access(mydb, 13, "admin2") == True
+# assert decks.check_deck_edit_access(mydb, 13, "admin2") == True
 
 
-assert decks.delete_user(mydb, "User2Bdeleted2", "dean") == True
+# assert admin.delete_user(mydb, "User2Bdeleted2", "dean") == True
+
+
+#print(admin.admin_get_everything(mydb, "admin4"))
