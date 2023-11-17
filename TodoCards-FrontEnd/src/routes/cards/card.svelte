@@ -16,7 +16,8 @@
     let isEditing = false
     let currentlyEditingCard
     function showEdit(cardinfo) {
-        currentlyEditingCard = cardinfo
+        // deep copying the object to remove the binding & reference sematics shinanigans
+        currentlyEditingCard = JSON.parse(JSON.stringify(cardinfo))
         isEditing = true
     }
     

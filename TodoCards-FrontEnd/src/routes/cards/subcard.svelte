@@ -34,7 +34,8 @@
     function editMode() {
         isEditing = true
         isSelected = false
-        currentlyEditingSubcard = subcardinfo
+        // deep copying the object to remove the binding & reference sematics shinanigans
+        currentlyEditingSubcard = JSON.parse(JSON.stringify(subcardinfo))
     }
 
     function selectSubcard() {
@@ -78,7 +79,7 @@
                 </button>
             {/if}
         {:else}
-            <input class="textbox" type="text" placeholder="subcard name" bind:value={subcardinfo.subcardName}>
+            <input class="textbox" type="text" placeholder="subcard name" bind:value={currentlyEditingSubcard.subcardName}>
             <button class="tick-circle green bobbing-hover" on:click={editSubcard}>
                 <i class="far fa-check-circle"></i>
             </button>
