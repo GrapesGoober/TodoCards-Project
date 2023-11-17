@@ -196,7 +196,7 @@ def recieve_sharecode(mydb, sharecode, username):
     return "Unimplemented"
 
 
-def create_deck(mydb, deck_info, access_info, username):
+def create_deck(mydb, deck_info, username):
     mycursor = mydb.cursor()
     mycursor.execute(
         """
@@ -208,8 +208,6 @@ def create_deck(mydb, deck_info, access_info, username):
 
     deck_id = mycursor.lastrowid
     addAccess(mydb, deck_id, "edit", username)
-    for people in access_info.keys():
-        addAccess(mydb, deck_id, access_info[people], people)
     return True
 
 
@@ -253,8 +251,30 @@ def addAccess(mydb, deck_id, access_type, username):
     return True
 
 
-def removeAccess(mydb, deck_id, removee_username, remover_username):
-    if check_deck_view_access(mydb, deck_id, remover_username):
+def get_access_list(mydb, deck_id, username):
+    if check_deck_edit_access(mydb, deck_id, username):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            """
+                SELECT username, accessType FROM access
+                WHERE deckId = %s AND username != %s
+            """, (deck_id, username)
+            )
+
+        result = {}
+        for i, r in enumerate(mycursor.fetchall()):
+            if r[1] not in result:
+                result[r[1]] = []
+            result[r[1]].append(r[0])
+        
+        mycursor.close()
+        mydb.commit()
+        return result
+    return False
+
+
+def remove_access(mydb, deck_id, removee_username, remover_username):
+    if check_deck_edit_access(mydb, deck_id, remover_username):
         mycursor = mydb.cursor()
         mycursor.execute(
             """
@@ -265,7 +285,7 @@ def removeAccess(mydb, deck_id, removee_username, remover_username):
             )
         mycursor.close()
         mydb.commit()
-
+        return True
     else:
         print("remover_username does not have access")
     return False

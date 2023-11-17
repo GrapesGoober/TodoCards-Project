@@ -1,23 +1,8 @@
 <script>
-    import Adddeckmodal from "./adddeckmodal.svelte";
     import Deckslist from "./deckslist.svelte";
 
-    let isAdding = false
-    let refreshCards
-
-    function addDeck() {
-        isAdding = true
-    }
-
-    async function gotoUserSetting(){
-        window.location.href = "/usersetting";
-    }
 </script>
 
-<Adddeckmodal
-    bind:showModal={isAdding} 
-    refresh={refreshCards}>
-</Adddeckmodal>
 <!-- Font Awesome 5 Free -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -27,12 +12,7 @@
     <button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
 </div>
 <div>
-    <Deckslist getDeckslist={refreshCards}></Deckslist>
-</div>
-<div class="header">
-    <button class="add-btn bobbing-hover" on:click={addDeck}>
-        <i class="fas fa-plus-circle "></i>
-    </button>
+    <Deckslist></Deckslist>
 </div>
 
 
@@ -49,21 +29,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }
-    .add-btn {
-        font-size: xx-large;
-        padding: 0;
-        height: 40px;
-        width: 40px;
-        border: none;
-        border-radius: 50%;
-        color: green;
-        transition: 0.15s;
-        cursor: pointer;
-        background-color: transparent;
-    }
-    .add-btn:hover {
-        color: rgb(10, 170, 10);
     }
     .user-btn {
         font-size: xx-large;
