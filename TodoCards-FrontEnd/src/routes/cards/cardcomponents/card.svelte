@@ -21,12 +21,16 @@
         isEditing = true
     }
     
-    let cardDue_dateObj = new Date(cardinfo.cardDue)
-    let formattedDate = new Intl.DateTimeFormat('en-US', {
+
+    let formattedDate
+    $ : {
+        let cardDue_dateObj = new Date(cardinfo.cardDue)
+        formattedDate = new Intl.DateTimeFormat('en-US', {
         weekday: 'short',
         day: 'numeric',
         month: 'short'
     }).format(cardDue_dateObj);
+    }
 
 </script>
 
