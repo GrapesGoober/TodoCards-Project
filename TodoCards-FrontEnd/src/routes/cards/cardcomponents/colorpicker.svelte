@@ -20,8 +20,6 @@
 {/each}
 
 <style>
-    @import "../style.css";
-
     .color-button {
         background-color: transparent;
         border: none;
