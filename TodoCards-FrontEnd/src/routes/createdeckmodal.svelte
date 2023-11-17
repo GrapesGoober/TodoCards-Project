@@ -7,8 +7,8 @@
         deckDescription:    ""
     }
 
-    async function addDeck(){
-        let status = await APIs.addDeck(deckInfo)
+    async function createDeck(){
+        let status = await APIs.createDeck(deckInfo)
         if (status == true) {
             refresh()
             showModal = false
@@ -25,7 +25,7 @@
     <input type="text" placeholder="cardName" bind:value={deckInfo.deckName}> <br>
     cardDescription
     <input type="text" placeholder="cardDescription" bind:value={deckInfo.deckDescription}> <br>
-    <input type="button" value="submit" on:click={addDeck}>
+    <input type="button" value="submit" on:click={createDeck}>
     <input type="button" value="cancel" on:click={cancel}>
 
 </Modal>
