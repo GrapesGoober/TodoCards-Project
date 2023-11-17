@@ -18,5 +18,5 @@
 
 </script>
 
-<label for="customDate">Select Date: {formattedDate}</label> <br>
+<span>Select Date: {formattedDate}</span> <br>
 <input type="date" id="datepicker" min={todayString} bind:value={cardDue}>
