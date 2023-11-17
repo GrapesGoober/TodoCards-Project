@@ -44,7 +44,7 @@
 
     <Useraccesslist bind:deckId={deckInfo.deckId} bind:usersToRemove={usersToRemove}></Useraccesslist>
 
-    <Sharecomponent></Sharecomponent>
+    <Sharecomponent bind:deckId={deckInfo.deckId}></Sharecomponent>
 
     
 

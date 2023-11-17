@@ -1,10 +1,20 @@
 <script>
     import * as APIs from "$lib"
+  import { fade } from "svelte/transition";
     export let deckId
-    let sharemode, sharecode
+    let sharemode, sharecode, isCopied = false
 
     async function getSharecode() {
         sharecode = await APIs.getSharecode(deckId)
+        console.log(window.location.origin)
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(sharecode)
+        .then(() => {
+            isCopied = true
+            setTimeout(()=> isCopied=false, 3000)
+        })
     }
 </script>
 
@@ -18,8 +28,9 @@
             <option value="view">Viewer</option>
         </select>
 
-        <button>
-            Generate Code
+        <button class="bobbing-hover" on:click={getSharecode}>
+            <i class="fas fa-share-square"></i>
+            <span>Generate Code</span>
         </button>
     </div>
 </div>
@@ -28,10 +39,19 @@
 {#if sharecode}
     <div class="link-section">
         <div>Link</div>
-        <div class="link-code">
-            <div>{sharecode}</div>
+        <input type="text" readonly class="link-code" bind:value={sharecode}>
+        
+        <button class="bobbing-hover" on:click={copy}>
             <i class="far fa-copy fa-xs copy-icon"></i>
+        </button>
+
+        {#if isCopied}
+        <div class="copy-wrapper">
+            <span class="copied-display" out:fade>
+                Copied!
+            </span>
         </div>
+        {/if}
     </div>
     <p class="link-txt">This link will be expired in 3 minutes</p>
 {/if}
@@ -40,6 +60,10 @@
 <style>
     p {
         margin: 0;
+    }
+    button {
+        background-color: transparent;
+        border: none;
     }
     .share-section, .link-section, .link-code {
         display: flex;
@@ -93,5 +117,15 @@
         color: red;
         font-size: 12px;
         margin-bottom: 25px;
+    }
+    .copy-wrapper {
+        position: relative;
+
+    }
+    .copied-display{ 
+        position: absolute;
+        top: 10px;
+        left: -20px;
+        font-size: small;
     }
 </style>
