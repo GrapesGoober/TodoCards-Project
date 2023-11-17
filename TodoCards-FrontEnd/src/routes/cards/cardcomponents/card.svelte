@@ -1,6 +1,6 @@
 <script>
     import * as APIs from "$lib"
-    import Subcardlist from "./subcardlist.svelte";
+    import Subcardlist from "../subcardlist.svelte";
     import EditcardModal from "./editcardmodal.svelte";
     export let cardinfo, refresh, editable
     

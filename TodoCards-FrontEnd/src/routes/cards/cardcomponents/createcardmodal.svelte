@@ -1,6 +1,6 @@
 <script>
     import * as APIs from "$lib"
-    import Modal from "../modal.svelte"
+    import Modal from "../../modal.svelte"
     export let showModal = false, deckId, refresh
 
     let cardInfo = {

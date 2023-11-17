@@ -1,9 +1,9 @@
 <script>
     import * as APIs from "$lib"
     import { onMount } from "svelte";
-	import Card from './card.svelte'
+	import Card from './cardcomponents/card.svelte'
     import EditdeckModal from "./editdeckmodal.svelte";
-    import Createcardmodal from "./createcardmodal.svelte";
+    import Createcardmodal from "./cardcomponents/createcardmodal.svelte";
 
     // Send request to backend to query the cards for us
     let cardslist = []

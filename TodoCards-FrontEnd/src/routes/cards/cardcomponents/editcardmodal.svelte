@@ -1,8 +1,8 @@
 <script>
     import * as APIs from "$lib"
-    import Modal from "../modal.svelte"
-    import ColorPicker from "./colorPicker.svelte";
-    import Datepicker from "./datepicker.svelte";
+    import Modal from "../../modal.svelte"
+    import ColorPicker from "../colorPicker.svelte";
+    import Datepicker from "../datepicker.svelte";
     export let showModal = false, cardInfo, refresh
 
     async function editCard(){
@@ -70,7 +70,6 @@
 </Modal>
 
 <style>
-    @import "../style.css";
     p {
         margin: 0;
     }
