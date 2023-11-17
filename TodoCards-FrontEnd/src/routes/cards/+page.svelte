@@ -112,6 +112,7 @@
         color: green;
         transition: 0.15s;
         cursor: pointer;
+        background-color: transparent;
     }
     .add-btn:hover {
         color: rgb(10, 170, 10);
