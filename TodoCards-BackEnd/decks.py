@@ -147,7 +147,7 @@ def recieve_sharecode(mydb, sharecode, username):
     return "Unimplemented"
 
 
-def create_deck(mydb, deck_info, access_info, username):
+def create_deck(mydb, deck_info, username):
     mycursor = mydb.cursor()
     mycursor.execute(
         """
@@ -159,9 +159,6 @@ def create_deck(mydb, deck_info, access_info, username):
 
     deck_id = mycursor.lastrowid
     addAccess(mydb, deck_id, "edit", username)
-    for people in access_info.keys():
-        addAccess(mydb, deck_id, access_info[people], people)
-          
     return True
 
 
