@@ -193,7 +193,16 @@ assert decks.check_deck_view_access(mydb, 14, "admin1") == True
 # assert decks.check_deck_edit_access(mydb, 13, "admin2") == True
 
 
-# assert admin.delete_user(mydb, "User2Bdeleted2", "dean") == True
+assert admin.delete_user(mydb, "testdelete3", "ajarn") == False
 
 
-#print(admin.admin_get_everything(mydb, "admin4"))
+# print(admin.admin_get_everything(mydb, "admin3"))
+
+# admin.check_is_admin(mydb, "admin1") == True
+# admin.check_is_admin(mydb, "admin2") == True
+# admin.check_is_admin(mydb, "admin3") == True
+# admin.check_is_admin(mydb, "admin4") == True
+
+
+
+

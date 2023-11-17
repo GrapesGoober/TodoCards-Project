@@ -1,31 +1,14 @@
 from datetime import date
+import admin 
 # This is the script cards.py, which will be handling all-things decks
 # This includes: getting, creating, editing, finishing, and deleting decks
-
-def check_is_admin(mydb, username):
-    mycursor = mydb.cursor()
-    mycursor.execute(
-        """
-        SELECT 
-            username 
-        FROM admin 
-        WHERE username = %s
-        """, (username,))
-    is_admin = mycursor.fetchall()
-
-    if is_admin:
-        #print("is admin")
-        mycursor.close()
-        mydb.commit()
-        return True
-    return False
     
 
 # Utility function to check access for your deck_id
 def check_deck_view_access(mydb, deck_id, username):
     # check if user is admin----------------------------
     mycursor = mydb.cursor()
-    if check_is_admin(mydb, username) == True:
+    if admin.check_is_admin(mydb, username) == True:
         return True 
 
 
@@ -52,7 +35,7 @@ def check_deck_edit_access(mydb, deck_id, username):
     
     # check if user is admin----------------------------
     mycursor = mydb.cursor()
-    if check_is_admin(mydb, username) == True:
+    if admin.check_is_admin(mydb, username) == True:
         return True 
 
     # check if user has edit access----------------------------
@@ -150,19 +133,6 @@ def edit_deck(mydb, deck_info, username):
         return True
     return False
 
-def delete_user(mydb, user, admin):
-    if check_is_admin == True:
-        mycursor = mydb.cursor()
-        mycursor.execute(
-            """
-                DELETE FROM user
-                WHERE username = %s
-                """, (user,)
-        )
-        mycursor.close()
-        mydb.commit()
-        return True
-    return False
 
 
 # deletes a deck using deck_id
