@@ -112,3 +112,7 @@ export async function getSharecode(deckId){
 export async function recieveSharecode(sharecode){
     return await sendAuthBackendRequest("/recieve-sharecode", {sharecode})
 }
+
+export async function getAccessList(deckId){
+    return await sendAuthBackendRequest("/get-access-list", {deckId})
+}

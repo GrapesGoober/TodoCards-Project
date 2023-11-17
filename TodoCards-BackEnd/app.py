@@ -198,6 +198,20 @@ def get_sharecode():
     result = decks.get_sharecode(mydb, deck_id, username)
     return jsonify(result)
 
+@app.route("/api/get-access-list", methods=["POST"])
+def get_access_list():
+    jsonbody = request.get_json()
+    deck_id = jsonbody.get("deckId")
+    #result = decks.get_sharecode(mydb, deck_id, username)
+    return jsonify({
+        "editors" : [
+            "bob", "hans", "erik"
+        ],
+        "viewers" : [
+            "buck", "bick", "back"
+        ]
+    })
+
 # Handles sharing
 @app.route("/api/recieve-sharecode", methods=["POST"])
 def recieve_sharecode():

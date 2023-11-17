@@ -1,6 +1,7 @@
 <script>
     import * as APIs from "$lib"
     import Modal from "../../modal.svelte"
+  import Useraccesslist from "./useraccesslist.svelte";
     export let showModal = false, deckInfo, refresh
 
     let shareDeckEditorViewer = false
@@ -48,38 +49,7 @@
         <input type="text" placeholder="Description" bind:value={deckInfo.deckDescription}>
     </div>
 
-<!--these are just UI. The users in these section are not real-->
-
-    <div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other editors-->
-        <div>Editor: </div>
-        <div class="editor-viewer-name">
-            <p class="shared-user">awacado</p>
-            <button class="user-delete"><i class="fas fa-times"></i></button>
-        </div>
-
-        <div class="editor-viewer-name">
-            <p class="shared-user">Elle</p>
-            <button class="user-delete"><i class="fas fa-times"></i></button>
-        </div>
-    </div>
-    <div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other viewer-->
-        <div>Viewer: </div>
-        <div class="editor-viewer-name">
-            <p class="shared-user">Grapes</p>
-            <button class="user-delete"><i class="fas fa-times"></i></button>
-        </div>
-
-        <div class="editor-viewer-name">
-            <p class="shared-user">Picnic</p>
-            <button class="user-delete"><i class="fas fa-times"></i></button>
-        </div>
-
-        <div class="editor-viewer-name">
-            <p class="shared-user">Guin</p>
-            <button class="user-delete"><i class="fas fa-times"></i></button>
-        </div>
-    </div>
-
+    <Useraccesslist bind:deckId={deckInfo}></Useraccesslist>
 <!--------------------------------------------------->
 
     <div class="share-section"> <!--share section-->
@@ -138,11 +108,11 @@
     input:focus {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
     }
-    .editor-viewer-section, .editor-viewer-name, .share-section, .link-section, .link-code, .header, .delete-submit {
+    .share-section, .link-section, .link-code, .header, .delete-submit {
         display: flex;
         align-items: center;
     }
-    .deck-name, .deck-description, .editor-viewer-section, .share-section, .link-section, .link-txt, .delete-submit {
+    .deck-name, .deck-description, .share-section, .link-section, .link-txt, .delete-submit {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 10px;
@@ -154,31 +124,6 @@
 
     .deckinfo-txt {
         margin-bottom: 4px;
-    }
-
-    .editor-viewer-name {
-        background-color: rgb(110, 110, 255);
-        color: white;
-        border-radius: 15px;
-        margin-left: 4px;
-        padding-left: 8px;
-        padding-right: 8px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        align-items: center;
-        text-align: center;
-    }
-    .shared-user {
-        font-size: 14px;
-    }
-    .user-delete {
-        color: white;
-        background-color: rgb(110, 110, 255);
-        border: none;
-        font-weight: bold;
-        padding: 0;
-        margin-left: 5px;
-        cursor: pointer;
     }
 
     .share-section {
