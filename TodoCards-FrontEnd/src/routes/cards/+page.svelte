@@ -91,7 +91,9 @@
 {/if}
 
 {#if deckinfo && deckinfo.editable}
-<button class="fas fa-plus-circle add-btn" on:click={showAddCardModal}></button>
+<button class="add-btn bobbing-hover" on:click={showAddCardModal}>
+    <i class="fas fa-plus-circle "></i>
+</button>
 {/if}
 
 <style>

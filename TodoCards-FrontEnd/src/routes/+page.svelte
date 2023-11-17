@@ -26,7 +26,9 @@
     <Deckslist getDeckslist={refreshCards}></Deckslist>
 </div>
 <div class="header">
-    <button class="fas fa-plus-circle add-btn" on:click={addDeck}></button>
+    <button class="add-btn bobbing-hover" on:click={addDeck}>
+        <i class="fas fa-plus-circle "></i>
+    </button>
 </div>
 
 
