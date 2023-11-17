@@ -19,7 +19,7 @@ def check_is_admin(mydb, username):
 
 
 def delete_user(mydb, user, admin):
-    if check_is_admin == True:
+    if check_is_admin(mydb, admin) == True:
         mycursor = mydb.cursor()
         mycursor.execute(
             """
@@ -32,50 +32,11 @@ def delete_user(mydb, user, admin):
         return True
     return False
 
-# -------------------------------------------
-# def get_decks_list(mydb, username):
-#     mycursor = mydb.cursor()
-#     mycursor.execute(
-#         """
-#         SELECT 
-#             deck.deckid, deck.deckName, 
-#             deck.deckdescription, 
-#             (SELECT MIN(cardDue) FROM card WHERE card.deckid = deck.deckid AND card.cardIsFinished = '0') as nearestDue, 
-#             (select GROUP_CONCAT(DISTINCT card.cardColor) as cardColors FROM card WHERE card.deckid = deck.deckid GROUP BY deck.deckid) as card_colors,
-#             access.accessType
-#         FROM deck, access
-#         WHERE deck.deckid = access.deckid
-#               AND access.username = %s
-#         """, (username,))
-    
-#     result = mycursor.fetchall()
-#     for i, r in enumerate(result):
-#         if r[3] != None:
-#             formatted_nearest_due = r[3].strftime("%Y-%m-%d")
-#             #formatted_nearest_due = int(r[3])
-#         else:
-#             formatted_nearest_due = ""
-
-#         if r[4] != None:
-#             card_colors = [color.strip() for color in r[4].split(',')]
-#         else:
-#             card_colors = []
-            
-#         result[i] = {
-#             "deckId": int(r[0]),
-#             "deckName": r[1],
-#             "deckDescription": r[2],
-#             "nearestDue" : formatted_nearest_due,
-#             "cardColors" : card_colors,
-#             "editable" : r[5] == "edit"
-#         }
-#         #print(result[i]) 
-#     mycursor.close()
-#     mydb.commit()
-#     return result
-# ------------------------------------------------------
 
 def admin_get_everything(mydb, username):
+    if check_is_admin(mydb, username) == False:
+        return False
+    
     mycursor = mydb.cursor()
     mycursor.execute(
         """
