@@ -130,14 +130,6 @@
         justify-content: space-between;
         align-items: center;
     }
-    .red-button {
-        color: rgb(187, 0, 0);
-        font-size: 20px;
-        cursor: pointer;
-    }
-    .red-button:hover {
-        color: rgb(229, 0, 0);
-    }
     .green-button {
         color: green;
         font-size: 20px;
