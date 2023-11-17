@@ -2,15 +2,14 @@
     import * as APIs from "$lib"
     import { onMount } from "svelte";
 
-    export let deckId
-    let access = {editors:[], viewers:[]}
-    let usersToRemove = []
+    export let deckId, usersToRemove = []
+    let access = {}
     async function getAccessList() {
         access = await APIs.getAccessList(deckId)
     }
     function pushUserToRemove(username) {
-        access.editors = access.editors.filter(item => item !== username);
-        access.viewers = access.viewers.filter(item => item !== username);
+        if (access.edit) access.edit = access.edit.filter(item => item !== username);
+        if (access.view) access.view = access.view.filter(item => item !== username);
         usersToRemove.push(username)
     }
     onMount(getAccessList)
@@ -19,30 +18,33 @@
 
 {#if access}
     
-<div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other editors-->
-    <div>Editor: </div>
-    {#each access.editors as editorName}
-        <div class="editor-viewer-name">
-            <p class="shared-user">{editorName}</p>
-            <button class="user-delete bobbing-hover" on:click={() => pushUserToRemove(editorName)}>
-                <i class="fas fa-times"></i>
-            </button>
+    {#if access.edit}
+        <div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other editors-->
+            <div>Editor: </div>
+            {#each access.edit as editorName}
+                <div class="editor-viewer-name">
+                    <p class="shared-user">{editorName}</p>
+                    <button class="user-delete bobbing-hover" on:click={() => pushUserToRemove(editorName)}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            {/each}
         </div>
-    {/each}
-</div>
+    {/if}
 
-<div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other viewer-->
-    <div>Viewer: </div>
-    {#each access.viewers as viewerName}
-        <div class="editor-viewer-name">
-            <p class="shared-user">{viewerName}</p>
-            <button class="user-delete bobbing-hover" on:click={() => pushUserToRemove(viewerName)}>
-                <i class="fas fa-times"></i>
-            </button>
+    {#if access.view}
+        <div class="editor-viewer-section"> <!--this part doesn't appear if you don't have other viewer-->
+            <div>Viewer: </div>
+            {#each access.view as viewerName}
+                <div class="editor-viewer-name">
+                    <p class="shared-user">{viewerName}</p>
+                    <button class="user-delete bobbing-hover" on:click={() => pushUserToRemove(viewerName)}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            {/each}
         </div>
-    {/each}
-</div>
-
+    {/if}
 {/if}
 
 

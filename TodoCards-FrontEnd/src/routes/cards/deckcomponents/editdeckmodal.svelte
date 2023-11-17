@@ -1,15 +1,19 @@
 <script>
     import * as APIs from "$lib"
     import Modal from "../../modal.svelte"
-  import Useraccesslist from "./useraccesslist.svelte";
+    import Useraccesslist from "./useraccesslist.svelte";
     export let showModal = false, deckInfo, refresh
 
-    let shareDeckEditorViewer = false
+    let shareDeckEditorViewer = false, usersToRemove = []
     
     async function editDeck(){
         let status = await APIs.editDeck(deckInfo)
+        console.log(usersToRemove)
+        usersToRemove.forEach(async user => {
+            await APIs.removeAccess(deckInfo.deckId, user)
+        }); 
         if (status == true) {
-            refresh()
+            await refresh()
             showModal = false
         }
     }
@@ -27,6 +31,7 @@
     }
 
     function cancel() {
+        usersToRemove = []
         showModal = false
     }
 </script>
@@ -49,7 +54,7 @@
         <input type="text" placeholder="Description" bind:value={deckInfo.deckDescription}>
     </div>
 
-    <Useraccesslist bind:deckId={deckInfo}></Useraccesslist>
+    <Useraccesslist bind:deckId={deckInfo.deckId} bind:usersToRemove={usersToRemove}></Useraccesslist>
 <!--------------------------------------------------->
 
     <div class="share-section"> <!--share section-->

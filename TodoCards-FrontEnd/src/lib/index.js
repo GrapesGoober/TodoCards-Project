@@ -116,3 +116,7 @@ export async function recieveSharecode(sharecode){
 export async function getAccessList(deckId){
     return await sendAuthBackendRequest("/get-access-list", {deckId})
 }
+
+export async function removeAccess(deckId, username) {
+    return await sendAuthBackendRequest("/remove-access", {deckId, username})
+}
