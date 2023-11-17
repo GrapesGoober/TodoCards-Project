@@ -30,7 +30,9 @@
     <Deckslist getDeckslist={refreshCards}></Deckslist>
 </div>
 <div class="header">
-    <button class="fas fa-plus-circle add-btn" on:click={addDeck}></button>
+    <button class="add-btn bobbing-hover" on:click={addDeck}>
+        <i class="fas fa-plus-circle "></i>
+    </button>
 </div>
 
 
@@ -58,6 +60,7 @@
         color: green;
         transition: 0.15s;
         cursor: pointer;
+        background-color: transparent;
     }
     .add-btn:hover {
         color: rgb(10, 170, 10);

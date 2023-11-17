@@ -1,13 +1,14 @@
 <script>
     import * as APIs from "$lib"
     import { onMount } from "svelte";
-	import Card from './card.svelte'
-    import EditdeckModal from "./editdeckmodal.svelte";
-    import Createcardmodal from "./createcardmodal.svelte";
+	import Card from './cardcomponents/card.svelte'
+    import EditdeckModal from "./deckcomponents/editdeckmodal.svelte";
+    import Createcardmodal from "./cardcomponents/createcardmodal.svelte";
 
     // Send request to backend to query the cards for us
     let cardslist = []
     let deckinfo
+    let formattedDeckDue = ""
     async function getCardslistAndDeckInfo(){
         // get the cardslist
         let searchParams = new URLSearchParams(window.location.search)
@@ -17,6 +18,19 @@
         // also get the deck info to display as well
         let deckslist = await APIs.getDeckslist()
         deckinfo = deckslist.find(deck => deck.deckId == deckId)
+
+        if (deckinfo == null) {
+            window.location.href = "/"
+        }
+        
+        if (deckinfo.nearestDue != "") {
+            let cardDue_dateObj = new Date(deckinfo.nearestDue)
+            formattedDeckDue = new Intl.DateTimeFormat('en-US', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short'
+            }).format(cardDue_dateObj);
+        }
     }
     onMount(getCardslistAndDeckInfo)
     
@@ -29,6 +43,7 @@
     async function showAddCardModal() {
         isAdding = true
     }
+
     
 </script>
 
@@ -40,7 +55,7 @@
 {#if deckinfo}
     <EditdeckModal
         bind:showModal={isEditing} 
-        bind:deckInfo={deckinfo}
+        deckInfo={deckinfo}
         refresh={getCardslistAndDeckInfo}>
     </EditdeckModal>
 
@@ -59,8 +74,8 @@
         
     </h1>
     
-    {#if deckinfo.nearestDue != ""}
-        <p><b>Nearest Due Date</b> {deckinfo.nearestDue}</p>
+    {#if formattedDeckDue != ""}
+        <p><b>Nearest Due Date</b> {formattedDeckDue}</p>
     {/if}
     <p>{deckinfo.deckDescription}</p>
 {/if}
@@ -76,7 +91,9 @@
 {/if}
 
 {#if deckinfo && deckinfo.editable}
-<button class="fas fa-plus-circle add-btn" on:click={showAddCardModal}></button>
+<button class="add-btn bobbing-hover" on:click={showAddCardModal}>
+    <i class="fas fa-plus-circle "></i>
+</button>
 {/if}
 
 <style>
@@ -95,6 +112,7 @@
         color: green;
         transition: 0.15s;
         cursor: pointer;
+        background-color: transparent;
     }
     .add-btn:hover {
         color: rgb(10, 170, 10);

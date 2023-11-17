@@ -1,6 +1,6 @@
 <script>
     import * as APIs from "$lib"
-    import Modal from "../modal.svelte"
+    import Modal from "../../modal.svelte"
     export let showModal = false, deckInfo, refresh
 
     let shareDeckEditorViewer = false
@@ -107,17 +107,19 @@
     {/if}
 
     <div class="delete-submit">
-        <i class="fas fa-trash-alt deletedeck"></i>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <i class="fas fa-check-circle submit" on:click={editDeck}></i>
+        <button class="red-button bobbing-hover">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+
+        <button class="green-button bobbing-hover"  on:click={editDeck}>
+            <i class="fas fa-check-circle"></i>
+        </button>
 
     </div>
 
 </Modal>
 
 <style>
-    @import "../style.css";
     p {
         margin: 0;
     }
@@ -238,20 +240,24 @@
     .delete-submit {
         justify-content: space-between;
     }
-    .deletedeck {
+    .red-button {
         color: rgb(187, 0, 0);
         font-size: 20px;
         cursor: pointer;
+        background-color: transparent;
+        border: none;
     }
-    .deletedeck:active {
+    .red-button:hover {
         color: rgb(229, 0, 0);
     }
-    .submit {
+    .green-button {
         color: green;
         font-size: 20px;
         cursor: pointer;
+        background-color: transparent;
+        border: none;
     }
-    .submit:active {
+    .green-button:hover {
         color: rgb(0, 194, 0);
     }
 </style>

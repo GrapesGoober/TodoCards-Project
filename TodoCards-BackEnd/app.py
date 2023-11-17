@@ -102,16 +102,18 @@ def get_subcards_list():
 def finish_card():
     jsonbody = request.get_json()
     card_id = jsonbody.get("cardId")
+    is_unfinished = jsonbody.get("isUnfinished")
     username = session.get("username")
-    result = cards.finish_card(mydb, card_id, username)
+    result = cards.finish_card(mydb, card_id, is_unfinished, username)
     return jsonify(result)
 
 @app.route("/api/finish-subcard", methods=["POST"])
 def finish_subcard():
     jsonbody = request.get_json()
     subcard_id = jsonbody.get("subcardId")
+    is_unfinished = jsonbody.get("isUnfinished")
     username = session.get("username")
-    result = cards.finish_subcard(mydb, subcard_id, username)
+    result = cards.finish_subcard(mydb, subcard_id, is_unfinished, username)
     return jsonify(result)
 
 @app.route("/api/edit-deck", methods=["POST"])
@@ -185,7 +187,7 @@ def delete_subcard():
     jsonbody = request.get_json()
     subcard_id = jsonbody.get("subcardId")
     username = session.get("username")
-    status = cards.delete_card(mydb, subcard_id, username)
+    status = cards.delete_subcard(mydb, subcard_id, username)
     return jsonify(status)
 
 @app.route("/api/get-sharecode", methods=["POST"])

@@ -105,7 +105,7 @@ def get_cards_list(mydb, deck_id, username):
     result = mycursor.fetchall()
     for i, r in enumerate(result):
         if r[3] != None:
-            format_due = r[3].strftime('%d %B %Y')
+            format_due = r[3].strftime("%Y-%m-%d")
             #formatted_nearest_due = int(r[3])
         else:
             format_due = ""
@@ -155,15 +155,15 @@ def get_subcards_list(mydb, card_id, username):
 # updates a card by setting isFinished = True
 # must also check edit access of that card_id
 # returns True if success, False otherwise
-def finish_card(mydb, card_id, username):
+def finish_card(mydb, card_id, is_unfinished, username):
     if check_card_edit_access(mydb, card_id, username):
         mycursor = mydb.cursor()
         mycursor.execute(
             """
                 UPDATE card
-                SET cardIsFinished = '1'
+                SET cardIsFinished = %s
                 WHERE cardid = %s
-                """, (card_id,)
+                """, ( 0 if is_unfinished else 1, card_id,)
         )
         mycursor.close()
         mydb.commit()
@@ -174,16 +174,17 @@ def finish_card(mydb, card_id, username):
 # updates a subcard by setting isFinished = True
 # must also check edit access of that subcard_id
 # returns True if success, False otherwise
-def finish_subcard(mydb, subcard_id, username):
+def finish_subcard(mydb, subcard_id, is_unfinished, username):
     
     if check_subcard_edit_access(mydb, subcard_id, username):
+        print(is_unfinished, 0 if is_unfinished else 1)
         mycursor = mydb.cursor()
         mycursor.execute(
             """
                 UPDATE subcard
-                SET scardIsFinished = '1'
+                SET scardIsFinished = %s
                 WHERE scardid = %s
-                """, (subcard_id,)
+                """, ( 0 if is_unfinished else 1, subcard_id,)
         )
         mycursor.close()
         mydb.commit()
@@ -199,7 +200,7 @@ def edit_card(mydb, card_info, username):
     if check_card_edit_access(mydb, int(card_info["cardId"]), username):
         
         # format datestring into date object
-        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+        dateObj = datetime.strptime(card_info["cardDue"], "%Y-%m-%d")
 
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -233,19 +234,16 @@ def edit_card(mydb, card_info, username):
 # must also check edit access
 # returns True if success, False otherwise
 def edit_subcard(mydb, subcard_info, username):
-    if check_subcard_edit_access(mydb, int(subcard_info["cardId"]), username):
+    if check_subcard_edit_access(mydb, int(subcard_info["subcardId"]), username):
         mycursor = mydb.cursor()
         mycursor.execute(
             """
             UPDATE subcard
-            SET cardid = %s,
-                scardName = %s,
-                scardIsFinished = %s
+            SET 
+                scardName = %s
             WHERE scardid = %s
             """,
-            (int(subcard_info["cardId"]), 
-             subcard_info["subcardName"], 
-             subcard_info["subcardIsFinished"],
+            (subcard_info["subcardName"], 
              int(subcard_info["subcardId"]) )
         )
           
@@ -262,7 +260,7 @@ def create_card(mydb, deck_id, card_info, username):
     if decks.check_deck_edit_access(mydb, deck_id, username):
 
         # format datestring into date object
-        dateObj = datetime.strptime(card_info["cardDue"], '%d %B %Y')
+        dateObj = datetime.strptime(card_info["cardDue"], "%Y-%m-%d")
 
         mycursor = mydb.cursor()
         mycursor.execute(
