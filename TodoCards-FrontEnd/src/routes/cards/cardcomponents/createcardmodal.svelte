@@ -33,7 +33,7 @@
 <Modal bind:showModal={showModal}>
     <div class="header">
         <button class="cancel_btn" on:click={cancel}><i class="fas fa-angle-left"></i></button>
-        <h1>Edit Card</h1>
+        <h1>Create Card</h1>
     </div>
 
 
