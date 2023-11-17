@@ -203,7 +203,6 @@ def addAccess(mydb, deck_id, access_type, username):
 
 
 def get_access_list(mydb, deck_id, username):
-    print(deck_id, username)
     if check_deck_edit_access(mydb, deck_id, username):
         mycursor = mydb.cursor()
         mycursor.execute(
