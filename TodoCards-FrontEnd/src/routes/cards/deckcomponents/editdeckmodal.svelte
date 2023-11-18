@@ -1,10 +1,11 @@
 <script>
     import * as APIs from "$lib"
     import Modal from "../../modal.svelte"
+    import Sharecomponent from "./sharecomponent.svelte";
     import Useraccesslist from "./useraccesslist.svelte";
     export let showModal = false, deckInfo, refresh
 
-    let shareDeckEditorViewer = false, usersToRemove = []
+    let usersToRemove = []
     
     async function editDeck(){
         let status = await APIs.editDeck(deckInfo)
@@ -18,25 +19,12 @@
         }
     }
 
-    function handleComboBoxChange(event) {
-        const selectedValue = event.target.value;
-
-        // Assuming shareDeckEditorViewer is a variable in your script
-        // that determines whether to show the link section
-        if (selectedValue === "option2" || selectedValue === "option3") {
-            shareDeckEditorViewer = true;
-        } else {
-            shareDeckEditorViewer = false;
-        }
-    }
-
     function cancel() {
         usersToRemove = []
         showModal = false
     }
 </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <Modal bind:showModal={showModal}>
     <div class="header">
@@ -45,7 +33,7 @@
     </div>
 
     <div class="deck-name">
-        <p class="deckinfo-txt">Deck</p>
+        <p class="deckinfo-txt">Deck Name</p>
         <input type="text" placeholder="Name" bind:value={deckInfo.deckName}>
     </div>
 
@@ -55,31 +43,10 @@
     </div>
 
     <Useraccesslist bind:deckId={deckInfo.deckId} bind:usersToRemove={usersToRemove}></Useraccesslist>
-<!--------------------------------------------------->
 
-    <div class="share-section"> <!--share section-->
-        <i class="fas fa-user-plus fa-2xs share-icon"></i>
-        <div class="share-icon">share</div>
-        <div>
-            <select class="share-combobx" id="myComboBox" name="myComboBox" on:change={handleComboBoxChange}>
-                <option value="option1"></option>
-                <option value="option2">Editor</option>
-                <option value="option3">Viewer</option>
-            </select>
-        </div>
-    </div>
+    <Sharecomponent bind:deckId={deckInfo.deckId}></Sharecomponent>
 
-    <!--link section will appear when you choose an option in share section-->
-    {#if shareDeckEditorViewer}
-    <div class="link-section">
-        <div>Link</div>
-        <div class="link-code">
-            <div>1234567890</div>
-            <i class="far fa-copy fa-xs copy-icon"></i>
-        </div>
-    </div>
-    <p class="link-txt">This link will be expired in 3 minutes</p>
-    {/if}
+    
 
     <div class="delete-submit">
         <button class="red-button bobbing-hover">
@@ -89,8 +56,8 @@
         <button class="green-button bobbing-hover"  on:click={editDeck}>
             <i class="fas fa-check-circle"></i>
         </button>
-
     </div>
+
 
 </Modal>
 
@@ -113,11 +80,11 @@
     input:focus {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
     }
-    .share-section, .link-section, .link-code, .header, .delete-submit {
+    .header, .delete-submit {
         display: flex;
         align-items: center;
     }
-    .deck-name, .deck-description, .share-section, .link-section, .link-txt, .delete-submit {
+    .deck-name, .deck-description, .delete-submit {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 10px;
@@ -129,51 +96,6 @@
 
     .deckinfo-txt {
         margin-bottom: 4px;
-    }
-
-    .share-section {
-        margin-bottom: 20px;
-    }
-    .share-icon {
-        margin-right: 5px;
-    }
-    .share-combobx {
-        padding: 3px;
-        padding-left: 6px;
-        border: solid;
-        border-width: 1px;
-        border-radius: 4px;
-        border-color: rgb(156, 156, 156);
-    }
-    
-    .link-code {
-        width: 200px;
-        justify-content: space-between;
-        align-items: center;
-        margin-left: 10px;
-
-        padding: 3px;
-        padding-left: 6px;
-        padding-right: 6px;
-        border: solid;
-        border-width: 1px;
-        border-radius: 4px;
-    }
-    .copy-icon {
-        color: black;
-        padding: 0;
-        border: none;
-        background-color: white;
-        font-size: 15px;
-        cursor: pointer;
-    }
-    .copy-icon:active {
-        color: rgb(84, 84, 84);
-    }
-    .link-txt {
-        color: red;
-        font-size: 12px;
-        margin-bottom: 25px;
     }
 
     .cancel_btn {
@@ -189,6 +111,7 @@
 
     .delete-submit {
         justify-content: space-between;
+        align-items: center;
     }
     .red-button {
         color: rgb(187, 0, 0);
