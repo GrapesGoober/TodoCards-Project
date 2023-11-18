@@ -1,12 +1,20 @@
 <script>
     import * as APIs from "$lib"
     import Modal from "../../modal.svelte"
+    import ColorPicker from "./colorpicker.svelte";
+    import Datepicker from "./datepicker.svelte";
     export let showModal = false, deckId, refresh
+
+    let today = new Date()
+    let year = today.getFullYear()
+    let month = String(today.getMonth() + 1).padStart(2, '0') // Month is zero-based, so we add 1 and pad with '0' if necessary
+    let day = String(today.getDate()).padStart(2, '0')
+    let todayString = `${year}-${month}-${day}`
 
     let cardInfo = {
         cardName:           "",
         cardDescription:    "",
-        cardDue:            "",
+        cardDue:            todayString,
         cardColor:          "",
     }
 
@@ -29,40 +37,39 @@
     </div>
 
 
-    <div class="name">
-        <p class="info-txt">Card Name</p>
+    <div class="deck-name">
+        <p class="deckinfo-txt">Card Name</p>
         <input type="text" placeholder="Name" bind:value={cardInfo.cardName}>
     </div>
 
 
-    <div class="description">
-        <p class="info-txt">Description</p>
+    <div class="deck-description">
+        <p class="deckinfo-txt">Description</p>
         <input type="text" placeholder="Card Description" bind:value={cardInfo.cardDescription}>
     </div>
 
 
-    <div class="description">
-        <p class="info-txt">Due date</p>
-        <input type="text" placeholder="datepicker" bind:value={cardInfo.cardDue}>
+    <div class="deck-description">
+        <p class="deckinfo-txt">Due date</p>
+        <Datepicker bind:cardDue={cardInfo.cardDue}></Datepicker>
     </div>
 
 
     <div class="card-color">
-        <p class="info-txt">Color</p>
-        <input class="color-input" type="text" placeholder="cardColor" bind:value={cardInfo.cardColor}>
-    </div>
-    
-
-    <div class="submit-section">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <i class="fas fa-check-circle submit" on:click={createCard}></i>
+        <p class="deckinfo-txt">Color</p>
+        <ColorPicker bind:selectedColor={cardInfo.cardColor}></ColorPicker>
     </div>
 
+    <br> <br>
+
+    <div class="delete-submit">
+        <button class="green-button bobbing-hover" on:click={createCard}>
+            <i class="fas fa-check-circle"></i>
+        </button>
+    </div>
 </Modal>
 
 <style>
-    @import "../style.css";
     p {
         margin: 0;
     }
@@ -81,11 +88,11 @@
     input:focus {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
     }
-    .header, .submit-section {
+    .header, .delete-submit {
         display: flex;
         align-items: center;
     }
-    .name, .description, .submit-section {
+    .deck-name, .deck-description, .delete-submit {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 10px;
@@ -95,7 +102,7 @@
         margin: 10px;
     }
 
-    .info-txt {
+    .deckinfo-txt {
         margin-bottom: 4px;
     }
 
@@ -118,21 +125,22 @@
         margin-top: 18px;
         margin-bottom: 10px;
     }
-    .color-input {
-        margin-left: 8px;
-        width: 200px;
-    }
 
-    .submit-section {
-        justify-content: end;
+    .delete-submit {
+        justify-content: space-between;
         align-items: center;
     }
-    .submit {
+    .green-button {
         color: green;
         font-size: 20px;
         cursor: pointer;
     }
-    .submit:active {
+    .green-button:hover {
         color: rgb(0, 194, 0);
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
     }
 </style>

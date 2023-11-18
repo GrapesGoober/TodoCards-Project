@@ -39,7 +39,7 @@
     }
 
     function selectSubcard() {
-        if (!isEditing) {
+        if (!isEditing && editable) {
             isSelected = !isSelected
         }
     }

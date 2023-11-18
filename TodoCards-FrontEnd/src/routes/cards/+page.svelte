@@ -80,8 +80,6 @@
     <p>{deckinfo.deckDescription}</p>
 {/if}
 
-<button on:click={getCardslistAndDeckInfo}>refresh</button>
-
 {#if deckinfo != null}
 <div>
     {#each cardslist as card}
