@@ -6,7 +6,7 @@
 
     async function getSharecode() {
         sharecode = await APIs.getSharecode(deckId)
-        console.log(window.location.origin)
+        sharecode = `${window.location.origin}/sharecode=?${sharecode}`
     }
 
     function copy() {
@@ -39,7 +39,7 @@
 {#if sharecode}
     <div class="link-section">
         <div>Link</div>
-        <input type="text" readonly class="link-code" bind:value={sharecode}>
+        <textarea cols="30" rows="2" readonly>{sharecode}</textarea>
         
         <button class="bobbing-hover" on:click={copy}>
             <i class="far fa-copy fa-xs copy-icon"></i>
