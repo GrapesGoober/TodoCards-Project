@@ -18,7 +18,21 @@ mydb = mysql.connector.connect(
 assert user.login(mydb, "admin4", "admin4123") == True
 
 
-user.signup(mydb, "testdelete1", "111")
-user.signup(mydb, "testdelete2", "111")
-user.signup(mydb, "testdelete3", "111")
-user.signup(mydb, "testdelete4", "111")
+import random
+import string
+
+
+def generate_unique_code():
+    length = 15
+    characters = string.ascii_letters + string.digits
+    # print(characters) = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+    unique_code = ''.join(random.choice(characters) for i in range(length))
+    print(unique_code)
+    return unique_code
+
+
+generate_unique_code()
+
+
+
+
