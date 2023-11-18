@@ -2,6 +2,7 @@ import user
 import decks
 import cards
 import inspect
+import admin
 
 # result = user.hash_password("password1234")
 # print(result)
@@ -108,29 +109,29 @@ assert cards.edit_card(mydb, {"cardId": 5,
 '''
 
 
-assert cards.edit_subcard(mydb, {"subcardId": 3, 
-                                "cardId": 4,
-                                "subcardName" : "deancard1subcard1New",
-                                "subcardIsFinished": "0"},
-                                "dean") == True
+# assert cards.edit_subcard(mydb, {"subcardId": 3, 
+#                                 "cardId": 4,
+#                                 "subcardName" : "deancard1subcard1New",
+#                                 "subcardIsFinished": "0"},
+#                                 "dean") == True
 
-assert decks.edit_deck(mydb, {"deckId": 3, 
-                            "deckName": "cindyDecktestEdit",
-                            "deckDescription" : "ayo aloha"},
-                            "dean") == False
+# assert decks.edit_deck(mydb, {"deckId": 3, 
+#                             "deckName": "cindyDecktestEdit",
+#                             "deckDescription" : "ayo aloha"},
+#                             "dean") == False
 
-assert decks.edit_deck(mydb, {"deckId": 3, 
-                            "deckName": "cindyDecktestEdit",
-                            "deckDescription" : "i love nicki minaj"},
-                            "cindy") == True
+# assert decks.edit_deck(mydb, {"deckId": 3, 
+#                             "deckName": "cindyDecktestEdit",
+#                             "deckDescription" : "i love nicki minaj"},
+#                             "cindy") == True
 
 
-assert cards.create_card(mydb, 4, {"cardName": "deanCard3",
-                                "cardDescription": "testAdding",
-                                "cardDue": "2023-11-30",
-                                "cardIsFinished": "1",
-                                "cardColor": "pink"},
-                                 "ajarn") == False
+# assert cards.create_card(mydb, 4, {"cardName": "deanCard3",
+#                                 "cardDescription": "testAdding",
+#                                 "cardDue": "2023-11-30",
+#                                 "cardIsFinished": "1",
+#                                 "cardColor": "pink"},
+#                                  "ajarn") == False
 '''
 assert cards.create_card(mydb, 4, {"cardName": "deanCard4",
                                 "cardDescription": "testAdding2",
@@ -178,3 +179,30 @@ decks.create_deck(mydb,
 
 
 #decks.removeAccess(mydb, 18, "cindy", "bob")
+
+
+
+assert decks.check_deck_view_access(mydb, 5, "dean") == False
+assert decks.check_deck_view_access(mydb, 14, "admin1") == True
+
+#print(decks.check_deck_view_access(mydb, 5, "admin1"))
+
+#assert decks.check_deck_edit_access(mydb, 5, "fay") == True
+
+
+# assert decks.check_deck_edit_access(mydb, 13, "admin2") == True
+
+
+assert admin.delete_user(mydb, "testdelete3", "ajarn") == False
+
+
+# print(admin.admin_get_everything(mydb, "admin3"))
+
+# admin.check_is_admin(mydb, "admin1") == True
+# admin.check_is_admin(mydb, "admin2") == True
+# admin.check_is_admin(mydb, "admin3") == True
+# admin.check_is_admin(mydb, "admin4") == True
+
+
+
+

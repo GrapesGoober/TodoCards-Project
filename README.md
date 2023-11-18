@@ -27,3 +27,10 @@ cindy cindy123
 dean dean123
 
 fay fay123
+
+
+# These are our sample usernames & passwords of ADMINs
+admin1  admin1123
+admin2  admin2123
+admin3  admin3123
+admin4  admin4123
