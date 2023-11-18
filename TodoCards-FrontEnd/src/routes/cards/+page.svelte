@@ -64,8 +64,12 @@
         bind:deckId={deckinfo.deckId}
         refresh={getCardslistAndDeckInfo}>
     </Createcardmodal>
-    
-    <h1>{deckinfo.deckName}
+
+    <h1>
+        <a href="/">
+            <i class="fas fa-angle-left"></i>
+        </a>
+        {deckinfo.deckName}
         {#if deckinfo.editable}
             <button class="edit-button bobbing-hover" on:click={showEditDeckModal}>
                 <i class="fas fa-edit"></i>
