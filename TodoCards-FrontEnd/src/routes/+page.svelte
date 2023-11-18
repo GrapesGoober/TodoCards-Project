@@ -2,11 +2,6 @@
     import Deckslist from "./deckslist.svelte";
 
     let isAdding = false
-    let refreshCards
-
-    function addDeck() {
-        isAdding = true
-    }
 
     async function gotoUserSetting(){
         window.location.href = "/usersetting";
