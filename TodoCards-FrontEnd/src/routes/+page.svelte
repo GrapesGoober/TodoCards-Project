@@ -3,8 +3,6 @@
     import { onMount } from "svelte";
     import Deckslist from "./deckslist.svelte";
 
-    let isAdding = false
-
     async function gotoUserSetting(){
         window.location.href = "/usersetting";
     }
