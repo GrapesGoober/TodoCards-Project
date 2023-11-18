@@ -3,8 +3,9 @@
     import { onMount } from "svelte";
     import Deckslist from "./deckslist.svelte";
 
-    async function gotoUserSetting(){
-        window.location.href = "/usersetting";
+    async function logout(){
+        await APIs.logout()
+        window.location.href = "/login";
     }
 
     async function handleSharecode() {
@@ -31,7 +32,9 @@
 <!--This is the deckslist page (the home page)-->
 <div class="header">
     <h1 class="todo-header">Todo</h1>
-    <button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
+    <button class="bobbing-hover user-btn" on:click={logout}>
+        <i class="fas fa-sign-out-alt"></i>
+    </button>
 </div>
 <div>
     <Deckslist></Deckslist>
