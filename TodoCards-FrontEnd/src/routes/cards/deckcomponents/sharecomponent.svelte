@@ -6,7 +6,7 @@
 
     async function getSharecode() {
         sharecode = await APIs.getSharecode(deckId)
-        sharecode = `${window.location.origin}/sharecode=?${sharecode}`
+        sharecode = `${window.location.origin}?sharecode=${sharecode}`
     }
 
     function copy() {
