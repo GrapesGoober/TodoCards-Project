@@ -265,6 +265,25 @@ def recieve_sharecode():
     mydb.close()
     return jsonify(result)
 
+@app.route("/api/get-everything", methods=["POST"])
+def get_everything():
+    mydb = connect_to_db()
+    username = session.get("username")
+    result = admin.admin_get_everything(mydb, username)
+    mydb.close()
+    return jsonify(result)
+
+@app.route("/api/delete-user", methods=["POST"])
+def delete_user():
+    mydb = connect_to_db()
+    jsonbody = request.get_json()
+    the_unlucky_user = jsonbody.get("username")
+    admin_username = session.get("username")
+    print(the_unlucky_user)
+    result = admin.delete_user(mydb, the_unlucky_user, admin_username)
+    mydb.close()
+    return jsonify(result)
+
 # the entry point of the code
 if __name__ == "__main__":
     # runs app, default to 127.0.0.1 port 5000

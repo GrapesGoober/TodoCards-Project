@@ -120,3 +120,12 @@ export async function getAccessList(deckId){
 export async function removeAccess(deckId, username) {
     return await sendAuthBackendRequest("/remove-access", {deckId, username})
 }
+
+
+export async function adminGetEverything() {
+    return await sendAuthBackendRequest("/get-everything", {})
+}
+
+export async function adminDeleteUser(username) {
+    return await sendAuthBackendRequest("/delete-user", {username})
+}
