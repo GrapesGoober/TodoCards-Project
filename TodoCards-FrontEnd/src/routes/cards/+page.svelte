@@ -100,6 +100,9 @@
 <style>
     @import "../style.css";
 
+    a {
+        color: black;
+    }
     .edit-button {
         left: 10px;
     }
