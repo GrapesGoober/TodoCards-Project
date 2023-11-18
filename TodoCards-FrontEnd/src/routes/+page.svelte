@@ -1,4 +1,6 @@
 <script>
+    import * as APIs from "$lib"
+    import { onMount } from "svelte";
     import Deckslist from "./deckslist.svelte";
 
     let isAdding = false
@@ -6,6 +8,23 @@
     async function gotoUserSetting(){
         window.location.href = "/usersetting";
     }
+
+    async function handleSharecode() {
+        let searchParams = new URLSearchParams(window.location.search)
+        let sharecode = searchParams.get("sharecode")
+        if (sharecode != null) {
+            let status = await APIs.recieveSharecode(sharecode)
+            if (status.deckId) {
+                window.location.replace(`/cards?deckId=${status.deckId}`)
+            }
+            else {
+                window.location.replace("/")
+                alert("Share code invalid (it probably expired)")
+            }
+        }
+    }
+
+    onMount(handleSharecode)
 </script>
 
 <!-- Font Awesome 5 Free -->
