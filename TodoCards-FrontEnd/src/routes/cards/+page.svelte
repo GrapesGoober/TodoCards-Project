@@ -78,20 +78,19 @@
         <p><b>Nearest Due Date</b> {formattedDeckDue}</p>
     {/if}
     <p>{deckinfo.deckDescription}</p>
-{/if}
 
-{#if deckinfo != null}
-<div>
-    {#each cardslist as card}
-        <Card bind:cardinfo={card} bind:editable={deckinfo.editable} refresh={getCardslistAndDeckInfo}></Card>
-    {/each}
-</div>
-{/if}
+    <div>
+        {#each cardslist as card}
+            <Card bind:cardinfo={card} bind:editable={deckinfo.editable} refresh={getCardslistAndDeckInfo}></Card>
+        {/each}
+    </div>
 
-{#if deckinfo && deckinfo.editable}
-<button class="add-btn bobbing-hover" on:click={showAddCardModal}>
-    <i class="fas fa-plus-circle "></i>
-</button>
+    {#if deckinfo.editable}
+    <button class="add-btn bobbing-hover" on:click={showAddCardModal}>
+        <i class="fas fa-plus-circle "></i>
+    </button>
+    {/if}
+
 {/if}
 
 <style>
