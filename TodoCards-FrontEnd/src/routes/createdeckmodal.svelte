@@ -7,8 +7,8 @@
         deckDescription:    ""
     }
 
-    async function addDeck(){
-        let status = await APIs.addDeck(deckInfo)
+    async function createDeck(){
+        let status = await APIs.createDeck(deckInfo)
         if (status == true) {
             refresh()
             showModal = false
@@ -19,18 +19,16 @@
     }
 </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <Modal bind:showModal={showModal}>
     <div class="header">
         <button class="cancel_btn" on:click={cancel}><i class="fas fa-angle-left"></i></button>
-        <h1>Add Deck</h1>
+        <h1>Create Deck</h1>
     </div>
 
     <div class="deck-name">
-        <p class="deckinfo-txt">Deck</p>
+        <p class="deckinfo-txt">Deck Name</p>
         <input type="text" placeholder="Name" bind:value={deckInfo.deckName}>
-    </div>
+    </div> 
 
     <div class="deck-description">
         <p class="deckinfo-txt">Description</p>
@@ -38,14 +36,19 @@
     </div>
 
     <div class="delete-submit">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <i class="fas fa-check-circle submit" on:click={addDeck}></i>
+        <button class="red-button bobbing-hover">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+
+        <button class="green-button bobbing-hover"  on:click={createDeck}>
+            <i class="fas fa-check-circle"></i>
+        </button>
+
     </div>
+
 </Modal>
 
 <style>
-    @import "./style.css";
     p {
         margin: 0;
     }
@@ -64,11 +67,24 @@
     input:focus {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
     }
-    .header {
+    .header, .delete-submit {
         display: flex;
         align-items: center;
+    }
+    .deck-name, .deck-description, .delete-submit {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+
+    .header {
         margin: 10px;
     }
+
+    .deckinfo-txt {
+        margin-bottom: 4px;
+    }
+
     .cancel_btn {
         font-size: 36px;
         background-color: white;
@@ -79,27 +95,29 @@
     .cancel_btn:active {
         color: rgb(77, 77, 77);
     }
-    .deck-name, .deck-description, .delete-submit {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 10px;
-    }
-    .deckinfo-txt {
-        margin-bottom: 4px;
-    }
+
     .delete-submit {
-        display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: end;
     }
-    .submit {
-        margin-top: 10px;
+    .red-button {
+        color: rgb(187, 0, 0);
+        font-size: 20px;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+    }
+    .red-button:hover {
+        color: rgb(229, 0, 0);
+    }
+    .green-button {
         color: green;
         font-size: 20px;
         cursor: pointer;
+        background-color: transparent;
+        border: none;
     }
-    .submit:active {
+    .green-button:hover {
         color: rgb(0, 194, 0);
     }
 </style>
-

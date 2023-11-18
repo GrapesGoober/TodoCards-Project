@@ -1,5 +1,4 @@
 <script>
-    import Adddeckmodal from "./adddeckmodal.svelte";
     import Deckslist from "./deckslist.svelte";
 
     let isAdding = false
@@ -14,10 +13,6 @@
     }
 </script>
 
-<Adddeckmodal
-    bind:showModal={isAdding} 
-    refresh={refreshCards}>
-</Adddeckmodal>
 <!-- Font Awesome 5 Free -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -27,10 +22,7 @@
     <button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
 </div>
 <div>
-    <Deckslist getDeckslist={refreshCards}></Deckslist>
-</div>
-<div class="header">
-    <button class="fas fa-plus-circle add-btn" on:click={addDeck}></button>
+    <Deckslist></Deckslist>
 </div>
 
 

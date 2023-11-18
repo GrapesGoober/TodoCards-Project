@@ -1,5 +1,16 @@
 <script>
     export let deckinfo
+
+    let formattedDue = ""
+    if (deckinfo.nearestDue != "") {
+        let cardDue_dateObj = new Date(deckinfo.nearestDue)
+        formattedDue = new Intl.DateTimeFormat('en-US', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short'
+        }).format(cardDue_dateObj);
+    }
+
     function toCardsPage() {
         window.location.href = "/cards?deckId=" + deckinfo.deckId
     }
@@ -11,7 +22,7 @@
     <!-- For card name & nearest date due -->
         <div class="text-container">
             <div class="deck-name"> {deckinfo.deckName} </div>
-            <div> {deckinfo.nearestDue} </div>
+            <div> {formattedDue} </div>
         </div>
 
     <!-- For the multicolored cards icon -->

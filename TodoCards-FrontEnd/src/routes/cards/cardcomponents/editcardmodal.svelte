@@ -1,10 +1,19 @@
 <script>
     import * as APIs from "$lib"
-    import Modal from "../modal.svelte"
+    import Modal from "../../modal.svelte"
+    import ColorPicker from "./colorpicker.svelte";
+    import Datepicker from "./datepicker.svelte";
     export let showModal = false, cardInfo, refresh
 
     async function editCard(){
         let status = await APIs.editCard(cardInfo)
+        if (status == true) {
+            await refresh()
+            showModal = false
+        }
+    }
+    async function deleteCard(){
+        let status = await APIs.deleteCard(cardInfo.cardId)
         if (status == true) {
             await refresh()
             showModal = false
@@ -24,40 +33,43 @@
     </div>
 
 
-    <div class="name">
-        <p class="info-txt">Card Name</p>
+    <div class="deck-name">
+        <p class="deckinfo-txt">Card Name</p>
         <input type="text" placeholder="Name" bind:value={cardInfo.cardName}>
     </div>
 
 
-    <div class="description">
-        <p class="info-txt">Description</p>
+    <div class="deck-description">
+        <p class="deckinfo-txt">Description</p>
         <input type="text" placeholder="Card Description" bind:value={cardInfo.cardDescription}>
     </div>
 
 
-    <div class="description">
-        <p class="info-txt">Due date</p>
-        <input type="text" placeholder="datepicker" bind:value={cardInfo.cardDue}>
+    <div class="deck-description">
+        <p class="deckinfo-txt">Due date</p>
+        <Datepicker bind:cardDue={cardInfo.cardDue}></Datepicker>
     </div>
 
 
     <div class="card-color">
-        <p class="info-txt">Color</p>
-        <input class="color-input" type="text" placeholder="cardColo" bind:value={cardInfo.cardColor}>
+        <p class="deckinfo-txt">Color</p>
+        <ColorPicker bind:selectedColor={cardInfo.cardColor}></ColorPicker>
     </div>
 
+    <br> <br>
 
     <div class="delete-submit">
-        <i class="fas fa-trash-alt deletedeck"></i>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <i class="fas fa-check-circle submit" on:click={editCard}></i>
+        <button class="red-button bobbing-hover" on:click={deleteCard}>
+            <i class="fas fa-trash-alt"></i>
+        </button>
+
+        <button class="green-button bobbing-hover" on:click={editCard}>
+            <i class="fas fa-check-circle"></i>
+        </button>
     </div>
 </Modal>
 
 <style>
-    @import "../style.css";
     p {
         margin: 0;
     }
@@ -80,7 +92,7 @@
         display: flex;
         align-items: center;
     }
-    .name, .description, .delete-submit {
+    .deck-name, .deck-description, .delete-submit {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 10px;
@@ -90,7 +102,7 @@
         margin: 10px;
     }
 
-    .info-txt {
+    .deckinfo-txt {
         margin-bottom: 4px;
     }
 
@@ -113,29 +125,30 @@
         margin-top: 18px;
         margin-bottom: 10px;
     }
-    .color-input {
-        margin-left: 8px;
-        width: 200px;
-    }
 
     .delete-submit {
         justify-content: space-between;
         align-items: center;
     }
-    .deletedeck {
+    .red-button {
         color: rgb(187, 0, 0);
         font-size: 20px;
         cursor: pointer;
     }
-    .deletedeck:active {
+    .red-button:hover {
         color: rgb(229, 0, 0);
     }
-    .submit {
+    .green-button {
         color: green;
         font-size: 20px;
         cursor: pointer;
     }
-    .submit:active {
+    .green-button:hover {
         color: rgb(0, 194, 0);
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
     }
 </style>
