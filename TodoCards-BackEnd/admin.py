@@ -38,40 +38,33 @@ def admin_get_everything(mydb, username):
         return False
     
     mycursor = mydb.cursor()
-    mycursor.execute(
-        """
-        SELECT 
-            deck.deckid, deck.deckName, 
-            user.username, 
-            access.accessId, access.username, access.deckid, access.accessType
+    mycursor.execute("SELECT deckid, deckName FROM deck ORDER BY deck.deckid")
+    decks_list = mycursor.fetchall()
+    for i, deck in enumerate(decks_list):
+        decks_list[i] = {
+            "deckId": deck[0],
+            "deckName": deck[1]
+        }
+        
+    mycursor.execute("SELECT username FROM user ORDER BY username")
+    users = mycursor.fetchall()
+    for i, user in enumerate(users):
+        users[i] = user[0]
 
-        FROM deck, user, access    
-        """)
-    
-    decks_list = {}
-    users = set()
-    access_dict = {}
-    result = mycursor.fetchall()
-    for r in result:
-        deck_id = int(r[0])
-        deck_name = r[1]
-        user_name = r[2]
-        access_id = r[3]
-        access_username = r[4]
-        access_deckid = r[5]
-        access_type = r[6]
+    mycursor.execute("SELECT accessId, username, deckid, accessType FROM access ORDER BY accessId")
+    access_list = mycursor.fetchall()
+    for i, access in enumerate(access_list):
+        access_list[i] = {
+            "accessId": access[0],
+            "username": access[1],
+            "deckId": access[2],
+            "accessType": access[3],
+        }
 
-
-        #organize
-        decks_list[deck_id] = deck_name
-        users.add(user_name)
-        access_dict[access_id] = (access_username, access_deckid, access_type)
-
-    users_list = list(users)
     output = {
         "deckslist": decks_list,
-        "users": users_list,
-        "access": access_dict
+        "users": users,
+        "accesslist": access_list
     }
 
     mycursor.close()
