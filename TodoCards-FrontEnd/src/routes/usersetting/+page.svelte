@@ -1,6 +1,12 @@
 <script>
+    import * as APIs from "$lib"
     function goback(){
-        window.location.href = "/";
+        history.back()
+    }
+
+    async function logout() {
+        await APIs.logout()
+        window.location.href = "/login";
     }
 </script>
 
@@ -9,7 +15,7 @@
 <div class="header">
     <!--might add an icon for going back to login page-->
     <button class="goback_btn" on:click={goback}><i class="fas fa-angle-left"></i></button>
-    <p class="logout">Log out</p>
+    <button class="logout" on:click={logout}>Log out</button>
 </div>
 
 <div class="user-profile">

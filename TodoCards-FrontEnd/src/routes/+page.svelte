@@ -54,20 +54,6 @@
         align-items: center;
         justify-content: space-between;
     }
-    .add-btn {
-        font-size: xx-large;
-        padding: 0;
-        height: 40px;
-        width: 40px;
-        border: none;
-        border-radius: 50%;
-        color: green;
-        transition: 0.15s;
-        cursor: pointer;
-    }
-    .add-btn:hover {
-        color: rgb(10, 170, 10);
-    }
     .user-btn {
         font-size: xx-large;
         border: none;

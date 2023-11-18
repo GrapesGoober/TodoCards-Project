@@ -5,7 +5,7 @@
 
 from flask import Flask, request, jsonify, session
 import mysql.connector
-import cards, user, decks
+import cards, user, decks, admin
 
 # sets up some flask stuff (oh, and CORS too)
 app = Flask(__name__)
@@ -48,6 +48,10 @@ def login():
         session["username"] = username
     elif "username" in session:
         session.pop("username")
+
+    if admin.check_is_admin(mydb, username):
+        status = "isAdmin"
+
     mydb.close()
     return jsonify(status)
 
