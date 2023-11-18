@@ -1,5 +1,5 @@
 <script>
-    async function goback(){
+    function goback(){
         window.location.href = "/";
     }
 </script>
