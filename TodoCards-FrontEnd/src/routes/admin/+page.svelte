@@ -3,8 +3,9 @@
     import { onMount } from "svelte";
     import Modal from "../modal.svelte"
 
-    function gotoUserSetting(){
-        window.location.href = "/usersetting";
+    async function logout(){
+        await APIs.logout()
+        window.location.href = "/login";
     }
 
     let data
@@ -69,7 +70,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <h1>Hello Admin
-<button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
+<button class="fas fa-sign-out-alt user-btn" on:click={logout}></button>
 </h1>
 
 <Modal bind:showModal={showingDeleteModal}>
