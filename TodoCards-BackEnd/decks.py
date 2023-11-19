@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
     
 
 # Utility function to check access for your deck_id
-def check_deck_view_access(mydb, deck_id, username):
+def check_deck_view_access(mydb, deck_id, username): 
     # check if user is admin----------------------------
     mycursor = mydb.cursor()
     if admin.check_is_admin(mydb, username) == True:
@@ -61,7 +61,6 @@ def check_deck_edit_access(mydb, deck_id, username):
 
 # Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
-
     mycursor = mydb.cursor()
     mycursor.execute(
         """
@@ -85,7 +84,7 @@ def get_decks_list(mydb, username):
             formatted_nearest_due = ""
 
         if r[4] != None:
-            card_colors = [color.strip() for color in r[4].split(',')]
+            card_colors = r[4].split(',')
         else:
             card_colors = []
             
@@ -168,13 +167,26 @@ def get_sharecode(mydb, access_type, deck_id, username):
         mycursor = mydb.cursor()
         mycursor.execute(
         """
-        INSERT INTO share(code, deckid, type, expires) values
-            (%s, %s, %s, DATE_ADD(NOW(), INTERVAL %s MINUTE))
-
-        """, (unique_code, deck_id, access_type, expires))
+        SELECT * 
+        FROM share
+        WHERE code = %s 
+        """, (unique_code, ))
+        result = mycursor.fetchall()
         mycursor.close()
         mydb.commit()
-        return unique_code
+
+        if not result:
+            mycursor = mydb.cursor()
+            mycursor.execute(
+            """
+            INSERT INTO share(code, deckid, type, expires) values
+                (%s, %s, %s, DATE_ADD(NOW(), INTERVAL %s MINUTE))
+
+            """, (unique_code, deck_id, access_type, expires))
+            mycursor.close()
+            mydb.commit()
+            return unique_code
+
     return False
 
 
@@ -193,13 +205,11 @@ def recieve_sharecode(mydb, sharecode, username):
         SELECT code, deckid, type, expires
         FROM share
         WHERE code = %s
-        """, (sharecode))
+        """, (sharecode, ))
 
     result = select_cursor.fetchall()
     select_cursor.close()
     mydb.commit()
-
-    print("done select")
 
     if not result:
         return False
@@ -216,7 +226,7 @@ def recieve_sharecode(mydb, sharecode, username):
                 result[i] = {
                     "deckId": int(r[1])
                 }
-                print("have not expired")
+                #print("have not expired")
 
                 #insert into access table
                 insert_cursor = mydb.cursor()
@@ -228,7 +238,7 @@ def recieve_sharecode(mydb, sharecode, username):
                 """, (username, r[1], r[2]))
                 insert_cursor.close()
                 mydb.commit()
-                print("done insert")
+                #print("done insert")
                 return result
     return False
     
