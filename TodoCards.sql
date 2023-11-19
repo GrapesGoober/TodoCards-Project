@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS TodoCards;
 CREATE DATABASE TodoCards;
 USE TodoCards;
+
 --
 -- Database: `todocards`
 --
@@ -23,7 +24,6 @@ CREATE TABLE `access` (
 --
 
 INSERT INTO `access` (`accessId`, `username`, `deckId`, `accessType`) VALUES
-(1, 'ajarn', 2, 'view'),
 (2, 'ajarn', 3, 'view'),
 (3, 'ajarn', 4, 'view'),
 (4, 'ajarn', 5, 'view'),
@@ -41,7 +41,9 @@ INSERT INTO `access` (`accessId`, `username`, `deckId`, `accessType`) VALUES
 (30, 'ajarn', 1, 'edit'),
 (43, 'ajarn', 18, 'edit'),
 (45, 'cindy', 18, 'edit'),
-(47, 'fay', 18, 'edit');
+(47, 'fay', 18, 'edit'),
+(48, 'ajarn', 1, 'edit'),
+(49, 'cindy', 1, 'edit');
 
 -- --------------------------------------------------------
 
@@ -139,6 +141,15 @@ CREATE TABLE `share` (
   `type` varchar(4) NOT NULL,
   `expires` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `share`
+--
+
+INSERT INTO `share` (`code`, `deckId`, `type`, `expires`) VALUES
+('TWuhSSm8tG0WXJT', 3, 'edit', '2023-11-18 14:34:11'),
+('x1iRz8a4ZtSBDfa', 6, 'edit', '2023-11-18 14:33:27'),
+('ZDGq45VFJAHFyWB', 1, 'edit', '2023-11-18 16:21:25');
 
 -- --------------------------------------------------------
 
@@ -257,7 +268,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `access`
 --
 ALTER TABLE `access`
-  MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `accessId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `card`

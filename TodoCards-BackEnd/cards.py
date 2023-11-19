@@ -276,6 +276,7 @@ def create_card(mydb, deck_id, card_info, username):
           
         mycursor.close()
         mydb.commit()
+    
         return True
     return False
 

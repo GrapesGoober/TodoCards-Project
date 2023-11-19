@@ -1,5 +1,8 @@
 from datetime import date
 import admin 
+import random
+import string
+from datetime import datetime, timedelta
 # This is the script cards.py, which will be handling all-things decks
 # This includes: getting, creating, editing, finishing, and deleting decks
     
@@ -99,17 +102,7 @@ def get_decks_list(mydb, username):
     mydb.commit()
     return result
     #---------------------------------------
-    """
-    expected_results = [
-        {
-            "deckId" : 1,
-            "deckName" : "QuickDeck",
-            "deckDescription" : "Some deck",
-            "nearestDue" : "12 June 2029"
-        }
-    ]
-    return expected_results
-    """
+
 
 # Edits a deck using deck_info
 # must also check for edit access of that deck_id
@@ -152,19 +145,93 @@ def delete_deck(mydb, deck_id, username):
         return True
     return False
 
+
+
 # Generates a unique sharecode, inserts to share table, and returns it
 # must also check for edit access of that deck_id to get sharecode
 # returns share code, or false
-def get_sharecode(mydb, deck_id, username):
-    return "some_code_1234"
+
+# get_sharecode generates a unique sharecode.
+# must check giver's username access
+# use any randomization you wish
+# generate an expiration time as well
+# must be unique (can't have duplicate codes, lol)
+def get_sharecode(mydb, access_type, deck_id, username):
+    
+    if check_deck_edit_access(mydb, deck_id, username) == True:
+        expires = 3
+        length = 15
+        characters = string.ascii_letters + string.digits
+        # print(characters) = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+        unique_code = ''.join(random.choice(characters) for i in range(length))
+
+        mycursor = mydb.cursor()
+        mycursor.execute(
+        """
+        INSERT INTO share(code, deckid, type, expires) values
+            (%s, %s, %s, DATE_ADD(NOW(), INTERVAL %s MINUTE))
+
+        """, (unique_code, deck_id, access_type, expires))
+        mycursor.close()
+        mydb.commit()
+        return unique_code
+    return False
+
+
 
 # Recieves a sharecode and allow access
 # must check sharecode integrity (expiration and deck exists)
 # then a new access record onto access table
-# returns True if success, false otherwise
-def recieve_sharecode(mydb, sharecode, username):
-    return "Unimplemented"
+# returns if success = dict(deckId: 2)// if false = {}
 
+# check that code exists, hasn't expired, and that the code giver still has edit access
+# add access to the user
+def recieve_sharecode(mydb, sharecode, username):
+    select_cursor = mydb.cursor()
+    select_cursor.execute(
+        """
+        SELECT code, deckid, type, expires
+        FROM share
+        WHERE code = %s
+        """, (sharecode))
+
+    result = select_cursor.fetchall()
+    select_cursor.close()
+    mydb.commit()
+
+    print("done select")
+
+    if not result:
+        return False
+    
+    else:
+        for i, r in enumerate(result):
+
+            #check expires 
+            receive_code_time = datetime.now()
+            share_code_time = r[3]
+            delta_time_min = (receive_code_time - share_code_time).total_seconds() / 60
+
+            if delta_time_min <= 3:
+                result[i] = {
+                    "deckId": int(r[1])
+                }
+                print("have not expired")
+
+                #insert into access table
+                insert_cursor = mydb.cursor()
+                insert_cursor.execute(
+                """
+                INSERT INTO access(username, deckId, accessType) values
+                    (%s, %s, %s)
+
+                """, (username, r[1], r[2]))
+                insert_cursor.close()
+                mydb.commit()
+                print("done insert")
+                return result
+    return False
+    
 
 def create_deck(mydb, deck_info, username):
     mycursor = mydb.cursor()
