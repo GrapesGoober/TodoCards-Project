@@ -228,8 +228,9 @@ def get_sharecode():
     mydb = connect_to_db()
     jsonbody = request.get_json()
     deck_id = jsonbody.get("deckId")
+    access_type = jsonbody.get("accessType")
     username = session.get("username")
-    result = decks.get_sharecode(mydb, deck_id, username)
+    result = decks.get_sharecode(mydb, access_type, deck_id, username)
     mydb.close()
     return jsonify(result)
 
@@ -260,6 +261,7 @@ def recieve_sharecode():
     mydb = connect_to_db()
     jsonbody = request.get_json()
     sharecode = jsonbody.get("sharecode")
+    print(sharecode)
     username = session.get("username")
     result = decks.recieve_sharecode(mydb, sharecode, username)
     mydb.close()

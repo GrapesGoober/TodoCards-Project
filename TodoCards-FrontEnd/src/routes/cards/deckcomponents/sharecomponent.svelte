@@ -2,10 +2,10 @@
     import * as APIs from "$lib"
   import { fade } from "svelte/transition";
     export let deckId
-    let sharemode, sharecode, isCopied = false
+    let accessType, sharecode, isCopied = false
 
     async function getSharecode() {
-        sharecode = await APIs.getSharecode(deckId)
+        sharecode = await APIs.getSharecode(deckId, accessType)
         sharecode = `${window.location.origin}?sharecode=${sharecode}`
     }
 
@@ -23,7 +23,7 @@
     <i class="fas fa-user-plus fa-2xs share-icon"></i>
     <div class="share-icon">share</div>
     <div>
-        <select class="share-combobx" id="myComboBox" name="myComboBox" bind:value={sharemode}>
+        <select class="share-combobx" id="myComboBox" name="myComboBox" bind:value={accessType}>
             <option value="edit">Editor</option>
             <option value="view">Viewer</option>
         </select>

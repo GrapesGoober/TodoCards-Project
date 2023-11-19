@@ -105,8 +105,8 @@ export async function finishSubcard(subcardId, isUnfinished){
     return await sendAuthBackendRequest("/finish-subcard", {subcardId, isUnfinished})
 }
 
-export async function getSharecode(deckId){
-    return await sendAuthBackendRequest("/get-sharecode", {deckId})
+export async function getSharecode(deckId, accessType){
+    return await sendAuthBackendRequest("/get-sharecode", {deckId, accessType})
 }
 
 export async function recieveSharecode(sharecode){
