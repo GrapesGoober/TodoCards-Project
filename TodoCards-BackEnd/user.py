@@ -52,15 +52,17 @@ def signup(mydb, username, password):
         
         result = mycursor.fetchall()
         if result[0][0] != 0:
-            return False
+            return "username duplicate"
         
         #check if username is valid
         characters = string.ascii_letters + string.digits + "_"
         for i in username:
             if i not in characters:
-                return False
+                return "invalid inputs"
 
         mycursor.execute("INSERT INTO user VALUES (%s, %s)", (username, hs_pwd))
         mydb.commit()
-        return login(mydb, username, password)
+
+        #return login(mydb, username, password)
+        return True
     
