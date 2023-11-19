@@ -25,5 +25,6 @@
         height: 30px;
         border-radius: 4px;
         position: absolute;
+        border: 1px solid white;
     }
 </style>
