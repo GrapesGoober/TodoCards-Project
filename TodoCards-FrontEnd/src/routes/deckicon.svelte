@@ -1,8 +1,5 @@
 <script>
     export let colors = []
-    $:{
-        console.log(colors)
-    }
 </script>
     <div class="icon-container">
         {#each colors as color, i}
