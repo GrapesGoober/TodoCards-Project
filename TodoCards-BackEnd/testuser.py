@@ -10,4 +10,4 @@ mydb = mysql.connector.connect(
     database="TodoCards"
 )
 
-decks.get_decks_list(mydb, "ajarn")
+user.signup(mydb, "lia", "lia123")
