@@ -1,4 +1,6 @@
 <script>
+  import Deckicon from "./deckicon.svelte";
+
     export let deckinfo
 
     let formattedDue = ""
@@ -24,26 +26,12 @@
             <div class="deck-name"> {deckinfo.deckName} </div>
             <div> {formattedDue} </div>
         </div>
-
-    <!-- For the multicolored cards icon -->
-    <!--  <div class="icon-container">
-        {#each deckinfo.cardColors as color, i}
-            <div class="icon" style="
-                background-color: {color}
-            "> </div>
-        {/each  }
-    </div> -->
+        <Deckicon bind:colors={deckinfo.cardColors}></Deckicon>
     </button>
 </div>
 
 
 <style>
-    .icon {
-        width: 30px;
-        height: 30px;
-        border-radius: 4px;
-        display: inline-block;
-    }
     .deck-name {
         font-size: large;
     }
@@ -69,9 +57,6 @@
     }
     .text-container {
         width: 20em;
-    }
-    .icon-container {
-        display: inline;
     }
     .alldeck {
         margin-left: 5px;
