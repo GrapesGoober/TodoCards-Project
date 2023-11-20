@@ -1,6 +1,7 @@
 # This is the script user.py, which will be handling all-things users
 # This includes: authentication, changing usernames & password, 
 import os, hashlib, hmac
+import string
 
 # global variable for consistant salt size
 SALT_SIZE = 16
@@ -51,8 +52,22 @@ def signup(mydb, username, password):
         
         result = mycursor.fetchall()
         if result[0][0] != 0:
-            return False
+            return "username duplicate"
+        
+        #check if username is valid
+        characters = string.ascii_letters + string.digits + "_"
+        for i in username:
+            if i not in characters:
+                return "invalid username"
+        
+        #check if password is valid
+        for i in password:
+            if i not in characters:
+                return "invalid password"
 
         mycursor.execute("INSERT INTO user VALUES (%s, %s)", (username, hs_pwd))
         mydb.commit()
-        return login(mydb, username, password)
+
+        #return login(mydb, username, password)
+        return True
+    

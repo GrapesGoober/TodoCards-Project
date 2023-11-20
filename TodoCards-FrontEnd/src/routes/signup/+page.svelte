@@ -6,19 +6,26 @@
     let signup_confirm_password = ""
     let signup_status = false;
 
-    let passwordNotMatching = false
+    let errorMessage = ""
 
     async function signup() {
-        if (signup_password !== "" && signup_confirm_password !== "") {
-            if (signup_password === signup_confirm_password) {
-                signup_status = await APIs.signup(signup_username, signup_password);
-                window.location.href = "/";
-            } else {
-                passwordNotMatching = true;
-            }
-        } else {
-            // Handle case where passwords are empty
-            passwordNotMatching = true;
+
+        if (signup_username == "" || signup_password == "" || signup_confirm_password == "") {
+            errorMessage = "Please fill in all forms"
+            return
+        }
+
+        if (signup_password != signup_confirm_password) {
+            errorMessage = "Password doesn't match";
+            return
+        }
+
+        signup_status = await APIs.signup(signup_username, signup_password);
+        if (signup_status === true) {
+            window.location.href = "/";
+        }
+        else {
+            errorMessage = signup_status
         }
     }
 
@@ -46,8 +53,8 @@
         <input type="password" placeholder="Confirm Password" bind:value={signup_confirm_password}>
     </div>
 
-    {#if passwordNotMatching}
-    <p class="wrong-text">Please confirm your password again.</p>  
+    {#if errorMessage}
+        <p class="wrong-text">{errorMessage}</p>  
     {/if}
     <button class="signup_btn" on:click={signup}>Sign up</button>
 </div>
