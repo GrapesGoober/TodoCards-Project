@@ -223,11 +223,6 @@ def recieve_sharecode(mydb, sharecode, username):
             delta_time_min = (receive_code_time - share_code_time).total_seconds() / 60
 
             if delta_time_min <= 3:
-                result[i] = {
-                    "deckId": int(r[1])
-                }
-                #print("have not expired")
-
                 #insert into access table
                 insert_cursor = mydb.cursor()
                 insert_cursor.execute(
@@ -238,8 +233,9 @@ def recieve_sharecode(mydb, sharecode, username):
                 """, (username, r[1], r[2]))
                 insert_cursor.close()
                 mydb.commit()
-                #print("done insert")
-                return result
+                return {
+                    "deckId": int(r[1])
+                }
     return False
     
 

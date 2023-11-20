@@ -9,13 +9,20 @@
     
     async function editDeck(){
         let status = await APIs.editDeck(deckInfo)
-        console.log(usersToRemove)
         usersToRemove.forEach(async user => {
             await APIs.removeAccess(deckInfo.deckId, user)
         }); 
         if (status == true) {
             await refresh()
             showModal = false
+        }
+    }
+
+    async function deleteDeck(){
+        let status = await APIs.deleteDeck(deckInfo.deckId)
+
+        if (status == true) {
+            window.location.href = "/"
         }
     }
 
@@ -49,11 +56,11 @@
     
 
     <div class="delete-submit">
-        <button class="red-button bobbing-hover">
+        <button class="red-button bobbing-hover" on:click={deleteDeck}>
             <i class="fas fa-trash-alt"></i>
         </button>
 
-        <button class="green-button bobbing-hover"  on:click={editDeck}>
+        <button class="green-button bobbing-hover" on:click={editDeck}>
             <i class="fas fa-check-circle"></i>
         </button>
     </div>

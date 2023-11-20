@@ -5,7 +5,7 @@
 
 from flask import Flask, request, jsonify, session
 import mysql.connector
-import cards, user, decks
+import cards, user, decks, admin
 
 # sets up some flask stuff (oh, and CORS too)
 app = Flask(__name__)
@@ -48,6 +48,10 @@ def login():
         session["username"] = username
     elif "username" in session:
         session.pop("username")
+
+    if admin.check_is_admin(mydb, username):
+        status = "isAdmin"
+
     mydb.close()
     return jsonify(status)
 
@@ -224,8 +228,9 @@ def get_sharecode():
     mydb = connect_to_db()
     jsonbody = request.get_json()
     deck_id = jsonbody.get("deckId")
+    access_type = jsonbody.get("accessType")
     username = session.get("username")
-    result = decks.get_sharecode(mydb, deck_id, username)
+    result = decks.get_sharecode(mydb, access_type, deck_id, username)
     mydb.close()
     return jsonify(result)
 
@@ -256,8 +261,28 @@ def recieve_sharecode():
     mydb = connect_to_db()
     jsonbody = request.get_json()
     sharecode = jsonbody.get("sharecode")
+    print(sharecode)
     username = session.get("username")
     result = decks.recieve_sharecode(mydb, sharecode, username)
+    mydb.close()
+    return jsonify(result)
+
+@app.route("/api/get-everything", methods=["POST"])
+def get_everything():
+    mydb = connect_to_db()
+    username = session.get("username")
+    result = admin.admin_get_everything(mydb, username)
+    mydb.close()
+    return jsonify(result)
+
+@app.route("/api/delete-user", methods=["POST"])
+def delete_user():
+    mydb = connect_to_db()
+    jsonbody = request.get_json()
+    the_unlucky_user = jsonbody.get("username")
+    admin_username = session.get("username")
+    print(the_unlucky_user)
+    result = admin.delete_user(mydb, the_unlucky_user, admin_username)
     mydb.close()
     return jsonify(result)
 

@@ -11,6 +11,9 @@
             // (which is default endpoint)
             window.location.href = "/";
         }
+        else if (status == "isAdmin") {
+            window.location.href = "/admin";
+        }
         // upon bad login, we might want to display something on the screen
         else {
             wrongPassword = true

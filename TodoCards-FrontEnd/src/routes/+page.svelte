@@ -1,16 +1,29 @@
 <script>
+    import * as APIs from "$lib"
+    import { onMount } from "svelte";
     import Deckslist from "./deckslist.svelte";
 
-    let isAdding = false
-    let refreshCards
-
-    function addDeck() {
-        isAdding = true
+    async function logout(){
+        await APIs.logout()
+        window.location.href = "/login";
     }
 
-    async function gotoUserSetting(){
-        window.location.href = "/usersetting";
+    async function handleSharecode() {
+        let searchParams = new URLSearchParams(window.location.search)
+        let sharecode = searchParams.get("sharecode")
+        if (sharecode != null) {
+            let status = await APIs.recieveSharecode(sharecode)
+            if (status.deckId) {
+                window.location.replace(`/cards?deckId=${status.deckId}`)
+            }
+            else {
+                window.location.replace("/")
+                alert("Share code invalid (it probably expired)")
+            }
+        }
     }
+
+    onMount(handleSharecode)
 </script>
 
 <!-- Font Awesome 5 Free -->
@@ -19,7 +32,9 @@
 <!--This is the deckslist page (the home page)-->
 <div class="header">
     <h1 class="todo-header">Todo</h1>
-    <button class="fas fa-user-circle user-btn" on:click={gotoUserSetting}></button>
+    <button class="bobbing-hover user-btn" on:click={logout}>
+        <i class="fas fa-sign-out-alt"></i>
+    </button>
 </div>
 <div>
     <Deckslist></Deckslist>
@@ -39,20 +54,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }
-    .add-btn {
-        font-size: xx-large;
-        padding: 0;
-        height: 40px;
-        width: 40px;
-        border: none;
-        border-radius: 50%;
-        color: green;
-        transition: 0.15s;
-        cursor: pointer;
-    }
-    .add-btn:hover {
-        color: rgb(10, 170, 10);
     }
     .user-btn {
         font-size: xx-large;

@@ -64,8 +64,12 @@
         bind:deckId={deckinfo.deckId}
         refresh={getCardslistAndDeckInfo}>
     </Createcardmodal>
-    
-    <h1>{deckinfo.deckName}
+
+    <h1>
+        <a href="/">
+            <i class="fas fa-angle-left"></i>
+        </a>
+        {deckinfo.deckName}
         {#if deckinfo.editable}
             <button class="edit-button bobbing-hover" on:click={showEditDeckModal}>
                 <i class="fas fa-edit"></i>
@@ -78,25 +82,27 @@
         <p><b>Nearest Due Date</b> {formattedDeckDue}</p>
     {/if}
     <p>{deckinfo.deckDescription}</p>
-{/if}
 
-{#if deckinfo != null}
-<div>
-    {#each cardslist as card}
-        <Card bind:cardinfo={card} bind:editable={deckinfo.editable} refresh={getCardslistAndDeckInfo}></Card>
-    {/each}
-</div>
-{/if}
+    <div>
+        {#each cardslist as card}
+            <Card bind:cardinfo={card} bind:editable={deckinfo.editable} refresh={getCardslistAndDeckInfo}></Card>
+        {/each}
+    </div>
 
-{#if deckinfo && deckinfo.editable}
-<button class="add-btn bobbing-hover" on:click={showAddCardModal}>
-    <i class="fas fa-plus-circle "></i>
-</button>
+    {#if deckinfo.editable}
+    <button class="add-btn bobbing-hover" on:click={showAddCardModal}>
+        <i class="fas fa-plus-circle "></i>
+    </button>
+    {/if}
+
 {/if}
 
 <style>
     @import "../style.css";
 
+    a {
+        color: black;
+    }
     .edit-button {
         left: 10px;
     }

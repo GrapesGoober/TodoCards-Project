@@ -36,10 +36,6 @@
     </div>
 
     <div class="delete-submit">
-        <button class="red-button bobbing-hover">
-            <i class="fas fa-trash-alt"></i>
-        </button>
-
         <button class="green-button bobbing-hover"  on:click={createDeck}>
             <i class="fas fa-check-circle"></i>
         </button>

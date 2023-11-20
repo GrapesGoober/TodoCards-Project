@@ -2,11 +2,11 @@
     import * as APIs from "$lib"
   import { fade } from "svelte/transition";
     export let deckId
-    let sharemode, sharecode, isCopied = false
+    let accessType, sharecode, isCopied = false
 
     async function getSharecode() {
-        sharecode = await APIs.getSharecode(deckId)
-        console.log(window.location.origin)
+        sharecode = await APIs.getSharecode(deckId, accessType)
+        sharecode = `${window.location.origin}?sharecode=${sharecode}`
     }
 
     function copy() {
@@ -23,7 +23,7 @@
     <i class="fas fa-user-plus fa-2xs share-icon"></i>
     <div class="share-icon">share</div>
     <div>
-        <select class="share-combobx" id="myComboBox" name="myComboBox" bind:value={sharemode}>
+        <select class="share-combobx" id="myComboBox" name="myComboBox" bind:value={accessType}>
             <option value="edit">Editor</option>
             <option value="view">Viewer</option>
         </select>
@@ -39,7 +39,7 @@
 {#if sharecode}
     <div class="link-section">
         <div>Link</div>
-        <input type="text" readonly class="link-code" bind:value={sharecode}>
+        <textarea cols="30" rows="2" readonly>{sharecode}</textarea>
         
         <button class="bobbing-hover" on:click={copy}>
             <i class="far fa-copy fa-xs copy-icon"></i>
