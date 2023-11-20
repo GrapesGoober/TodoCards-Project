@@ -1,14 +1,14 @@
-from datetime import date
+#from datetime import date
 import admin 
 import random
 import string
-from datetime import datetime, timedelta
+from datetime import datetime #, timedelta
 # This is the script cards.py, which will be handling all-things decks
 # This includes: getting, creating, editing, finishing, and deleting decks
     
 
 # Utility function to check access for your deck_id
-def check_deck_view_access(mydb, deck_id, username):
+def check_deck_view_access(mydb, deck_id, username): 
     # check if user is admin----------------------------
     mycursor = mydb.cursor()
     if admin.check_is_admin(mydb, username) == True:
@@ -61,7 +61,6 @@ def check_deck_edit_access(mydb, deck_id, username):
 
 # Retrieve all decks that the user has view or edit access to
 def get_decks_list(mydb, username):
-
     mycursor = mydb.cursor()
     mycursor.execute(
         """
@@ -85,7 +84,7 @@ def get_decks_list(mydb, username):
             formatted_nearest_due = ""
 
         if r[4] != None:
-            card_colors = [color.strip() for color in r[4].split(',')]
+            card_colors = r[4].split(',')
         else:
             card_colors = []
             
@@ -168,13 +167,26 @@ def get_sharecode(mydb, access_type, deck_id, username):
         mycursor = mydb.cursor()
         mycursor.execute(
         """
-        INSERT INTO share(code, deckid, type, expires) values
-            (%s, %s, %s, DATE_ADD(NOW(), INTERVAL %s MINUTE))
-
-        """, (unique_code, deck_id, access_type, expires))
+        SELECT * 
+        FROM share
+        WHERE code = %s 
+        """, (unique_code, ))
+        result = mycursor.fetchall()
         mycursor.close()
         mydb.commit()
-        return unique_code
+
+        if not result:
+            mycursor = mydb.cursor()
+            mycursor.execute(
+            """
+            INSERT INTO share(code, deckid, type, expires) values
+                (%s, %s, %s, DATE_ADD(NOW(), INTERVAL %s MINUTE))
+
+            """, (unique_code, deck_id, access_type, expires))
+            mycursor.close()
+            mydb.commit()
+            return unique_code
+
     return False
 
 
@@ -211,7 +223,6 @@ def recieve_sharecode(mydb, sharecode, username):
             delta_time_min = (receive_code_time - share_code_time).total_seconds() / 60
 
             if delta_time_min <= 3:
-
                 #insert into access table
                 insert_cursor = mydb.cursor()
                 insert_cursor.execute(
