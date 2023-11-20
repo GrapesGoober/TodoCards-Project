@@ -58,7 +58,12 @@ def signup(mydb, username, password):
         characters = string.ascii_letters + string.digits + "_"
         for i in username:
             if i not in characters:
-                return "invalid inputs"
+                return "invalid username"
+        
+        #check if password is valid
+        for i in password:
+            if i not in characters:
+                return "invalid username"
 
         mycursor.execute("INSERT INTO user VALUES (%s, %s)", (username, hs_pwd))
         mydb.commit()
