@@ -23,8 +23,16 @@ def check_login():
 def connect_to_db():
     return mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="root",
+        user="user",
+        password="user123",
+        database="TodoCards"
+    )
+
+def admin_connect_to_db():
+    return mysql.connector.connect(
+        host="localhost",
+        user="superadmin",
+        password="superadmin123",
         database="TodoCards"
     )
 
@@ -269,7 +277,7 @@ def recieve_sharecode():
 
 @app.route("/api/get-everything", methods=["POST"])
 def get_everything():
-    mydb = connect_to_db()
+    mydb = admin_connect_to_db()
     username = session.get("username")
     result = admin.admin_get_everything(mydb, username)
     mydb.close()
@@ -277,7 +285,7 @@ def get_everything():
 
 @app.route("/api/delete-user", methods=["POST"])
 def delete_user():
-    mydb = connect_to_db()
+    mydb = admin_connect_to_db()
     jsonbody = request.get_json()
     the_unlucky_user = jsonbody.get("username")
     admin_username = session.get("username")
