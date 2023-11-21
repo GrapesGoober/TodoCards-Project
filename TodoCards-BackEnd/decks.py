@@ -225,6 +225,25 @@ def recieve_sharecode(mydb, sharecode, username):
             if delta_time_min <= 3:
                 #insert into access table
                 insert_cursor = mydb.cursor()
+
+                # Check to prevent duplicate access - three possible cases
+                # Case 1, already exists, no action
+                # Case 2, not exist, insert
+                insert_cursor.execute(
+                """
+                SELECT * FROM access
+                WHERE
+                    username = %s AND
+                    deckId = %s AND
+                    accessType = %s;
+                """, (username, r[1], r[2]))
+                should_be_empty = insert_cursor.fetchall()
+                if should_be_empty != []:
+                    return {
+                        "deckId": int(r[1])
+                    }
+
+
                 insert_cursor.execute(
                 """
                 INSERT INTO access(username, deckId, accessType) values
