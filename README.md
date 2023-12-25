@@ -17,6 +17,7 @@ There are 3 main components: the database, the backend, and the frontend
 - FrontEnd: Navigate to TodoCards-Frontend with `cd TodoCards-FrontEnd` then run node `npm run dev`
   - This should have the localhost running at port 5173
   - If there is import issue, run `npm install`
+  - If you want to expose this to your local network (trusted WIFI only!!) do `npm run dev -- --host`
 
 # These are our sample usernames & passwords
 ajarn ajarn123
